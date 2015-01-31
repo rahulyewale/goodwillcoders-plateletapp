@@ -18,6 +18,9 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 	private Date requestedDate;
 	private String status;
 	private Date smsSentDate;
+	private boolean historySelected;
+
+	private DonationCenterDTO donationCenterDTO;
 
 	public String getRequestId()
 	{
@@ -97,6 +100,26 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 	public void setSmsSentDate(Date smsSentDate)
 	{
 		this.smsSentDate = smsSentDate;
+	}
+
+	public DonationCenterDTO getDonationCenterDTO()
+	{
+		return donationCenterDTO;
+	}
+
+	public void setDonationCenterDTO(DonationCenterDTO donationCenterDTO)
+	{
+		this.donationCenterDTO = donationCenterDTO;
+	}
+
+	public boolean isHistorySelected()
+	{
+		return historySelected;
+	}
+
+	public void setHistorySelected(boolean historySelected)
+	{
+		this.historySelected = historySelected;
 	}
 
 }

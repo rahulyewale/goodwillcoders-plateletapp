@@ -22,7 +22,7 @@ public class DashbordMB
 
 	public String navigateToSearchCommunicationHistory()
 	{
-		System.out.println("navigating to dashbord");
+		System.out.println("navigating to search communication history");
 		return "success";
 	}
 }
