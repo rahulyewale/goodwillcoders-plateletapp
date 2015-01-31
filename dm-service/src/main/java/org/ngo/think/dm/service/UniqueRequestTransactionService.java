@@ -23,6 +23,19 @@ public class UniqueRequestTransactionService
 		if (null == uniqueRequestTxn)
 		{
 			uniqueRequestNumber = RandomNumberGenerator.generateRandomNumber(RandomNumberType.REQUEST_NUMBER);
+			try
+			{
+				UniqueRequestTxn uniqueRequestTxn2 = new UniqueRequestTxn();
+				uniqueRequestTxn2.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
+				uniqueRequestTxn2.setRequestDate(searchDonorRequestDTO.getRequestDate());
+				uniqueRequestTxn2.setRequestId(uniqueRequestNumber);
+				requestDAO.save(uniqueRequestTxn2);
+			}
+			catch (Exception e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		else
 		{

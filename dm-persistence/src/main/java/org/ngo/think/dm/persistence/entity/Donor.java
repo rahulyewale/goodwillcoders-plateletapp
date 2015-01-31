@@ -71,7 +71,7 @@ public class Donor implements Serializable
 	private List<DonorContactDetail> donorContactDetails;
 	
 	@Transient
-	private double distanceInKm;
+	private String distanceInKm;
 	
 	@Transient
 	private Integer rating;
@@ -294,12 +294,12 @@ public class Donor implements Serializable
 		return donorContactDetail;
 	}
 
-	public double getDistanceInKm()
+	public String getDistanceInKm()
 	{
 		return distanceInKm;
 	}
 
-	public void setDistanceInKm(double distanceInKm)
+	public void setDistanceInKm(String distanceInKm)
 	{
 		this.distanceInKm = distanceInKm;
 	}

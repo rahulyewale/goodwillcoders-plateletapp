@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
@@ -31,7 +32,7 @@ public class DonorFilter
 	@Value("${next.donation.interval.in.days}")
 	private String nextDonationInterval;
 
-	public void filterDonorsBasedOnSearchCriteria(SearchDonorRequestDTO searchDonorRequestDTO, List<Donor> donorList, DonationCenter center)
+	public void filterDonorsBasedOnSearchCriteria(SearchDonorRequestDTO searchDonorRequestDTO, List<Donor> donorList, DonationCenter center, DonorAppointmentDTO appointmentDTO)
 	{
 		Iterator<Donor> donorIterator = donorList.iterator();
 		
@@ -61,7 +62,7 @@ public class DonorFilter
 				donorIterator.remove();
 				continue;
 			}	
-			else if(communicationHistoryManager.isDonorAlreadyConfirmed(donor))
+			else if(communicationHistoryManager.isDonorAlreadyConfirmed(donor,appointmentDTO))
 			{
 				donorIterator.remove();
 				continue;
@@ -82,6 +83,7 @@ public class DonorFilter
 			
 			distanceCalculator.populateDistance(donor,center);
 			populateRating(donor,donationInfo);
+			donor.setLastDonationDate(donationInfo.getLastDonationDate());
 			
 		}	
 			

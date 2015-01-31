@@ -3,6 +3,7 @@ package org.ngo.think.dm.service;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
@@ -57,13 +58,20 @@ public class SearchDonorService
 		{
 			e.printStackTrace();
 		}
+		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+		
 		// Call DAOImpl to get donor master List
 		List<Donor> donorList = donorDAO.getAllDonors();
-		donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO, donorList,center);
+		DonorAppointmentDTO appointmentDTO = new DonorAppointmentDTO();
+		appointmentDTO.setCenterId(center.getDonationCenterId());
+		appointmentDTO.setRequestedDate(searchDonorRequestDTO.getRequestDate());
+		appointmentDTO.setRequestTxnId(uniqueRequestNumber);
+		
+		donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO, donorList,center,appointmentDTO);
 
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
 
-		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+		
 
 		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 

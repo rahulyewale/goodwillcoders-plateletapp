@@ -11,6 +11,7 @@ public class DonorContactMapper
 		DonorContactDetailsDTO contactDetailsDTO = new DonorContactDetailsDTO();
 		contactDetailsDTO.setContactNumber(donorContactDetail.getContactNumber());
 		contactDetailsDTO.setContactNumberAlternate(donorContactDetail.getContactNumberAlternate());
+		contactDetailsDTO.setEmail(donorContactDetail.getEmail());
 		return contactDetailsDTO;
 	}
 

@@ -30,7 +30,7 @@ public class DonorDTO implements Serializable
 	private Date lastDonationDate;
 	private Date nextAvailableDate;
 	private Integer donationCount;
-	private Double distanceKm;
+	private String distanceKm;
 	private boolean selectedDonor;
 	
 	private DonorContactDetailsDTO donorContactDetailsDTO;
@@ -209,12 +209,12 @@ public class DonorDTO implements Serializable
 		this.donationCount = donationCount;
 	}
 
-	public Double getDistanceKm()
+	public String getDistanceKm()
 	{
 		return distanceKm;
 	}
 
-	public void setDistanceKm(Double distanceKm)
+	public void setDistanceKm(String distanceKm)
 	{
 		this.distanceKm = distanceKm;
 	}

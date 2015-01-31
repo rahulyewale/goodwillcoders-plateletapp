@@ -31,7 +31,7 @@ public class DistanceCalculator
 			if(null!=rowsHolder.getElements() && !rowsHolder.getElements().isEmpty())
 			{
 				DistanceDurationHolder distanceDurationHolder = rowsHolder.getElements().get(0);
-				double distanceInKm = Double.valueOf(distanceDurationHolder.getDistance().getValue());
+				String distanceInKm =  distanceDurationHolder.getDistance().getText();
 				donor.setDistanceInKm(distanceInKm);
 			}
 			

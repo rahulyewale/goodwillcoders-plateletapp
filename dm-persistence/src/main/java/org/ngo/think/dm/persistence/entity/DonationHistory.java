@@ -34,7 +34,7 @@ public class DonationHistory implements Serializable
 	@Column(name = "donation_date")
 	private Date donationDate;
 
-	private Boolean isrejected;
+	private boolean isrejected;
 
 	@Column(name = "modified_by")
 	private String modifiedBy;
@@ -104,12 +104,12 @@ public class DonationHistory implements Serializable
 		this.donationDate = donationDate;
 	}
 
-	public Boolean getIsrejected()
+	public boolean getIsrejected()
 	{
 		return this.isrejected;
 	}
 
-	public void setIsrejected(Boolean isrejected)
+	public void setIsrejected(boolean isrejected)
 	{
 		this.isrejected = isrejected;
 	}
