@@ -24,8 +24,6 @@ public class DonorAppointmentDTO implements Serializable
 	private String confirmSMS;
 
 	private String requestTxnId;
-	
-	private String status;
 
 	public List<DonorDTO> getDonors()
 	{

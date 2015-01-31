@@ -69,6 +69,18 @@ public class Donor implements Serializable
 	// bi-directional many-to-one association to DonorContactDetail
 	@OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<DonorContactDetail> donorContactDetails;
+	
+	@Transient
+	private double distanceInKm;
+	
+	@Transient
+	private Integer rating;
+	
+	@Transient
+	private Date nextAvailableDate;
+	
+	@Transient
+	private Date lastDonationDate;
 
 	public Donor()
 	{
@@ -280,6 +292,46 @@ public class Donor implements Serializable
 		donorContactDetail.setDonor(null);
 
 		return donorContactDetail;
+	}
+
+	public double getDistanceInKm()
+	{
+		return distanceInKm;
+	}
+
+	public void setDistanceInKm(double distanceInKm)
+	{
+		this.distanceInKm = distanceInKm;
+	}
+
+	public Integer getRating()
+	{
+		return rating;
+	}
+
+	public void setRating(Integer rating)
+	{
+		this.rating = rating;
+	}
+
+	public Date getNextAvailableDate()
+	{
+		return nextAvailableDate;
+	}
+
+	public void setNextAvailableDate(Date nextAvailableDate)
+	{
+		this.nextAvailableDate = nextAvailableDate;
+	}
+
+	public Date getLastDonationDate()
+	{
+		return lastDonationDate;
+	}
+
+	public void setLastDonationDate(Date lastDonationDate)
+	{
+		this.lastDonationDate = lastDonationDate;
 	}
 
 }
