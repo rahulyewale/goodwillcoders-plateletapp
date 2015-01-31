@@ -30,7 +30,7 @@ public class CommunicationHistoryServiceController
 		
 	}
 	
-	@RequestMapping(value="/sendSMSForSearchedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value="/sendSMSForConfirmedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse sendConfirmedSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{
