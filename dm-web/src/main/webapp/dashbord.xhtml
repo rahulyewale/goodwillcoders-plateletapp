@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Dashboard</title>
+</h:head>
+<h:body>
+	<h:form >
+	
+	<p:accordionPanel>
+	<p:tab title="Dashbord">
+	 	<h:panelGrid columns="1" columnClasses="label">
+	 	<h:commandLink value="Search Donor" action="#{dashbord.navigateToSearchDonor}"/>
+	
+	 	
+	 	
+	 	</h:panelGrid>
+	</p:tab>
+	</p:accordionPanel>
+	</h:form>
+
+
+</h:body>
+</html>
