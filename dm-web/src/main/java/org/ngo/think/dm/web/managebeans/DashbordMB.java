@@ -25,4 +25,5 @@ public class DashbordMB
 		System.out.println("navigating to search communication history");
 		return "success";
 	}
+	
 }

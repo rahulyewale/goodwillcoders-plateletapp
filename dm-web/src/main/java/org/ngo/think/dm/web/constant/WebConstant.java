@@ -21,6 +21,9 @@ public class WebConstant
 	{
 		private static final String BASE_URL = RestServiceConstant.PROTOCOL + "://" + RestServiceConstant.HOST + ":" + RestServiceConstant.PORT + "/" + RestServiceConstant.SERVICE_NAME + "/";
 		public static final String SEARCH_DONOR_SERVICE_URL = BASE_URL + ServiceName.SEARCH_DONOR;
+		
+		public static final String SEND_SMS_TO_DONORS_SERVICE_URL = BASE_URL + "sendSMSToDonors/";
+		
 		public static final String COMMUNICATION_HISTORY_SEARCH_SERVICE_URL = BASE_URL + ServiceName.SEARCH_COMMUNICATION_HISTORY;
 
 	}

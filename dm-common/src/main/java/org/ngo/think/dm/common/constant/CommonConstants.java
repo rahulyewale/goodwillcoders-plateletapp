@@ -7,6 +7,7 @@ public class CommonConstants
 	public static class RequestKey
 	{
 		public static final String SEARCH_DONOR_REQUEST = "searchDonorRequest";
+		public static final String SEND_SMS_REQUEST = "sendSMSRequest";
 		public static final String SEARCH_COMMUNICATION_HISTORY_REQUEST = "searchCommunicationHistoryRequest";
 	}
 	
