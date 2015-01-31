@@ -68,7 +68,7 @@ public class SearchCommunicationHistoryMB implements Serializable
 			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
 			
 			this.getSrchCommnHistResultList().clear();
-			this.setSrchCommnHistResultList(searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList());
+			this.srchCommnHistResultList = searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList();
 			
 		}
 		catch (Exception e)
