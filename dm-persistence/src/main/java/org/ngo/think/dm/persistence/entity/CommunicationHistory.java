@@ -1,7 +1,9 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 /**
@@ -9,7 +11,10 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "communication_history")
-@NamedQuery(name = "CommunicationHistory.findAll", query = "SELECT c FROM CommunicationHistory c")
+@NamedQueries({
+	@NamedQuery(name = "CommunicationHistory.findAll", query = "SELECT c FROM CommunicationHistory c"),
+   @NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.donorId =:donorId AND u.requestedDate = :requestedDate")
+	})
 public class CommunicationHistory implements Serializable
 {
 	private static final long serialVersionUID = 1L;
