@@ -36,9 +36,10 @@ public class RestServiceInvoker
 		this.restServiceURL = restServiceURL;
 	}
 
-	public ServiceResponse invokeRestService(String origin, String destination)
+	public LocationResposne invokeRestService(String origin, String destination)
 	{
 		ServiceResponse response = null;
+		LocationResposne locationResposne =null;
 		try
 		{
 			// String origin = "410209";
@@ -48,16 +49,15 @@ public class RestServiceInvoker
 			RestTemplate restTemplate = new RestTemplate();
 			ResponseEntity<LocationResposne> responseqwqwq = restTemplate.exchange(url, HttpMethod.GET, null, LocationResposne.class, origin, destination);
 
-			LocationResposne locationResposne = responseqwqwq.getBody();
+			 locationResposne = responseqwqwq.getBody();
 
-			response = new ServiceResponse(ResponseData.successResponseData, "locationResponse", locationResposne);
 		}
 		catch (Exception exception)
 		{
 			exception.printStackTrace();
 		}
 
-		return response;
+		return locationResposne;
 
 	}
 }

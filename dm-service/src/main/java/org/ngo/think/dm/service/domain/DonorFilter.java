@@ -1,11 +1,15 @@
 package org.ngo.think.dm.service.domain;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
+import org.ngo.think.dm.common.util.DateUtil;
+import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -20,8 +24,14 @@ public class DonorFilter
 	
 	@Autowired
 	private DistanceCalculator distanceCalculator;
+	
+	@Value("${max.donation.limit.for.last.12.months}")
+	private String maxDonationLimitForLast12Months;
+	
+	@Value("${next.donation.interval.in.days}")
+	private String nextDonationInterval;
 
-	public void filterDonorsBasedOnSearchCriteria(SearchDonorRequestDTO searchDonorRequestDTO, List<Donor> donorList)
+	public void filterDonorsBasedOnSearchCriteria(SearchDonorRequestDTO searchDonorRequestDTO, List<Donor> donorList, DonationCenter center)
 	{
 		Iterator<Donor> donorIterator = donorList.iterator();
 		
@@ -65,12 +75,12 @@ public class DonorFilter
 				}
 				else
 				{
-					populateNextAvailableDate(donor);
+					populateNextAvailableDate(donor,donationInfo);
 				}
 
 			}
 			
-			distanceCalculator.populateDistance(donor,searchDonorRequestDTO);
+			distanceCalculator.populateDistance(donor,center);
 			populateRating(donor,donationInfo);
 			
 		}	
@@ -79,30 +89,47 @@ public class DonorFilter
 
 	private void populateRating(Donor donor, DonationInfo donationInfo)
 	{
-		// TODO Auto-generated method stub
+		int totalNumberOfYear = donationInfo.getTotalNoOfDonationYears();
+		int totalNoOfDonations = donationInfo.getTotalNoOfDonationsTillDate();
 		
+		int rating  = totalNoOfDonations/totalNumberOfYear;
+		
+		donor.setRating(rating);
 	}
 
-	private void populateNextAvailableDate(Donor donor)
+	private void populateNextAvailableDate(Donor donor, DonationInfo donationInfo)
 	{
-		// TODO Auto-generated method stub
-		
+		donor.setNextAvailableDate(DateUtil.addDaysToDate(donationInfo.getLastDonationDate(),Integer.valueOf(nextDonationInterval)));
 	}
 
 	private boolean isNextAvailableDateApplicable(DonationInfo donationInfo)
 	{
-		// TODO Auto-generated method stub
+		if (DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), new Date()) < Integer.valueOf(nextDonationInterval))
+		{
+			return true;
+		}
 		return false;
 	}
 
 	private boolean isLastDonationDateGreaterThanNotDonatedInLastMonthsDate(SearchDonorRequestDTO donorRequestDTO, DonationInfo donationInfo)
 	{
+		Date referenceDate = DateUtil.deductMonthsFromDate(new Date(), donorRequestDTO.getNotDonatedInLastMonthsCount());
+		
+		if(donationInfo.getLastDonationDate().after(referenceDate))
+		{
+			return true;
+		}
+		
 		return false;
 	}
 
 	private boolean isCoolingOfPeriodApplicable(SearchDonorRequestDTO donorRequestDTO, DonationInfo donationInfo)
 	{
-		return true;
+		if (DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), donorRequestDTO.getRequestDate()) < Integer.valueOf(nextDonationInterval))
+		{
+			return true;
+		}
+		return false;
 	}
 
 	private boolean isNumberOfDonationsLessThanCountExeeded(int donationslessThanCount, DonationInfo donationInfo)
@@ -112,7 +139,7 @@ public class DonorFilter
 
 	private boolean isMaxDonationLimitForLast12MonthsReached(DonationInfo donationInfo)
 	{
-		return donationInfo.getTotalNoOfDonationInLast12Months()>=24;
+		return donationInfo.getTotalNoOfDonationInLast12Months()>=Integer.valueOf(maxDonationLimitForLast12Months);
 	}
 
 }

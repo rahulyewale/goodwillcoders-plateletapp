@@ -1,5 +1,7 @@
 package org.ngo.think.dm.common.util;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.joda.time.DateTime;
@@ -20,9 +22,25 @@ public class DateUtil
 	{
 		return new DateTime(referenceDate).minusDays(days).toDate();
 	}
+	
+	public static Date addDaysToDate(Date referenceDate, int days)
+	{
+		return new DateTime(referenceDate).plusDays(days).toDate();
+	}
 
 	public static Date deductMonthsFromDate(Date referenceDate, int months)
 	{
 		return new DateTime(referenceDate).minusMonths(months).toDate();
 	}
+	
+	public static String dateToString(Date referenceDate)
+	{
+		DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+	   
+	   //to convert Date to String, use format method of SimpleDateFormat class.
+	   String strDate = dateFormat.format(referenceDate);
+	   return strDate;
+	}
+	
+	
 }

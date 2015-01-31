@@ -1,16 +1,20 @@
 package org.ngo.think.dm.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
+import org.ngo.think.dm.common.util.DateUtil;
+import org.ngo.think.dm.persistence.dao.DonationCenterDAO;
 import org.ngo.think.dm.persistence.dao.DonorDAO;
+import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.service.domain.DonorFilter;
 import org.ngo.think.dm.service.mapper.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,43 +22,67 @@ import org.springframework.transaction.annotation.Transactional;
 public class SearchDonorService
 {
 
+	@Value("${initial.sms.text}")
+	private String initialSmsText;
+
+	@Value("${confirm.sms.text}")
+	private String confirmSmsText;
+
 	@Autowired
 	DonorFilter donorFilter;
-	
+
 	@Autowired
 	UniqueRequestTransactionService uniqueRequestTransactionService;
-	
+
 	@Autowired
 	DonorDAO donorDAO;
-	
+
+	@Autowired
+	DonationCenterDAO centerDAO;
+
+	private static final Pattern DONATION_CENTRE = Pattern.compile("#DONATION_CENTRE#");
+	private static final Pattern REQ_UID = Pattern.compile("#REQ_UID#");
+	private static final Pattern REQ_DATE = Pattern.compile("#REQ_DATE#");
+
 	@Transactional
 	public SearchDonorResponseDTO searchDonor(SearchDonorRequestDTO searchDonorRequestDTO)
 	{
-		
-		
-		
-		//Call DAOImpl to get donor master List
-		List<Donor> donorList = new ArrayList<Donor>();
-		 donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO,donorList);
-		 
-		 List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
-		 
-		 if(donorList.size()>0)
-		 {
-			 //set and return sms
-			 
-		 }
-		 
-		 String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
-		 
-		 
-		 SearchDonorResponseDTO searchDonorResponseDTO = new SearchDonorResponseDTO();
-		 searchDonorResponseDTO.setConfirmSmsText(confirmSmsText);
-		 searchDonorResponseDTO.setIntialSmsText(intialSmsText);
-		 searchDonorResponseDTO.setDonorDTOList(donorDTOList);
-		 return null;
-		
-		
+		DonationCenter center = null;
+
+		try
+		{
+			center = centerDAO.findByPrimaryKey(searchDonorRequestDTO.getDonationCentre());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		// Call DAOImpl to get donor master List
+		List<Donor> donorList = donorDAO.getAllDonors();
+		donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO, donorList,center);
+
+		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
+
+		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+
+		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
+
+		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSmsText).replaceAll(centerDetails);
+		String intialSMSWithReqNumber = REQ_UID.matcher(intialSMSWithCenter).replaceAll(uniqueRequestNumber);
+		String intialSMSWithReqDate = REQ_DATE.matcher(intialSMSWithReqNumber).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
+		initialSmsText = intialSMSWithReqDate;
+
+		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
+		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
+		confirmSmsText = confirmSMSWithReqDate;
+
+		SearchDonorResponseDTO searchDonorResponseDTO = new SearchDonorResponseDTO();
+		searchDonorResponseDTO.setConfirmSmsText(confirmSmsText);
+		searchDonorResponseDTO.setIntialSmsText(initialSmsText);
+		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestNumber);
+		searchDonorResponseDTO.setDonorDTOList(donorDTOList);
+
+		return searchDonorResponseDTO;
+
 	}
 }
-
