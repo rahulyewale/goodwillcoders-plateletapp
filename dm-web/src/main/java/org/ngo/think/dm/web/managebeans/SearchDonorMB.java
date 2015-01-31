@@ -35,8 +35,7 @@ public class SearchDonorMB implements Serializable {
 			this.getSearchDonorList().clear();
 			this.getSearchDonorList().add(donorDTO);
 			
-			
-			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.ServiceRequestKey.SEARCH_DONOR_REQUEST,donorRequestDTO);
+			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST,donorRequestDTO);
 			ServiceResponse serviceResponse = null;
 			try
 			{
