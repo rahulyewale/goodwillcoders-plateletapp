@@ -37,6 +37,9 @@
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
 						<f:selectItem itemValue="1" itemLabel="Om Sai Ram Diagostic,Sec-35,Airoli,400708" />
 						<f:selectItem itemValue="2" itemLabel="Jupiter Hospital,Sec-12,Thane,400601" />
+						<f:selectItem itemValue="3" itemLabel="Shree Clinic,Plot-55, Dadar 400028" />
+						<f:selectItem itemValue="4" itemLabel="Apollo clinic,A-303,lake view Plot-05, Andheri 400069" />
+						<f:selectItem itemValue="5" itemLabel="MGM Hospital A-101 Dynamic Enclave Plot-29 Panvel 410209" />
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
@@ -62,6 +65,13 @@
 						<f:selectItem itemValue="4" itemLabel="4" />
 						<f:selectItem itemValue="5" itemLabel="5" />
 						<f:selectItem itemValue="6" itemLabel="6" />
+						<f:selectItem itemValue="7" itemLabel="7" />
+						<f:selectItem itemValue="8" itemLabel="8" />
+						<f:selectItem itemValue="9" itemLabel="9" />
+						<f:selectItem itemValue="10" itemLabel="10" />
+						<f:selectItem itemValue="11" itemLabel="11" />
+						<f:selectItem itemValue="12" itemLabel="12" />
+						
 					</h:selectOneMenu>
 					<h:outputText value=" months." />
 				</p:panel>
@@ -72,13 +82,29 @@
 						value="#{searchDonorMB.donorRequestDTO.numberOfDonationsLessThanCount}">
 						<f:selectItem itemValue="24" itemLabel="24" />
 						<f:selectItem itemValue="23" itemLabel="23" />
-						<f:selectItem itemValue="0" itemLabel="0" />
-						<f:selectItem itemValue="1" itemLabel="1" />
-						<f:selectItem itemValue="2" itemLabel="2" />
-						<f:selectItem itemValue="3" itemLabel="3" />
-						<f:selectItem itemValue="4" itemLabel="4" />
-						<f:selectItem itemValue="5" itemLabel="5" />
-						<f:selectItem itemValue="6" itemLabel="6" />
+						<f:selectItem itemValue="22" itemLabel="22" />
+						<f:selectItem itemValue="21" itemLabel="21" />
+						<f:selectItem itemValue="20" itemLabel="20" />
+						<f:selectItem itemValue="19" itemLabel="19" />
+						<f:selectItem itemValue="18" itemLabel="18" />
+						<f:selectItem itemValue="17" itemLabel="17" />
+						<f:selectItem itemValue="16" itemLabel="16" />
+						<f:selectItem itemValue="15" itemLabel="15" />
+						<f:selectItem itemValue="14" itemLabel="14" />
+						<f:selectItem itemValue="13" itemLabel="13" />
+						<f:selectItem itemValue="12" itemLabel="12" />
+						<f:selectItem itemValue="11" itemLabel="11" />
+						<f:selectItem itemValue="10" itemLabel="10" />
+						<f:selectItem itemValue="09" itemLabel="09" />
+						<f:selectItem itemValue="08" itemLabel="08" />
+						<f:selectItem itemValue="07" itemLabel="07" />
+						<f:selectItem itemValue="06" itemLabel="06" />
+						<f:selectItem itemValue="05" itemLabel="05" />
+						<f:selectItem itemValue="04" itemLabel="04" />
+						<f:selectItem itemValue="03" itemLabel="03" />
+						<f:selectItem itemValue="02" itemLabel="02" />
+						<f:selectItem itemValue="01" itemLabel="01" />
+						
 					</h:selectOneMenu>
 					<h:outputText value=" months in last 12 months" />
 				</p:panel>
@@ -145,9 +171,9 @@
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
 							<h:inputTextarea rows="5"
-								value="Please confirm your availability for #{searchDonorMB.donorRequestDTO.donationType} on #{searchDonorMB.donorRequestDTO.requestDate} at #{searchDonorMB.donorRequestDTO.donationCentre} by replying with code eg. 'Y_R1250'"
+								value="sms1 msg"
 								cols="40" maxlength="140"
-								counterTemplate="{0} characters remaining." autoResize="true" />
+								 autoResize="true" />
 
 							<h:commandButton value="Send" oncomplete="donorDialog.hide()"
 								actionListener="#{searchDonorMB.sendSMS}"></h:commandButton>
