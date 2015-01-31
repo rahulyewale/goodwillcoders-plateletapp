@@ -24,7 +24,7 @@ public class SearchDonorServiceController
 	@Autowired
 	SearchDonorService searchDonorService;
 	
-	@RequestMapping(value="searchdonor",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value="/searchdonor",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse searchDonor(@RequestBody ServiceRequest serviceRequest)
 	{

@@ -7,6 +7,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
+import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.generic.dao.impl.BaseDAOImpl;
@@ -48,6 +49,45 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 		List<CommunicationHistory> communicationHistories = query.getResultList();
 		return communicationHistories;
 	}
-
 	
+	@Override
+	public List<CommunicationHistory> getCommunicationHistoryForScreen(SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequestDTO)
+	{
+
+		String baseQuery = "SELECT u FROM CommunicationHistory u";
+		String whereClause = " WHERE";
+
+		if (null != searchCommunicationHistoryRequestDTO.getRequestTxnId() && !searchCommunicationHistoryRequestDTO.getRequestTxnId().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestId =:requestId";
+			whereClause = " AND";
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getRequestTxnId())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestedDate =:requestedDate";
+			whereClause = " AND";
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getMobileNumber() && !searchCommunicationHistoryRequestDTO.getMobileNumber().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.mobileNumber =:mobileNumber";
+			whereClause = " AND";
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getStatus() && !searchCommunicationHistoryRequestDTO.getStatus().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.status =:status";
+		}
+
+		Query query = getEntityManager().createNamedQuery("baseQuery");
+		query.setParameter("requestId", searchCommunicationHistoryRequestDTO.getRequestTxnId());
+		query.setParameter("mobileNumber", searchCommunicationHistoryRequestDTO.getMobileNumber());
+		query.setParameter("requestedDate", searchCommunicationHistoryRequestDTO.getDonationRequestDate(), TemporalType.DATE);
+		query.setParameter("status", searchCommunicationHistoryRequestDTO.getStatus());
+
+		List<CommunicationHistory> communicationHistories = query.getResultList();
+		return communicationHistories;
+
+	}
 }

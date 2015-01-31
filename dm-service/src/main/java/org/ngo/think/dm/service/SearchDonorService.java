@@ -71,8 +71,6 @@ public class SearchDonorService
 
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
 
-		
-
 		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 
 		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSmsText).replaceAll(centerDetails);
