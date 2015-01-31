@@ -63,7 +63,7 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 			whereClause = " AND";
 		}
 
-		if (null != searchCommunicationHistoryRequestDTO.getRequestTxnId())
+		if (null != searchCommunicationHistoryRequestDTO.getDonationRequestDate())
 		{
 			baseQuery = baseQuery + whereClause + " u.requestedDate =:requestedDate";
 			whereClause = " AND";
@@ -75,16 +75,34 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 			whereClause = " AND";
 		}
 
-		if (null != searchCommunicationHistoryRequestDTO.getStatus() && !searchCommunicationHistoryRequestDTO.getStatus().isEmpty())
+		if (null != searchCommunicationHistoryRequestDTO.getStatus() && !searchCommunicationHistoryRequestDTO.getStatus().isEmpty() && !searchCommunicationHistoryRequestDTO.getStatus().equals("-1"))
 		{
 			baseQuery = baseQuery + whereClause + " u.status =:status";
 		}
 
-		Query query = getEntityManager().createNamedQuery("baseQuery");
-		query.setParameter("requestId", searchCommunicationHistoryRequestDTO.getRequestTxnId());
-		query.setParameter("mobileNumber", searchCommunicationHistoryRequestDTO.getMobileNumber());
-		query.setParameter("requestedDate", searchCommunicationHistoryRequestDTO.getDonationRequestDate(), TemporalType.DATE);
-		query.setParameter("status", searchCommunicationHistoryRequestDTO.getStatus());
+		Query query = getEntityManager().createQuery(baseQuery);
+		
+		
+		if (null != searchCommunicationHistoryRequestDTO.getRequestTxnId() && !searchCommunicationHistoryRequestDTO.getRequestTxnId().isEmpty())
+		{
+			query.setParameter("requestId", searchCommunicationHistoryRequestDTO.getRequestTxnId());
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getDonationRequestDate())
+		{
+			query.setParameter("requestedDate", searchCommunicationHistoryRequestDTO.getDonationRequestDate(), TemporalType.DATE);
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getMobileNumber() && !searchCommunicationHistoryRequestDTO.getMobileNumber().isEmpty())
+		{
+			query.setParameter("mobileNumber", searchCommunicationHistoryRequestDTO.getMobileNumber());
+		}
+
+		if (null != searchCommunicationHistoryRequestDTO.getStatus() && !searchCommunicationHistoryRequestDTO.getStatus().isEmpty() && !searchCommunicationHistoryRequestDTO.getStatus().equals("-1"))
+		{
+			query.setParameter("status", searchCommunicationHistoryRequestDTO.getStatus());
+		}
+		
 
 		List<CommunicationHistory> communicationHistories = query.getResultList();
 		return communicationHistories;
