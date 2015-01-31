@@ -19,6 +19,8 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 	private String status;
 	private Date smsSentDate;
 	private boolean historySelected;
+	
+	private Long communicationHistoryId;
 
 	private DonationCenterDTO donationCenterDTO;
 
@@ -121,5 +123,17 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 	{
 		this.historySelected = historySelected;
 	}
+
+	public Long getCommunicationHistoryId()
+	{
+		return communicationHistoryId;
+	}
+
+	public void setCommunicationHistoryId(Long communicationHistoryId)
+	{
+		this.communicationHistoryId = communicationHistoryId;
+	}
+	
+	
 
 }

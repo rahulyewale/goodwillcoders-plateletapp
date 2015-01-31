@@ -1,15 +1,19 @@
 package org.ngo.think.dm.common.constant;
 
+import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
+
 public class CommonConstants
 {
 	public static class RequestKey
 	{
 		public static final String SEARCH_DONOR_REQUEST = "searchDonorRequest";
+		public static final String SEARCH_COMMUNICATION_HISTORY_REQUEST = "searchCommunicationHistoryRequest";
 	}
 	
 	public static class ResponseKey
 	{
 		public static final String SEARCH_DONOR_RESPONSE = "searchDonorResponse";
+		public static final String SEARCH_COMMUNICATION_HISTORY_RESPONSE = "searchCommunicationHistoryResponse";
 	}
 	
 	public static class ApplicationConstant

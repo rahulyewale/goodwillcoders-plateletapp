@@ -55,7 +55,7 @@ public class SearchCommunicationHistoryMB implements Serializable
 	{
 		
 		
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST,srchCommnHistReqDTO);
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST,srchCommnHistReqDTO);
 		ServiceResponse serviceResponse = null;
 		try
 		{
