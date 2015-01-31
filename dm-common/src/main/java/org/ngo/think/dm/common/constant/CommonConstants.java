@@ -9,12 +9,14 @@ public class CommonConstants
 		public static final String SEARCH_DONOR_REQUEST = "searchDonorRequest";
 		public static final String SEND_SMS_REQUEST = "sendSMSRequest";
 		public static final String SEARCH_COMMUNICATION_HISTORY_REQUEST = "searchCommunicationHistoryRequest";
+		public static final String CONFIRM_COMMUNICATION_HISTORY_REQUEST = "confirmCommunicationHistoryRequest";
 	}
 	
 	public static class ResponseKey
 	{
 		public static final String SEARCH_DONOR_RESPONSE = "searchDonorResponse";
 		public static final String SEARCH_COMMUNICATION_HISTORY_RESPONSE = "searchCommunicationHistoryResponse";
+		public static final String CONFIRM_COMMUNICATION_HISTORY_RESPONSE = "confirmCommunicationHistoryResponse";
 	}
 	
 	public static class ApplicationConstant

@@ -76,12 +76,49 @@ public class SearchCommunicationHistoryMB implements Serializable
 			e.printStackTrace();
 		}
 		
-		
 	}
 	
 	public void confirmCommunications()
 	{
 		
+		ArrayList<SearchCommunicationHistoryResultDTO> filteredSearch = filteredSrchCommnHistResultList(this.srchCommnHistResultList);
+		
+		SearchCommunicationHistoryResponseDTO confirmSearchCommunicationHistoryResponseDTO  = new SearchCommunicationHistoryResponseDTO();
+		confirmSearchCommunicationHistoryResponseDTO.setSearchCommunicationHistoryResponseList(filteredSearch);
+		
+		try
+		{
+			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.CONFIRM_COMMUNICATION_HISTORY_REQUEST,confirmSearchCommunicationHistoryResponseDTO);
+			ServiceResponse serviceResponse = null;
+			
+			serviceResponse =  RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
+			String jsonResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.CONFIRM_COMMUNICATION_HISTORY_RESPONSE));
+			
+			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
+			
+			this.getSrchCommnHistResultList().clear();
+			this.setSrchCommnHistResultList(searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList());
+			
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private ArrayList<SearchCommunicationHistoryResultDTO> filteredSrchCommnHistResultList (List<SearchCommunicationHistoryResultDTO> allSrchCommnHistResultList)
+	{
+		ArrayList<SearchCommunicationHistoryResultDTO> filteredSrchCommnHistResultList = new ArrayList<SearchCommunicationHistoryResultDTO>();
+		for(SearchCommunicationHistoryResultDTO srchHist : allSrchCommnHistResultList)
+		{
+			if(srchHist.isHistorySelected())
+			{
+				filteredSrchCommnHistResultList.add(srchHist);
+			}
+		}
+		
+		return filteredSrchCommnHistResultList;
 	}
 	
 	public void cancelCommunications()
