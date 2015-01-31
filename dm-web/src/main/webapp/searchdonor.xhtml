@@ -8,9 +8,7 @@
 	
 </h:head>
 <h:body>
-	<h:form id="searchcriteria_frm_id">
-		<p:messages />
-		<p:accordionPanel>
+<h:form><p:accordionPanel>
 			<p:tab title="Dashbord">
 
 				<h:commandLink value="Dashbord" style="color:red;"
@@ -19,7 +17,9 @@
 						width="20px" />
 				</h:commandLink>
 			</p:tab>
-		</p:accordionPanel>
+		</p:accordionPanel></h:form>
+	<h:form id="searchcriteria_frm_id">
+	 <p:messages id="messages"  autoUpdate="true" closable="true" />
 		<p:accordionPanel>
 			<p:tab title="Search Criteria:">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
@@ -43,7 +43,7 @@
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
-					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="true" 
+					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="true" rendered="true" requiredMessage="Request date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
@@ -126,10 +126,9 @@
 			<p:tab title="Search Results:">
 				<h:panelGrid>
 					<p:dataTable value="#{searchDonorMB.searchDonorList}" var="donor"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
-					 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="20,25,30" paginatorPosition="bottom"
-						rows="25">
+						 paginator="true"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
 						<f:facet name="header">
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
@@ -156,9 +155,7 @@
 						<p:column headerText="Distance">
 							<h:outputText value="#{donor.distanceKm}" />
 						</p:column>
-						<p:column headerText="Dontaion Count">
-							<h:outputText value="#{donor.donationCount}" />
-						</p:column>
+					
 						<p:column headerText="Rating">
 							<p:rating value="#{donor.rating}" readonly="true" stars="6" />
 						</p:column>
