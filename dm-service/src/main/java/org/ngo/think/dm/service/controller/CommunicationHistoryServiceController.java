@@ -2,6 +2,9 @@ package org.ngo.think.dm.service.controller;
 
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
+import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
+import org.ngo.think.dm.common.util.JsonUtil;
+import org.ngo.think.dm.service.util.ServiceUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +19,8 @@ public class CommunicationHistoryServiceController
 	@ResponseBody
 	public ServiceResponse sendSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{
+		DonorAppointmentDTO donorAppointmentDTO = (DonorAppointmentDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, "donorAppointmentDTO", DonorAppointmentDTO.class);
+		
 		
 		return null;
 		
