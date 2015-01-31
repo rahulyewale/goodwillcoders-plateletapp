@@ -6,8 +6,18 @@
   <packaging>war</packaging>
   <name>dm-web</name>
   <description>web application</description>
+  
+  	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>Prime Repo</name>
+			<url>http://repository.primefaces.org</url>
+		</repository>
+	</repositories>
+	
   <dependencies>
-  <dependency>
+  
+		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>3.3</version>
