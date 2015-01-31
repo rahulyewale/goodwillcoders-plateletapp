@@ -9,7 +9,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "unique_request_txn")
-@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u")
+@NamedQueries({
+					@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u"),
+               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenterId =:donationCentreId AND u.requestDate = :requestDate")
+					})
+
 public class UniqueRequestTxn implements Serializable
 {
 	private static final long serialVersionUID = 1L;
