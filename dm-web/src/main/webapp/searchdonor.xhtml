@@ -165,8 +165,8 @@
 					</p:dataTable>
 
 					<p:dialog header="Send SMS" widgetVar="donorDialog"
-						resizable="false" width="400" showEffect="explode" height="200"
-						hideEffect="explode">
+						resizable="false" width="400" height="200">
+						
 
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
@@ -184,9 +184,8 @@
 			</p:tab>
 
 		</p:accordionPanel>
-		<h:commandButton oncomplete="donorDialog.show();" value="Send SMS"></h:commandButton>
-		<h:commandButton value="Confirm via Call"
-			actionListener="#{searchDonorMB.confirmedDonor}" />
+		<p:commandButton oncomplete="donorDialog.show();" value="Send SMS"> </p:commandButton>
+		<p:commandButton value="Confirm via Call"	actionListener="#{searchDonorMB.confirmedDonor}" />
 
 	</h:form>
 
