@@ -1,7 +1,9 @@
 package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -30,6 +32,12 @@ public class DonorDTO implements Serializable
 	private Integer donationCount;
 	private Double distanceKm;
 	private boolean selectedDonor;
+	
+	private DonorContactDetailsDTO donorContactDetailsDTO;
+	private DonorAddressDetailsDTO donorAddressDetailsDTO;
+	
+	private List<DonationHistoryDTO> donationHistoryDTOList =  new ArrayList<DonationHistoryDTO>();
+
 
 	public Long getDonorId()
 	{
@@ -220,5 +228,37 @@ public class DonorDTO implements Serializable
 	{
 		this.selectedDonor = selectedDonor;
 	}
+
+	public DonorContactDetailsDTO getDonorContactDetailsDTO()
+	{
+		return donorContactDetailsDTO;
+	}
+
+	public void setDonorContactDetailsDTO(DonorContactDetailsDTO donorContactDetailsDTO)
+	{
+		this.donorContactDetailsDTO = donorContactDetailsDTO;
+	}
+
+	public DonorAddressDetailsDTO getDonorAddressDetailsDTO()
+	{
+		return donorAddressDetailsDTO;
+	}
+
+	public void setDonorAddressDetailsDTO(DonorAddressDetailsDTO donorAddressDetailsDTO)
+	{
+		this.donorAddressDetailsDTO = donorAddressDetailsDTO;
+	}
+
+	public List<DonationHistoryDTO> getDonationHistoryDTOList()
+	{
+		return donationHistoryDTOList;
+	}
+
+	public void setDonationHistoryDTOList(List<DonationHistoryDTO> donationHistoryDTOList)
+	{
+		this.donationHistoryDTOList = donationHistoryDTOList;
+	}
+	
+	
 
 }
