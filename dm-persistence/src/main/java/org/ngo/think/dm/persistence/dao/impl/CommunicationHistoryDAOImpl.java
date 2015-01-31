@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
+import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.generic.dao.impl.BaseDAOImpl;
@@ -34,4 +35,19 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 		}
 	}
 
+	@Override
+	public List<CommunicationHistory> getCommunicationHistoryForGivenCriteria(Long donorId, DonorAppointmentDTO donorAppointmentDTO)
+	{
+		
+		Query query = getEntityManager().createNamedQuery("CommunicationHistory.getCommunicationHistoryForSMSCheck", CommunicationHistory.class);
+		query.setParameter("requestId", donorAppointmentDTO.getRequestTxnId());
+		query.setParameter("donorId", donorId);
+		query.setParameter("requestedDate", donorAppointmentDTO.getRequestedDate(), TemporalType.DATE);
+		query.setParameter("donationCenterId", donorAppointmentDTO.getCenterId());
+
+		List<CommunicationHistory> communicationHistories = query.getResultList();
+		return communicationHistories;
+	}
+
+	
 }
