@@ -2,6 +2,9 @@ package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class DonorContactDetailsDTO implements Serializable
 {
 

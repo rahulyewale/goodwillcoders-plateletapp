@@ -3,6 +3,9 @@ package org.ngo.think.dm.common.dto;
 import java.io.Serializable;
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SearchCommunicationHistoryRequestDTO implements Serializable
 {
 
