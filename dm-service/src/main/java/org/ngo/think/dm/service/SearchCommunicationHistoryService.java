@@ -78,10 +78,10 @@ public class SearchCommunicationHistoryService
 		
 		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 		
-		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
+		/*String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
 		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(reqDate));
 		confirmSmsText = confirmSMSWithReqDate;
-
+*/
 		SearchCommunicationHistoryResponseDTO communicationHistoryResponseDTO = new SearchCommunicationHistoryResponseDTO();
 		
 		ArrayList<SearchCommunicationHistoryResultDTO> communicationHistoryResultDTOs = new ArrayList<SearchCommunicationHistoryResultDTO>();

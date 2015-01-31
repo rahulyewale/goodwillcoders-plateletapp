@@ -42,7 +42,7 @@ public class DonorFilter
 			
 			DonationInfo donationInfo = donationHistoryManager.deriveLastDonationDateAndDonationCountForLast12Months(donor.getDonationHistories());
 			
-			if(isMaxDonationLimitForLast12MonthsReached(donationInfo))
+			/*if(isMaxDonationLimitForLast12MonthsReached(donationInfo))
 			{
 				donorIterator.remove();
 				continue;
@@ -79,17 +79,17 @@ public class DonorFilter
 					populateNextAvailableDate(donor,donationInfo);
 				}
 
-			}
+			}*/
 			
 			distanceCalculator.populateDistance(donor,center);
-			populateRating(donor,donationInfo);
+			//populateRating(donor,donationInfo);
 			donor.setLastDonationDate(donationInfo.getLastDonationDate());
 			
 		}	
 			
 	}
 
-	private void populateRating(Donor donor, DonationInfo donationInfo)
+	/*private void populateRating(Donor donor, DonationInfo donationInfo)
 	{
 		int totalNumberOfYear = donationInfo.getTotalNoOfDonationYears();
 		int totalNoOfDonations = donationInfo.getTotalNoOfDonationsTillDate();
@@ -97,7 +97,7 @@ public class DonorFilter
 		int rating  = totalNoOfDonations/totalNumberOfYear;
 		
 		donor.setRating(rating);
-	}
+	}*/
 
 	private void populateNextAvailableDate(Donor donor, DonationInfo donationInfo)
 	{
