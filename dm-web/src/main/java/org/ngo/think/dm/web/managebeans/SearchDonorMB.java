@@ -13,6 +13,8 @@ import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
+import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
+import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
 
@@ -47,20 +49,20 @@ public class SearchDonorMB implements Serializable {
 				e.printStackTrace();
 			}
 			
-			//SearchDonorRequestDTO
-		/*	ListContainer listContainer = null;
+			SearchDonorResponseDTO responseDTO = null;
+			
 			String responseString;
 			try
 			{
-				responseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstant.ServiceResponseKey.SEARCH_DONOR_RESPONSE));
-				listContainer = (ListContainer) JsonUtil.convertJsonToObject(responseString, ListContainer.class);
+				responseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DONOR_RESPONSE));
+				responseDTO = (SearchDonorResponseDTO) JsonUtil.convertJsonToObject(responseString, SearchDonorResponseDTO.class);
 			}
 			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 			
-			searchDonorList = listContainer.getDonorDTOlist();*/
+			searchDonorList = responseDTO.getDonorDTOList();
 			
 			System.out.println("Search submitted");
 			System.out.println(donorRequestDTO.toString());
