@@ -7,18 +7,18 @@ public class SearchCommunicationHistoryResponseDTO implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
-	private ArrayList<SearchCommunicationHistoryResultDTO> SearchCommunicationHistoryResponseList = new ArrayList<SearchCommunicationHistoryResultDTO>();
+	private ArrayList<SearchCommunicationHistoryResultDTO> searchCommunicationHistoryResponseList = new ArrayList<SearchCommunicationHistoryResultDTO>();
 	
 	private String confirmSMSText;
 
 	public ArrayList<SearchCommunicationHistoryResultDTO> getSearchCommunicationHistoryResponseList()
 	{
-		return SearchCommunicationHistoryResponseList;
+		return searchCommunicationHistoryResponseList;
 	}
 
 	public void setSearchCommunicationHistoryResponseList(ArrayList<SearchCommunicationHistoryResultDTO> searchCommunicationHistoryResponseList)
 	{
-		SearchCommunicationHistoryResponseList = searchCommunicationHistoryResponseList;
+		this.searchCommunicationHistoryResponseList = searchCommunicationHistoryResponseList;
 	}
 
 	public String getConfirmSMSText()

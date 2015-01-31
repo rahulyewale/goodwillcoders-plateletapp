@@ -22,7 +22,8 @@ import org.ngo.think.dm.web.constant.WebConstant;
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
 @SessionScoped
-public class SearchDonorMB implements Serializable {
+public class SearchDonorMB implements Serializable
+{
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
 	private List<DonorDTO> selectedDonorList = new ArrayList<DonorDTO>();
@@ -31,31 +32,32 @@ public class SearchDonorMB implements Serializable {
 	private String uniqueRequestId;
 	private String confirmMsg;
 
-	public SearchDonorMB() {
+	public SearchDonorMB()
+	{
 		// TODO Auto-generated constructor stub
 	}
 
-	public void searchDonor() {
+	public void searchDonor()
+	{
 
-	/*	DonorDTO donorDTO = new DonorDTO();
-		DonorDTO donorDTO1 = new DonorDTO();
-		donorDTO.setFirstName("Rajiv");
-		donorDTO.setLastName("Vaidya");
-		donorDTO1.setFirstName("Rajiv");
-		donorDTO1.setLastName("Vaidya");
-		this.getSearchDonorList().clear();
-		this.getSearchDonorList().add(donorDTO);
-		this.getSearchDonorList().add(donorDTO1);
-		*/
+		/*
+		 * DonorDTO donorDTO = new DonorDTO(); DonorDTO donorDTO1 = new
+		 * DonorDTO(); donorDTO.setFirstName("Rajiv");
+		 * donorDTO.setLastName("Vaidya"); donorDTO1.setFirstName("Rajiv");
+		 * donorDTO1.setLastName("Vaidya"); this.getSearchDonorList().clear();
+		 * this.getSearchDonorList().add(donorDTO);
+		 * this.getSearchDonorList().add(donorDTO1);
+		 */
 
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(),
-				CommonConstants.RequestKey.SEARCH_DONOR_REQUEST,
-				donorRequestDTO);
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, donorRequestDTO);
 
 		ServiceResponse serviceResponse = null;
-		try {
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEARCH_DONOR_SERVICE_URL,serviceRequest);
-		} catch (Exception e) {
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEARCH_DONOR_SERVICE_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
 
 			e.printStackTrace();
 		}
@@ -63,16 +65,16 @@ public class SearchDonorMB implements Serializable {
 		SearchDonorResponseDTO responseDTO = null;
 
 		String responseString;
-		try {
-			responseString = JsonUtil.convertObjectToJson(serviceResponse
-					.get(CommonConstants.ResponseKey.SEARCH_DONOR_RESPONSE));
-			responseDTO = (SearchDonorResponseDTO) JsonUtil
-					.convertJsonToObject(responseString,
-							SearchDonorResponseDTO.class);
-		} catch (Exception e) {
+		try
+		{
+			responseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DONOR_RESPONSE));
+			responseDTO = (SearchDonorResponseDTO) JsonUtil.convertJsonToObject(responseString, SearchDonorResponseDTO.class);
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
-		
+
 		searchDonorList = responseDTO.getDonorDTOList();
 		smsMsg = responseDTO.getIntialSmsText();
 		confirmMsg = responseDTO.getConfirmSmsText();
@@ -81,29 +83,31 @@ public class SearchDonorMB implements Serializable {
 		System.out.println("Search submitted");
 	}
 
-	public void sendSMS() {
+	public void sendSMS()
+	{
 		// sending the list
 
 		DonorAppointmentDTO donorAppointment = getSelectedDonorList();
 		donorAppointment.setStatus(CommonConstants.ApplicationConstant.SMS);
 		System.out.println("sms " + donorAppointment.getDonors().size());
-		
 
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(),
-				CommonConstants.RequestKey.DONOR_APPOINTMENT_DTO,
-				donorAppointment);
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEND_SMS_REQUEST, donorAppointment);
 
 		ServiceResponse serviceResponse = null;
-		try {
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEND_SMS_TO_DONORS_SERVICE_URL,serviceRequest);
-		} catch (Exception e) {
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEND_SMS_TO_DONORS_SERVICE_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
 
 			e.printStackTrace();
 		}
 
 	}
 
-	private DonorAppointmentDTO getSelectedDonorList() {
+	private DonorAppointmentDTO getSelectedDonorList()
+	{
 		DonorAppointmentDTO donorAppointment = new DonorAppointmentDTO();
 		donorAppointment.setDonors(selectedDonorList);
 		donorAppointment.setCenterId(donorRequestDTO.getDonationCentre());
@@ -111,8 +115,10 @@ public class SearchDonorMB implements Serializable {
 		donorAppointment.setInitialSMS(smsMsg);
 		donorAppointment.setRequestedDate(donorRequestDTO.getRequestDate());
 		donorAppointment.setRequestTxnId(uniqueRequestId);
-		for (DonorDTO donorDTO : searchDonorList) {
-			if (donorDTO.isSelectedDonor()) {
+		for (DonorDTO donorDTO : searchDonorList)
+		{
+			if (donorDTO.isSelectedDonor())
+			{
 				selectedDonorList.add(donorDTO);
 			}
 		}
@@ -121,62 +127,73 @@ public class SearchDonorMB implements Serializable {
 		return donorAppointment;
 	}
 
-	public void confirmedDonor() {
+	public void confirmedDonor()
+	{
 		DonorAppointmentDTO donorAppointment = getSelectedDonorList();
-		donorAppointment
-				.setStatus(CommonConstants.ApplicationConstant.CONFIRM_VIA_CALL);
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(),
-				CommonConstants.RequestKey.DONOR_APPOINTMENT_DTO,
-				donorAppointment);
+		donorAppointment.setStatus(CommonConstants.ApplicationConstant.CONFIRM_VIA_CALL);
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEND_SMS_REQUEST, donorAppointment);
 
 		ServiceResponse serviceResponse = null;
-		try {
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEND_SMS_TO_DONORS_SERVICE_URL,serviceRequest);
-		} catch (Exception e) {
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEND_SMS_TO_DONORS_SERVICE_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
 
 			e.printStackTrace();
 		}
 		System.out.println("phone " + donorAppointment.getDonors().size());
 	}
 
-	public List<DonorDTO> getSearchDonorList() {
+	public List<DonorDTO> getSearchDonorList()
+	{
 
 		return searchDonorList;
 	}
 
-	public void setSearchDonorList(List<DonorDTO> searchDonorList) {
+	public void setSearchDonorList(List<DonorDTO> searchDonorList)
+	{
 		this.searchDonorList = searchDonorList;
 	}
 
-	public SearchDonorRequestDTO getDonorRequestDTO() {
+	public SearchDonorRequestDTO getDonorRequestDTO()
+	{
 		return donorRequestDTO;
 	}
 
-	public void setDonorRequestDTO(SearchDonorRequestDTO donorRequestDTO) {
+	public void setDonorRequestDTO(SearchDonorRequestDTO donorRequestDTO)
+	{
 		this.donorRequestDTO = donorRequestDTO;
 	}
 
-	public String getSmsMsg() {
+	public String getSmsMsg()
+	{
 		return smsMsg;
 	}
 
-	public void setSmsMsg(String smsMsg) {
+	public void setSmsMsg(String smsMsg)
+	{
 		this.smsMsg = smsMsg;
 	}
 
-	public String getConfirmMsg() {
+	public String getConfirmMsg()
+	{
 		return confirmMsg;
 	}
 
-	public void setConfirmMsg(String confirmMsg) {
+	public void setConfirmMsg(String confirmMsg)
+	{
 		this.confirmMsg = confirmMsg;
 	}
 
-	public String getUniqueRequestId() {
+	public String getUniqueRequestId()
+	{
 		return uniqueRequestId;
 	}
 
-	public void setUniqueRequestId(String uniqueRequestId) {
+	public void setUniqueRequestId(String uniqueRequestId)
+	{
 		this.uniqueRequestId = uniqueRequestId;
 	}
 

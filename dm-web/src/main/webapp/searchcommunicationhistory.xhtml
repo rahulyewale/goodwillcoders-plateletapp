@@ -16,9 +16,21 @@
    </h:head>
 <h:body>
 <h3 style="margin-top:0">Search Communication History</h3>
- 		<h:form id="asd">
+
+<h:form><p:accordionPanel>
+			<p:tab title="Dashbord">
+
+				<h:commandLink value="Dashbord" style="color:red;"
+					action="#{dashbord.navigateToDashbord}">
+					<p:graphicImage value="/image/dashbord.gif" height="20px"
+						width="20px" />
+				</h:commandLink>
+			</p:tab>
+		</p:accordionPanel></h:form>
+
 <p:accordionPanel id="schAccordion" multiple="true">
         <p:tab title="Search Communication History Criteria">
+ 		<h:form id="asd">
             <h:panelGrid columns="2" cellpadding="10">
                
 	 	 	<p:outputLabel for="mobileNo" value="Mobile  No :" /> 
@@ -40,17 +52,14 @@
 		        
             </h:panelGrid>
             <h:panelGrid cellpadding="10">
-            	<h:commandButton value="Search" actionListener="#{srchCommHistMB.searchCommunications}"> 
-            	<f:ajax execute="@form" render=":srchCommHistTbl" />
-            	</h:commandButton>
+            	<p:commandButton value="Search" actionListener="#{srchCommHistMB.searchCommunications}"> </p:commandButton>
             </h:panelGrid>
-        </p:tab>
-</p:accordionPanel> 
 		</h:form>
-       
-<h:form id="srchCommHistTbl">
-<p:accordionPanel>
+        </p:tab>
+</p:accordionPanel>
+<p:accordionPanel id="schResAccordion" multiple="true">     
         <p:tab title="Search Communication History Result">
+        	<h:form id="basd">
             <h:panelGrid  cellpadding="10" >
                 
                <p:dataTable rows="10"  value="#{srchCommHistMB.srchCommnHistResultList}" var="commnHist"
@@ -83,7 +92,7 @@
 			            <h:outputText value="#{commnHist.donationCenterDTO.donationCenterName}, &lt;br/&gt; #{commnHist.donationCenterDTO.addressLine1},&lt;br/&gt;
 			            #{commnHist.donationCenterDTO.addressLine2},&lt;br/&gt;
 			            #{commnHist.donationCenterDTO.city}, #{commnHist.donationCenterDTO.state},&lt;br/&gt;
-			            #{commnHist.donationCenterDTO.pinCode}" escape="false"/>
+			            #{commnHist.donationCenterDTO.pinCode}" />
 			      </p:column>
 			      
    			      <p:column headerText="SMS Sent Date">
@@ -100,9 +109,9 @@
           	            <p:commandButton value="Confirm" > </p:commandButton>
           	            <p:commandButton value="Cancel" > </p:commandButton>
             </h:panelGrid>
+            </h:form>
         </p:tab>
 </p:accordionPanel>
-</h:form>
  
  
 </h:body>
