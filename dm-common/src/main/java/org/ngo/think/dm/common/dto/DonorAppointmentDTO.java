@@ -1,7 +1,7 @@
 package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -12,70 +12,70 @@ public class DonorAppointmentDTO implements Serializable
 
 	private static final long serialVersionUID = 1L;
 
-	private Long donorId;
-	private String status;
-	private String contactNumber;
+	private List<DonorDTO> donors;
 
-	private Date requestedDate;
-	private Long donationCenterId;
-	private String donationCenterAddressForSms;
-	private String uniqueRequestTxnId;
-	public Long getDonorId()
+	private Long centerId;
+
+	private String initialSMS;
+
+	private String confirmSMS;
+
+	private String requestTxnId;
+
+	public List<DonorDTO> getDonors()
 	{
-		return donorId;
+		return donors;
 	}
-	public void setDonorId(Long donorId)
+
+	public void setDonors(List<DonorDTO> donors)
 	{
-		this.donorId = donorId;
+		this.donors = donors;
 	}
-	public String getStatus()
+
+	public Long getCenterId()
 	{
-		return status;
+		return centerId;
 	}
-	public void setStatus(String status)
+
+	public void setCenterId(Long centerId)
 	{
-		this.status = status;
+		this.centerId = centerId;
 	}
-	public String getContactNumber()
+
+	public String getInitialSMS()
 	{
-		return contactNumber;
+		return initialSMS;
 	}
-	public void setContactNumber(String contactNumber)
+
+	public void setInitialSMS(String initialSMS)
 	{
-		this.contactNumber = contactNumber;
+		this.initialSMS = initialSMS;
 	}
-	public Date getRequestedDate()
+
+	public String getConfirmSMS()
 	{
-		return requestedDate;
+		return confirmSMS;
 	}
-	public void setRequestedDate(Date requestedDate)
+
+	public void setConfirmSMS(String confirmSMS)
 	{
-		this.requestedDate = requestedDate;
+		this.confirmSMS = confirmSMS;
 	}
-	public Long getDonationCenterId()
+
+	public String getRequestTxnId()
 	{
-		return donationCenterId;
+		return requestTxnId;
 	}
-	public void setDonationCenterId(Long donationCenterId)
+
+	public void setRequestTxnId(String requestTxnId)
 	{
-		this.donationCenterId = donationCenterId;
+		this.requestTxnId = requestTxnId;
 	}
-	public String getDonationCenterAddressForSms()
-	{
-		return donationCenterAddressForSms;
-	}
-	public void setDonationCenterAddressForSms(String donationCenterAddressForSms)
-	{
-		this.donationCenterAddressForSms = donationCenterAddressForSms;
-	}
-	public String getUniqueRequestTxnId()
-	{
-		return uniqueRequestTxnId;
-	}
-	public void setUniqueRequestTxnId(String uniqueRequestTxnId)
-	{
-		this.uniqueRequestTxnId = uniqueRequestTxnId;
-	}
-	
-	
+
+	/*
+	 * private Long donorId; private String status; private String contactNumber;
+	 * private Date requestedDate; private Long donationCenterId; private String
+	 * donationCenterAddressForSms; private String uniqueRequestTxnId;
+	 */
+
 }
