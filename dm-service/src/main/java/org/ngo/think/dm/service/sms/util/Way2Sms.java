@@ -148,7 +148,7 @@ public class Way2Sms
 		URLConnector.disconnect();
 	}
 
-	private static void sendSMS(String[] receiversMobNos, String msg)
+	public static void sendSMS(String[] receiversMobNos, String msg)
 	{
 		int noOfReceivers = receiversMobNos.length;
 
