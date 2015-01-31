@@ -24,6 +24,9 @@ import org.ngo.think.dm.web.constant.WebConstant;
 public class SearchDonorMB implements Serializable {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
+	private String smsMsg;
+	private String uniqueRequestId ;
+	private String confirmMsg ;
 
 		public SearchDonorMB() {
 			// TODO Auto-generated constructor stub
@@ -36,7 +39,7 @@ public class SearchDonorMB implements Serializable {
 			donorDTO.setLastName("Vaidya");
 			this.getSearchDonorList().clear();
 			this.getSearchDonorList().add(donorDTO);
-			
+			/*
 			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST,donorRequestDTO);
 			ServiceResponse serviceResponse = null;
 			try
@@ -61,12 +64,14 @@ public class SearchDonorMB implements Serializable {
 			{
 				e.printStackTrace();
 			}
-			
+			this.getSearchDonorList().add(donorDTO);
+			// setting the response
 			searchDonorList = responseDTO.getDonorDTOList();
+			smsMsg = responseDTO.getIntialSmsText();
+			confirmMsg = responseDTO.getConfirmSmsText();
+			uniqueRequestId = responseDTO.getUniqueRequestId();*/
 			
 			System.out.println("Search submitted");
-			System.out.println(donorRequestDTO.toString());
-			System.out.println(getSearchDonorList().size()+" "+getSearchDonorList().get(0).getFirstName());
 		}
 		
 		public void sendSMS()
@@ -95,6 +100,30 @@ public class SearchDonorMB implements Serializable {
 
 		public void setDonorRequestDTO(SearchDonorRequestDTO donorRequestDTO) {
 			this.donorRequestDTO = donorRequestDTO;
+		}
+
+		public String getSmsMsg() {
+			return smsMsg;
+		}
+
+		public void setSmsMsg(String smsMsg) {
+			this.smsMsg = smsMsg;
+		}
+
+		public String getConfirmMsg() {
+			return confirmMsg;
+		}
+
+		public void setConfirmMsg(String confirmMsg) {
+			this.confirmMsg = confirmMsg;
+		}
+
+		public String getUniqueRequestId() {
+			return uniqueRequestId;
+		}
+
+		public void setUniqueRequestId(String uniqueRequestId) {
+			this.uniqueRequestId = uniqueRequestId;
 		}
 		
 	

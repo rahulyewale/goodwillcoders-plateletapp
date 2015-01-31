@@ -43,7 +43,7 @@
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
-					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="true" 
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
@@ -160,7 +160,7 @@
 							<h:outputText value="#{donor.donationCount}" />
 						</p:column>
 						<p:column headerText="Rating">
-							<p:rating value="#{donor.rating}" readonly="true" stars="5" />
+							<p:rating value="#{donor.rating}" readonly="true" stars="6" />
 						</p:column>
 					</p:dataTable>
 
@@ -171,7 +171,7 @@
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
 							<h:inputTextarea rows="5"
-								value="sms1 msg"
+								value="#{searchDonorMB.smsMsg}"
 								cols="40" maxlength="140"
 								 autoResize="true" />
 
@@ -180,12 +180,29 @@
 
 						</h:panelGrid>
 					</p:dialog>
+					
+					<p:dialog header="Confirm Via Call" widgetVar="donorDialogConfirm"
+						resizable="false" width="400" height="200">
+						
+
+						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
+
+							<h:inputTextarea rows="5"
+								value="#{searchDonorMB.confirmMsg}"
+								cols="40" maxlength="140"
+								 autoResize="true" />
+
+							<h:commandButton value="Confirm" oncomplete="donorDialogConfirm.hide()"
+								actionListener="#{searchDonorMB.confirmedDonor}"></h:commandButton>
+
+						</h:panelGrid>
+					</p:dialog>
 				</h:panelGrid>
 			</p:tab>
 
 		</p:accordionPanel>
 		<p:commandButton oncomplete="donorDialog.show();" value="Send SMS"> </p:commandButton>
-		<p:commandButton value="Confirm via Call"	actionListener="#{searchDonorMB.confirmedDonor}" />
+		<p:commandButton oncomplete="donorDialogConfirm.show();" value="Confirm via Call"	  />
 
 	</h:form>
 
