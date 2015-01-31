@@ -19,23 +19,23 @@ public class CommunicationHistoryServiceController
 	@Autowired
 	private CommunicationHistoryService communicationHistoryService;
 
-	@RequestMapping(value="/sendSMSForSearchedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value="/sendSMSToDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse sendSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{
 		DonorAppointmentDTO donorAppointmentDTO = (DonorAppointmentDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, "donorAppointmentDTO", DonorAppointmentDTO.class);
 		
-		communicationHistoryService.sendSMSForSearchedDonors(donorAppointmentDTO);
+		communicationHistoryService.sendSMSToDonors(donorAppointmentDTO);
 		return null;
 		
 	}
 	
-	@RequestMapping(value="/sendSMSForConfirmedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	/*@RequestMapping(value="/sendSMSForConfirmedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse sendConfirmedSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{
 		
 		return null;
 		
-	}
+	}*/
 }
