@@ -25,7 +25,7 @@ public class CommunicationHistoryServiceController
 	{
 		DonorAppointmentDTO donorAppointmentDTO = (DonorAppointmentDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, "donorAppointmentDTO", DonorAppointmentDTO.class);
 		
-		
+		communicationHistoryService.sendSMSForSearchedDonors(donorAppointmentDTO);
 		return null;
 		
 	}
