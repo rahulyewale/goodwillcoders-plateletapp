@@ -8,5 +8,18 @@
 	
 </h:head>
 <h:body>
+	<h:form id="searchcriteria_frm_id">
+		<p:messages />
+		<p:accordionPanel>
+			<p:tab title="Dashbord">
+
+				<h:commandLink value="Dashbord" style="color:red;"
+					action="#{dashbord.navigateToDashbord}">
+					<p:graphicImage value="/image/dashbord.gif" height="20px"
+						width="20px" />
+				</h:commandLink>
+			</p:tab>
+		</p:accordionPanel>
+</h:form>
 </h:body>
 </html>
