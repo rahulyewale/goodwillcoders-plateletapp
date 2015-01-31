@@ -20,6 +20,150 @@
 				</h:commandLink>
 			</p:tab>
 		</p:accordionPanel>
-</h:form>
+		<p:accordionPanel>
+			<p:tab title="Search Criteria:">
+				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
+
+
+					<h:outputText value="Donation Type:" />
+					<h:selectOneMenu
+						value="#{searchDonorMB.donorRequestDTO.donationType}">
+						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
+					</h:selectOneMenu>
+
+
+					<h:outputText value="Donation Center:" />
+					<h:selectOneMenu
+						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
+						<f:selectItem itemValue="1" itemLabel="Om Sai Ram Diagostic,Sec-35,Airoli,400708" />
+						<f:selectItem itemValue="2" itemLabel="Jupiter Hospital,Sec-12,Thane,400601" />
+					</h:selectOneMenu>
+
+					<h:outputText value="Request Date:" />
+					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+						value="#{searchDonorMB.donorRequestDTO.requestDate}"
+						yearRange="-5:+1" />
+
+
+				</h:panelGrid>
+				
+			</p:tab>
+		</p:accordionPanel>
+		<p:accordionPanel id="advancesearch_id" style="display: block">
+			<p:tab title="Advance Search Criteria:">
+				<p:panel style="border:0">
+					<h:outputText value="Not donated in last " />
+					<h:selectOneMenu
+						value="#{searchDonorMB.donorRequestDTO.notDonatedInLastMonthsCount}">
+						<f:selectItem itemValue="0" itemLabel="0" />
+						<f:selectItem itemValue="1" itemLabel="1" />
+						<f:selectItem itemValue="2" itemLabel="2" />
+						<f:selectItem itemValue="3" itemLabel="3" />
+						<f:selectItem itemValue="4" itemLabel="4" />
+						<f:selectItem itemValue="5" itemLabel="5" />
+						<f:selectItem itemValue="6" itemLabel="6" />
+					</h:selectOneMenu>
+					<h:outputText value=" months." />
+				</p:panel>
+
+				<p:panel style="border:0">
+					<h:outputText value="Donation Count less than " />
+					<h:selectOneMenu
+						value="#{searchDonorMB.donorRequestDTO.numberOfDonationsLessThanCount}">
+						<f:selectItem itemValue="24" itemLabel="24" />
+						<f:selectItem itemValue="23" itemLabel="23" />
+						<f:selectItem itemValue="0" itemLabel="0" />
+						<f:selectItem itemValue="1" itemLabel="1" />
+						<f:selectItem itemValue="2" itemLabel="2" />
+						<f:selectItem itemValue="3" itemLabel="3" />
+						<f:selectItem itemValue="4" itemLabel="4" />
+						<f:selectItem itemValue="5" itemLabel="5" />
+						<f:selectItem itemValue="6" itemLabel="6" />
+					</h:selectOneMenu>
+					<h:outputText value=" months in last 12 months" />
+				</p:panel>
+				<p:panel style="border:0">
+					<h:outputText value="Search immediately available donors " />
+					<p:selectBooleanCheckbox
+						value="#{searchDonorMB.donorRequestDTO.searchAvailableDonorsOnly}" />
+				</p:panel>
+			</p:tab>
+		</p:accordionPanel>
+		<h:commandButton value="Search"
+			actionListener="#{searchDonorMB.searchDonor}">
+			<f:ajax execute="@form" render=":searchresult_frm_id" />
+		</h:commandButton>
+
+	</h:form>
+	<h:form id="searchresult_frm_id">
+		<p:accordionPanel>
+			<p:tab title="Search Results:">
+				<h:panelGrid>
+					<p:dataTable value="#{searchDonorMB.searchDonorList}" var="donor"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks}
+					 {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20,25,30" paginatorPosition="bottom"
+						rows="25">
+						<f:facet name="header">
+							<h:outputText value="Filtered Donors List" />
+						</f:facet>
+						<p:column headerText="Select">
+							<h:selectBooleanCheckbox value="#{donor.selectedDonor}" />
+						</p:column>
+						<p:column headerText="Name">
+							<h:outputText value="#{donor.firstName} #{donor.lastName}" />
+						</p:column>
+
+						<p:column headerText="Contact No">
+							<h:outputText
+								value="#{donor.donorContactDetailsDTO.contactNumber},#{donor.donorContactDetailsDTO.contactNumberAlternate}" />
+						</p:column>
+						<p:column headerText="Email">
+							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
+						</p:column>
+						<p:column headerText="Last Donation date">
+							<h:outputText value="#{donor.lastDonationDate}" />
+						</p:column>
+						<p:column headerText="Next available date">
+							<h:outputText value="#{donor.nextAvailableDate}" />
+						</p:column>
+						<p:column headerText="Distance">
+							<h:outputText value="#{donor.distanceKm}" />
+						</p:column>
+						<p:column headerText="Dontaion Count">
+							<h:outputText value="#{donor.donationCount}" />
+						</p:column>
+						<p:column headerText="Rating">
+							<p:rating value="#{donor.rating}" readonly="true" stars="5" />
+						</p:column>
+					</p:dataTable>
+
+					<p:dialog header="Send SMS" widgetVar="donorDialog"
+						resizable="false" width="400" showEffect="explode" height="200"
+						hideEffect="explode">
+
+						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
+
+							<h:inputTextarea rows="5"
+								value="Please confirm your availability for #{searchDonorMB.donorRequestDTO.donationType} on #{searchDonorMB.donorRequestDTO.requestDate} at #{searchDonorMB.donorRequestDTO.donationCentre} by replying with code eg. 'Y_R1250'"
+								cols="40" maxlength="140"
+								counterTemplate="{0} characters remaining." autoResize="true" />
+
+							<h:commandButton value="Send" oncomplete="donorDialog.hide()"
+								actionListener="#{searchDonorMB.sendSMS}"></h:commandButton>
+
+						</h:panelGrid>
+					</p:dialog>
+				</h:panelGrid>
+			</p:tab>
+
+		</p:accordionPanel>
+		<h:commandButton oncomplete="donorDialog.show();" value="Send SMS"></h:commandButton>
+		<h:commandButton value="Confirm via Call"
+			actionListener="#{searchDonorMB.confirmedDonor}" />
+
+	</h:form>
+
+
 </h:body>
 </html>
