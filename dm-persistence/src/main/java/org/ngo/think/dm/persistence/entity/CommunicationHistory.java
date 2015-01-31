@@ -13,8 +13,9 @@ import java.util.Date;
 @Table(name = "communication_history")
 @NamedQueries({
 	@NamedQuery(name = "CommunicationHistory.findAll", query = "SELECT c FROM CommunicationHistory c"),
-   @NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.donorId =:donorId AND u.requestedDate = :requestedDate")
-	})
+   @NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.donorId =:donorId AND u.requestedDate = :requestedDate"),
+	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForSMSCheck", query = "SELECT u FROM CommunicationHistory u WHERE u.requestId =:requestId AND u.donorId =:donorId AND u.requestedDate =:requestedDate AND u.donationCenter.donationCenterId =:donationCenterId")	
+})
 public class CommunicationHistory implements Serializable
 {
 	private static final long serialVersionUID = 1L;

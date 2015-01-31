@@ -1,6 +1,7 @@
 package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -15,6 +16,8 @@ public class DonorAppointmentDTO implements Serializable
 	private List<DonorDTO> donors;
 
 	private Long centerId;
+	
+	private Date requestedDate;
 
 	private String initialSMS;
 
@@ -40,6 +43,16 @@ public class DonorAppointmentDTO implements Serializable
 	public void setCenterId(Long centerId)
 	{
 		this.centerId = centerId;
+	}
+
+	public Date getRequestedDate()
+	{
+		return requestedDate;
+	}
+
+	public void setRequestedDate(Date requestedDate)
+	{
+		this.requestedDate = requestedDate;
 	}
 
 	public String getInitialSMS()
