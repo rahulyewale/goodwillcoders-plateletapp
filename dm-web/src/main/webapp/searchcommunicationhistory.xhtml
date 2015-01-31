@@ -18,7 +18,7 @@
 <h3 style="margin-top:0">Search Communication History</h3>
 <p:accordionPanel id="schAccordion" multiple="true">
         <p:tab title="Search Communication History Criteria">
- 	<h:form id="asd">
+ 		<h:form id="asd">
             <h:panelGrid columns="2" cellpadding="10">
                
 	 	 	<p:outputLabel for="mobileNo" value="Mobile  No :" /> 
@@ -40,9 +40,9 @@
 		        
             </h:panelGrid>
             <h:panelGrid cellpadding="10">
-            	<p:commandButton value="Search" > </p:commandButton>
+            	<p:commandButton value="Search" actionListener="#{srchCommHistMB.searchCommunications}"> </p:commandButton>
             </h:panelGrid>
- 	</h:form>
+		</h:form>
         </p:tab>
         
         <p:tab title="Search Communication History Result">
