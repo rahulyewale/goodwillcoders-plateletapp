@@ -90,7 +90,7 @@ public class SearchDonorMB implements Serializable {
 		
 
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(),
-				CommonConstants.RequestKey.SEND_SMS_REQUEST,
+				CommonConstants.RequestKey.DONOR_APPOINTMENT_DTO,
 				donorAppointment);
 
 		ServiceResponse serviceResponse = null;
@@ -126,7 +126,7 @@ public class SearchDonorMB implements Serializable {
 		donorAppointment
 				.setStatus(CommonConstants.ApplicationConstant.CONFIRM_VIA_CALL);
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(),
-				CommonConstants.RequestKey.SEND_SMS_REQUEST,
+				CommonConstants.RequestKey.DONOR_APPOINTMENT_DTO,
 				donorAppointment);
 
 		ServiceResponse serviceResponse = null;

@@ -21,6 +21,15 @@ public class Way2Sms
 		System.out.println("Message has been sent successfully!");
 	}
 
+	public static void initSMSSteps()
+	{
+		login("9619410803", "rdgumb87");
+		sendSMS("8097780229", "hello ry, sending from java code");// 8097780229
+																						// //9324227177
+
+		System.out.println("Message has been sent successfully!");
+	}
+	
 	private static void setProxy(String host, int port)
 	{
 		URLConnector.setProxy(host, port);

@@ -27,11 +27,11 @@ public class CommunicationHistoryService
 
 	public ResponseData sendSMSToDonors(DonorAppointmentDTO donorAppointmentDTO)
 	{
-		if(ApplicationConstant.SMS.equals(donorAppointmentDTO.getStatus()))
+		if(ApplicationConstant.SMS.toString().equals(donorAppointmentDTO.getStatus()))
 		{
 			return sendSMSForSearchedDonors(donorAppointmentDTO);
 			
-		}else if(ApplicationConstant.CONFIRM_VIA_CALL.equals(donorAppointmentDTO.getStatus()))
+		}else if(ApplicationConstant.CONFIRM_VIA_CALL.toString().equals(donorAppointmentDTO.getStatus()))
 		{
 			return sendSMSForConfirmedDonors(donorAppointmentDTO);
 		}
@@ -82,8 +82,14 @@ public class CommunicationHistoryService
 				}
 			}
 
-			String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
-			Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getInitialSMS());
+			if(!donorsContacts.isEmpty())
+			{
+				Way2Sms.initSMSSteps();
+				
+				String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
+				Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getInitialSMS());
+			}
+			
 		}
 		catch (Exception exception)
 		{
@@ -152,8 +158,14 @@ public class CommunicationHistoryService
 				}
 			}
 
-			String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
-			Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getConfirmSMS());
+			if(!donorsContacts.isEmpty())
+			{
+				Way2Sms.initSMSSteps();
+				
+				String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
+				Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getConfirmSMS());
+			}
+			
 		}
 		catch (Exception exception)
 		{
