@@ -10,7 +10,7 @@ public class RandomNumberGenerator
 	public static final String REQUEST_PREFIX = "R";
 	public static final String DEFAULT_PREFIX = "";
 	
-	public String generateRandomNumber(RandomNumberType randomNumberType)
+	public static String generateRandomNumber(RandomNumberType randomNumberType)
 	{
 		Random random = new Random();
 		random.setSeed(System.currentTimeMillis());
