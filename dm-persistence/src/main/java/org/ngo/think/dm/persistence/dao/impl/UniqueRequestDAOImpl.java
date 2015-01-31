@@ -32,4 +32,24 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 
 		return resultUniqueRequestTxn;
 	}
+	
+	@Override
+	public UniqueRequestTxn getUniqueRequestTxnByRequestID(String requestId)
+	{
+
+		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByID", UniqueRequestTxn.class);
+		query.setParameter("requestId", requestId);
+
+		UniqueRequestTxn resultUniqueRequestTxn = null;
+		List<UniqueRequestTxn> uniqueRequestTxns = query.getResultList();
+		if (!uniqueRequestTxns.isEmpty())
+		{
+			resultUniqueRequestTxn = uniqueRequestTxns.get(0);
+		}
+
+		return resultUniqueRequestTxn;
+	}
+	
+	
+	
 }

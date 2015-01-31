@@ -10,4 +10,6 @@ public interface UniqueRequestDAO  extends BaseDAO<UniqueRequestTxn>
 
 	UniqueRequestTxn getUniqueRequestTxnByDateAndCenter(Date requestDate, Long donationCenterId);
 	
+	UniqueRequestTxn getUniqueRequestTxnByRequestID(String requestId);
+	
 }

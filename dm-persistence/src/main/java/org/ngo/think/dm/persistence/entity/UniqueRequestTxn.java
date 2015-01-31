@@ -11,7 +11,8 @@ import java.util.Date;
 @Table(name = "unique_request_txn")
 @NamedQueries({
 					@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u"),
-               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenterId =:donationCentreId AND u.requestDate = :requestDate")
+               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenterId =:donationCentreId AND u.requestDate = :requestDate"),
+               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByID", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestId =:requestId")
 					})
 
 public class UniqueRequestTxn implements Serializable
