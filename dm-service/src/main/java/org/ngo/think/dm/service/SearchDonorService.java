@@ -1,5 +1,6 @@
 package org.ngo.think.dm.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ import org.ngo.think.dm.persistence.dao.DonationCenterDAO;
 import org.ngo.think.dm.persistence.dao.DonorDAO;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
+import org.ngo.think.dm.service.domain.DistanceComparator;
 import org.ngo.think.dm.service.domain.DonorFilter;
 import org.ngo.think.dm.service.mapper.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +70,8 @@ public class SearchDonorService
 		appointmentDTO.setRequestTxnId(uniqueRequestNumber);
 		
 		donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO, donorList,center,appointmentDTO);
+		
+		Collections.sort(donorList, new DistanceComparator());
 
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
 

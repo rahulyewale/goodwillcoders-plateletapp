@@ -42,7 +42,7 @@ public class DonorFilter
 			
 			DonationInfo donationInfo = donationHistoryManager.deriveLastDonationDateAndDonationCountForLast12Months(donor.getDonationHistories());
 			
-			/*if(isMaxDonationLimitForLast12MonthsReached(donationInfo))
+			if(isMaxDonationLimitForLast12MonthsReached(donationInfo))
 			{
 				donorIterator.remove();
 				continue;
@@ -79,25 +79,29 @@ public class DonorFilter
 					populateNextAvailableDate(donor,donationInfo);
 				}
 
-			}*/
+			}
 			
 			distanceCalculator.populateDistance(donor,center);
-			//populateRating(donor,donationInfo);
+			populateRating(donor,donationInfo);
 			donor.setLastDonationDate(donationInfo.getLastDonationDate());
 			
 		}	
 			
 	}
 
-	/*private void populateRating(Donor donor, DonationInfo donationInfo)
+	private void populateRating(Donor donor, DonationInfo donationInfo)
 	{
+		int rating = 0;
 		int totalNumberOfYear = donationInfo.getTotalNoOfDonationYears();
 		int totalNoOfDonations = donationInfo.getTotalNoOfDonationsTillDate();
 		
-		int rating  = totalNoOfDonations/totalNumberOfYear;
+		if(totalNumberOfYear!=0)
+		{
+			rating  = (totalNoOfDonations/totalNumberOfYear)*(6/Integer.valueOf(maxDonationLimitForLast12Months));
+		}
 		
 		donor.setRating(rating);
-	}*/
+	}
 
 	private void populateNextAvailableDate(Donor donor, DonationInfo donationInfo)
 	{
@@ -106,7 +110,7 @@ public class DonorFilter
 
 	private boolean isNextAvailableDateApplicable(DonationInfo donationInfo)
 	{
-		if (DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), new Date()) < Integer.valueOf(nextDonationInterval))
+		if (null!=donationInfo.getLastDonationDate()&&(DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), new Date()) < Integer.valueOf(nextDonationInterval)))
 		{
 			return true;
 		}
@@ -117,7 +121,7 @@ public class DonorFilter
 	{
 		Date referenceDate = DateUtil.deductMonthsFromDate(new Date(), donorRequestDTO.getNotDonatedInLastMonthsCount());
 		
-		if(donationInfo.getLastDonationDate().after(referenceDate))
+		if(null!=donationInfo.getLastDonationDate()&& donationInfo.getLastDonationDate().after(referenceDate))
 		{
 			return true;
 		}
@@ -127,7 +131,7 @@ public class DonorFilter
 
 	private boolean isCoolingOfPeriodApplicable(SearchDonorRequestDTO donorRequestDTO, DonationInfo donationInfo)
 	{
-		if (DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), donorRequestDTO.getRequestDate()) < Integer.valueOf(nextDonationInterval))
+		if (null != donationInfo.getLastDonationDate() && (DateUtil.getNumberOfDaysBetweenDates(donationInfo.getLastDonationDate(), donorRequestDTO.getRequestDate()) < Integer.valueOf(nextDonationInterval)))
 		{
 			return true;
 		}

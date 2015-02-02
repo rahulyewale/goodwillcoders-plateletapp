@@ -1,7 +1,5 @@
 package org.ngo.think.dm.service.domain;
 
-import java.awt.PageAttributes.OriginType;
-
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.persistence.entity.DonorAddressDetail;
@@ -32,6 +30,8 @@ public class DistanceCalculator
 			{
 				DistanceDurationHolder distanceDurationHolder = rowsHolder.getElements().get(0);
 				String distanceInKm =  distanceDurationHolder.getDistance().getText();
+				Integer distanceInMeter = Integer.valueOf(distanceDurationHolder.getDistance().getValue());
+				donor.setDistanceInMeter(distanceInMeter);
 				donor.setDistanceInKm(distanceInKm);
 			}
 			

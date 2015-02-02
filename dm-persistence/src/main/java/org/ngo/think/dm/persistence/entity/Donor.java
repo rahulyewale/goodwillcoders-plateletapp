@@ -1,7 +1,11 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Date;
 import java.util.List;
 
@@ -81,6 +85,14 @@ public class Donor implements Serializable
 	
 	@Transient
 	private Date lastDonationDate;
+	
+	@Transient
+	private Integer distanceInMeter;
+
+	public Integer getDistanceInMeter()
+	{
+		return distanceInMeter;
+	}
 
 	public Donor()
 	{
@@ -332,6 +344,12 @@ public class Donor implements Serializable
 	public void setLastDonationDate(Date lastDonationDate)
 	{
 		this.lastDonationDate = lastDonationDate;
+	}
+
+	public void setDistanceInMeter(Integer distanceInMeter)
+	{
+		this.distanceInMeter = distanceInMeter;
+		
 	}
 
 }

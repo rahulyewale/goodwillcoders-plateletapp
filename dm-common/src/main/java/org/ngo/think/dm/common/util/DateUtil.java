@@ -12,6 +12,7 @@ public class DateUtil
 
 	public static int getNumberOfDaysBetweenDates(Date olderDate, Date newerDate)
 	{
+		
 		DateTime startDateTime = new DateTime(olderDate.getTime());
 		DateTime endDateTime = new DateTime(newerDate.getTime());
 		Days days = Days.daysBetween(startDateTime, endDateTime);
