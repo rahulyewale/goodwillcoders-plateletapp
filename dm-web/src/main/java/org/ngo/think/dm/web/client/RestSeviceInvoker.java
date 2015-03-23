@@ -16,7 +16,7 @@ import org.ngo.think.dm.common.util.JsonUtil;
 
 public class RestSeviceInvoker
 {
-	public static ServiceResponse invokeRestService(String serviceUrl,ServiceRequest serviceRequest) throws Exception
+	public static ServiceResponse invokeRestService(String serviceUrl, ServiceRequest serviceRequest) throws Exception
 	{
 		ServiceResponse serviceResponse = null;
 

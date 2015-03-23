@@ -1,6 +1,7 @@
 package org.ngo.think.dm.common.util;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -41,6 +42,15 @@ public class DateUtil
 	   //to convert Date to String, use format method of SimpleDateFormat class.
 	   String strDate = dateFormat.format(referenceDate);
 	   return strDate;
+	}
+	
+	public static Date stringToDate(String referenceStringDate) throws ParseException
+	{
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	   
+	   //to convert Date to String, use format method of SimpleDateFormat class.
+	   Date date = dateFormat.parse(referenceStringDate);
+	   return date;
 	}
 	
 	

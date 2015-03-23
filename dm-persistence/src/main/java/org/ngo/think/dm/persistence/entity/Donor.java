@@ -1,13 +1,23 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import org.springframework.transaction.annotation.Transactional;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  * The persistent class for the donor database table.
@@ -64,15 +74,15 @@ public class Donor implements Serializable
 
 	// bi-directional many-to-one association to DonationHistory
 	@OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<DonationHistory> donationHistories;
+	private List<DonationHistory> donationHistories = new ArrayList<DonationHistory>();
 
 	// bi-directional many-to-one association to DonorAddressDetail
 	@OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<DonorAddressDetail> donorAddressDetails;
+	private List<DonorAddressDetail> donorAddressDetails=new ArrayList<DonorAddressDetail>();;
 
 	// bi-directional many-to-one association to DonorContactDetail
 	@OneToMany(mappedBy = "donor", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<DonorContactDetail> donorContactDetails;
+	private List<DonorContactDetail> donorContactDetails=new ArrayList<DonorContactDetail>();;
 	
 	@Transient
 	private String distanceInKm;

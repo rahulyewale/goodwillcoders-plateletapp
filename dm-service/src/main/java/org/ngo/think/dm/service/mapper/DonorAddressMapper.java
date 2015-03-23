@@ -1,7 +1,10 @@
 package org.ngo.think.dm.service.mapper;
 
+import java.util.Date;
+
 import org.ngo.think.dm.common.dto.DonorAddressDetailsDTO;
 import org.ngo.think.dm.persistence.entity.DonorAddressDetail;
+import org.ngo.think.dm.service.domain.Donor;
 
 public class DonorAddressMapper
 {
@@ -18,6 +21,20 @@ public class DonorAddressMapper
 		addressDetailsDTO.setPinCode(donorAddressDetail.getPinCode());
 		addressDetailsDTO.setState(donorAddressDetail.getState());
 		return addressDetailsDTO;
+	}
+	
+	
+	public static DonorAddressDetail toEntity(Donor donor)
+	{
+		DonorAddressDetail donorAddressDetail = new DonorAddressDetail();
+		donorAddressDetail.setAddressLine1(donor.getResidentialAddress());
+		donorAddressDetail.setCity(donor.getCity());
+		donorAddressDetail.setPinCode(donor.getPincode());
+		donorAddressDetail.setState(donor.getState());
+		donorAddressDetail.setCreatedBy("System");
+		donorAddressDetail.setCreatedDate(new Date());
+		
+		return donorAddressDetail;
 	}
 
 }

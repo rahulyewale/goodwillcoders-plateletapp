@@ -73,16 +73,17 @@ org.ngo.think.dm.persistence.generic.dao.impl">
 	<bean id="jsonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</bean>
-	
+
 	<bean name="restServiceInvoker" class="org.ngo.think.dm.service.rest.RestServiceInvoker">
 		<property name="restTemplate" ref="restTemplate"></property>
 		<property name="restServiceURL" value="${donor.management.service.url}" />
 	</bean>
-	
-	<bean name="restTemplate" id="restTemplate" class="org.springframework.web.client.RestTemplate">
+
+	<bean name="restTemplate" id="restTemplate"
+		class="org.springframework.web.client.RestTemplate">
 		<property name="messageConverters">
 			<list>
-				<ref bean="jsonMessageConverter"/>
+				<ref bean="jsonMessageConverter" />
 			</list>
 		</property>
 	</bean>

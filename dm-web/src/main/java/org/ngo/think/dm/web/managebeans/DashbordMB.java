@@ -26,4 +26,9 @@ public class DashbordMB
 		return "success";
 	}
 	
+	public String navigateToExcelUpload()
+	{
+		return "success";
+	}
+	
 }

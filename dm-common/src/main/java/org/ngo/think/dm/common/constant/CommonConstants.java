@@ -1,6 +1,5 @@
 package org.ngo.think.dm.common.constant;
 
-import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 
 public class CommonConstants
 {
@@ -12,6 +11,8 @@ public class CommonConstants
 		public static final String DONOR_APPOINTMENT_DTO = "donorAppointmentDTO";
 		public static final String SEARCH_COMMUNICATION_HISTORY_REQUEST = "searchCommunicationHistoryRequest";
 		public static final String CONFIRM_COMMUNICATION_HISTORY_REQUEST = "confirmCommunicationHistoryRequest";
+		
+		public static final String IMPORT_DONOR_EXCEL_REQUEST = "importDonorExcel";
 	}
 	
 	public static class ResponseKey

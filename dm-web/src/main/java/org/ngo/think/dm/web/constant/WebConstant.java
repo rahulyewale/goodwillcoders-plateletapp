@@ -16,6 +16,8 @@ public class WebConstant
 		private static final String SEARCH_DONOR = "searchdonor";
 		private static final String SEARCH_COMMUNICATION_HISTORY = "searchcommunicationhistory";
 		private static final String CONFIRM_COMMUNICATION_HISTORY = "confirmcommunicationhistory";
+		private static final String IMPORT_DONOR_DATA = "importdonordata";
+		
 
 	}
 	
@@ -23,6 +25,8 @@ public class WebConstant
 	{
 		private static final String BASE_URL = RestServiceConstant.PROTOCOL + "://" + RestServiceConstant.HOST + ":" + RestServiceConstant.PORT + "/" + RestServiceConstant.SERVICE_NAME + "/";
 		public static final String SEARCH_DONOR_SERVICE_URL = BASE_URL + ServiceName.SEARCH_DONOR;
+		
+		public static final String IMPORT_DONOR_DATA_URL = BASE_URL + ServiceName.IMPORT_DONOR_DATA;
 		
 		public static final String SEND_SMS_TO_DONORS_SERVICE_URL = BASE_URL + "sendSMSToDonors/";
 		

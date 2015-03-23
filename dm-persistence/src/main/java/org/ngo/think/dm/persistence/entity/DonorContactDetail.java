@@ -14,7 +14,7 @@ public class DonorContactDetail implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "DONOR_CONTACT_DETAILS_DONORCONTACTID_GENERATOR", sequenceName = "DONOR_CONTACT_DETAILS", allocationSize = 1)
+	@SequenceGenerator(name = "DONOR_CONTACT_DETAILS_DONORCONTACTID_GENERATOR", sequenceName = "DONOR_CONTACT_ID_SEQ", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DONOR_CONTACT_DETAILS_DONORCONTACTID_GENERATOR")
 	@Column(name = "donor_contact_id")
 	private Long donorContactId;

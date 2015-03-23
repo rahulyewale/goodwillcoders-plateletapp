@@ -1,33 +1,34 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>org.ngo.think.dm.web</groupId>
-  <artifactId>dm-web</artifactId>
-  <version>1.0</version>
-  <packaging>war</packaging>
-  <name>dm-web</name>
-  <description>web application</description>
-  
-  	<repositories>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.ngo.think.dm.web</groupId>
+	<artifactId>dm-web</artifactId>
+	<version>1.0</version>
+	<packaging>war</packaging>
+	<name>dm-web</name>
+	<description>web application</description>
+
+	<repositories>
 		<repository>
 			<id>prime-repo</id>
 			<name>Prime Repo</name>
 			<url>http://repository.primefaces.org</url>
 		</repository>
 	</repositories>
-	
-  <dependencies>
-  
+
+	<dependencies>
+
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
 			<version>3.3</version>
 		</dependency>
-		
+
 		<dependency>
-		<groupId>org.apache.httpcomponents</groupId>
-		<artifactId>httpclient</artifactId>
-		<version>4.1.1</version>
-	</dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.1.1</version>
+		</dependency>
 
 		<!-- JSF 2 -->
 		<dependency>
@@ -71,8 +72,19 @@
 			<artifactId>dm-common</artifactId>
 			<version>1.0</version>
 		</dependency>
-  </dependencies>
-  	<build>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+	</dependencies>
+	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

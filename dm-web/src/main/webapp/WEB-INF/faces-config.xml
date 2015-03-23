@@ -22,6 +22,15 @@
 		 <from-outcome>success</from-outcome>
 		 <to-view-id>searchcommunicationhistory.xhtml</to-view-id>
 		</navigation-case>
+		
+		<navigation-case>
+		 <from-action>#{dashbord.navigateToExcelUpload}</from-action>
+		 <from-outcome>success</from-outcome>
+		 <to-view-id>donorexcelimport.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		
 	</navigation-rule>
 	
 </faces-config>

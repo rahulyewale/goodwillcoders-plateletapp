@@ -12,6 +12,7 @@
 	<p:accordionPanel>
 	<p:tab title="Dashbord">
 	 	<h:panelGrid columns="1" columnClasses="label">
+	 		<h:commandLink value="Upload Existing Donors" action="#{dashbord.navigateToExcelUpload}"/>
 		 	<h:commandLink value="Search Donor" action="#{dashbord.navigateToSearchDonor}"/>
 		 	<h:commandLink value="Search Communication History" action="#{dashbord.navigateToSearchCommunicationHistory}"/>
 	 	</h:panelGrid>
