@@ -24,31 +24,29 @@
 			<p:tab title="Search Criteria:">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
-
 					<h:outputText value="Donation Type:" />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
 					</h:selectOneMenu>
 
-
-					<h:outputText value="Donation Center:" />
-					<h:selectOneMenu
-						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
-						<f:selectItem itemValue="1" itemLabel="Om Sai Ram Diagostic,Sec-35,Airoli,400708" />
-						<f:selectItem itemValue="2" itemLabel="Jupiter Hospital,Sec-12,Thane,400601" />
-						<f:selectItem itemValue="3" itemLabel="Shree Clinic,Plot-55, Dadar 400028" />
-						<f:selectItem itemValue="4" itemLabel="Apollo clinic,A-303,lake view Plot-05, Andheri 400069" />
-						<f:selectItem itemValue="5" itemLabel="MGM Hospital A-101 Dynamic Enclave Plot-29 Panvel 410209" />
-					</h:selectOneMenu>
-
+			
 					<h:outputText value="Request Date:" />
-					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="true" rendered="true" requiredMessage="Request date is mandatory"
+					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="false" rendered="true" requiredMessage="Request date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
 
 				</h:panelGrid>
+				
+				<h:panelGrid columns="3" columnClasses="label, value,label">
+   					
+ 				<h:outputText value="Donation Center Address:"   />
+				<p:inputTextarea id="centerAddress" rows="4" cols="33" value="#{searchDonorMB.donorRequestDTO.centerAddress}" 
+				title="Please use this format,ex. Om Sai Ram Diagostic,A-204,Sai Arcade,Plot-25,Airoli,Maharashtra,400708" />
+				<p:tooltip id="toolTipFocus" for="centerAddress" showEvent="focus" hideEvent="blur" />
+
+			 </h:panelGrid>
 				
 			</p:tab>
 		</p:accordionPanel>

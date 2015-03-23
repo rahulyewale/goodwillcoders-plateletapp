@@ -23,6 +23,8 @@ public class SearchDonorRequestDTO implements Serializable
 	private Integer notDonatedInLastMonthsCount;
 
 	private boolean searchAvailableDonorsOnly;
+	
+	private String centerAddress;
 
 	public String getDonationType()
 	{
@@ -92,6 +94,16 @@ public class SearchDonorRequestDTO implements Serializable
 	public void setSearchAvailableDonorsOnly(boolean searchAvailableDonorsOnly)
 	{
 		this.searchAvailableDonorsOnly = searchAvailableDonorsOnly;
+	}
+
+	public String getCenterAddress()
+	{
+		return centerAddress;
+	}
+
+	public void setCenterAddress(String centerAddress)
+	{
+		this.centerAddress = centerAddress;
 	}
 
 }

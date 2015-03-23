@@ -81,7 +81,7 @@ public class DonorFilter
 
 			}
 			
-			distanceCalculator.populateDistance(donor,center);
+			distanceCalculator.populateDistance(searchDonorRequestDTO.getCenterAddress(),donor);
 			populateRating(donor,donationInfo);
 			donor.setLastDonationDate(donationInfo.getLastDonationDate());
 			
@@ -140,12 +140,21 @@ public class DonorFilter
 
 	private boolean isNumberOfDonationsLessThanCountExeeded(int donationslessThanCount, DonationInfo donationInfo)
 	{
-		return donationInfo.getTotalNoOfDonationInLast12Months() >= donationslessThanCount;
+		if (null != donationInfo.getTotalNoOfDonationInLast12Months())
+		{
+			return donationInfo.getTotalNoOfDonationInLast12Months() >= donationslessThanCount;
+		}
+		return false;
 	}
 
 	private boolean isMaxDonationLimitForLast12MonthsReached(DonationInfo donationInfo)
 	{
-		return donationInfo.getTotalNoOfDonationInLast12Months()>=Integer.valueOf(maxDonationLimitForLast12Months);
+		if (null != donationInfo.getTotalNoOfDonationInLast12Months())
+		{
+			return donationInfo.getTotalNoOfDonationInLast12Months() >= Integer.valueOf(maxDonationLimitForLast12Months);
+		}
+		return false;
+
 	}
 
 }

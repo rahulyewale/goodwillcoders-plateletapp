@@ -29,7 +29,7 @@ public class UniqueRequestTransactionService
 				uniqueRequestTxn2.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
 				uniqueRequestTxn2.setRequestDate(searchDonorRequestDTO.getRequestDate());
 				uniqueRequestTxn2.setRequestId(uniqueRequestNumber);
-				requestDAO.save(uniqueRequestTxn2);
+				//requestDAO.save(uniqueRequestTxn2);
 			}
 			catch (Exception e)
 			{

@@ -2,6 +2,7 @@ package org.ngo.think.dm.web.managebeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -34,21 +35,16 @@ public class SearchDonorMB implements Serializable
 
 	public SearchDonorMB()
 	{
-		// TODO Auto-generated constructor stub
 	}
 
 	public void searchDonor()
 	{
 
-		/*
-		 * DonorDTO donorDTO = new DonorDTO(); DonorDTO donorDTO1 = new
-		 * DonorDTO(); donorDTO.setFirstName("Rajiv");
-		 * donorDTO.setLastName("Vaidya"); donorDTO1.setFirstName("Rajiv");
-		 * donorDTO1.setLastName("Vaidya"); this.getSearchDonorList().clear();
-		 * this.getSearchDonorList().add(donorDTO);
-		 * this.getSearchDonorList().add(donorDTO1);
-		 */
-
+		if(null==donorRequestDTO.getRequestDate())
+		{
+			donorRequestDTO.setRequestDate(new Date());
+		}
+		
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, donorRequestDTO);
 
 		ServiceResponse serviceResponse = null;

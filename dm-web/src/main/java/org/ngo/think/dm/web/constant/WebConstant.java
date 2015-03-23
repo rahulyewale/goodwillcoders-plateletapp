@@ -6,7 +6,7 @@ public class WebConstant
 	{
 		private static final String PROTOCOL = "http";
 		private static final String HOST = "localhost";
-		private static final String PORT = "8085";
+		private static final String PORT = "8765";
 		private static final String SERVICE_NAME = "dm-service";
 		
 	}

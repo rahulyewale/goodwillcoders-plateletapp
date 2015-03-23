@@ -60,6 +60,7 @@ public class SearchDonorService
 		{
 			e.printStackTrace();
 		}
+		
 		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
 		
 		// Call DAOImpl to get donor master List
@@ -67,7 +68,7 @@ public class SearchDonorService
 		DonorAppointmentDTO appointmentDTO = new DonorAppointmentDTO();
 		appointmentDTO.setCenterId(center.getDonationCenterId());
 		appointmentDTO.setRequestedDate(searchDonorRequestDTO.getRequestDate());
-		appointmentDTO.setRequestTxnId(uniqueRequestNumber);
+		//appointmentDTO.setRequestTxnId(uniqueRequestNumber);
 		
 		donorFilter.filterDonorsBasedOnSearchCriteria(searchDonorRequestDTO, donorList,center,appointmentDTO);
 		
@@ -75,14 +76,14 @@ public class SearchDonorService
 
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
 
-		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
+		//String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 
-		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSmsText).replaceAll(centerDetails);
+		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSmsText).replaceAll(searchDonorRequestDTO.getCenterAddress());
 		String intialSMSWithReqNumber = REQ_UID.matcher(intialSMSWithCenter).replaceAll(uniqueRequestNumber);
 		String intialSMSWithReqDate = REQ_DATE.matcher(intialSMSWithReqNumber).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
 		initialSmsText = intialSMSWithReqDate;
 
-		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
+		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(searchDonorRequestDTO.getCenterAddress());
 		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
 		confirmSmsText = confirmSMSWithReqDate;
 

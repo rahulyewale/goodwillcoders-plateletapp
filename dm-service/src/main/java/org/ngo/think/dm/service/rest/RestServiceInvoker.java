@@ -38,7 +38,6 @@ public class RestServiceInvoker
 
 	public LocationResposne invokeRestService(String origin, String destination)
 	{
-		ServiceResponse response = null;
 		LocationResposne locationResposne =null;
 		try
 		{
@@ -47,9 +46,9 @@ public class RestServiceInvoker
 			final String url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins={origin}&destinations={destination}&mode=driving&sensor=false&language=en-EN&units=metric";
 
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<LocationResposne> responseqwqwq = restTemplate.exchange(url, HttpMethod.GET, null, LocationResposne.class, origin, destination);
+			ResponseEntity<LocationResposne> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, LocationResposne.class, origin, destination);
 
-			 locationResposne = responseqwqwq.getBody();
+			 locationResposne = responseEntity.getBody();
 
 		}
 		catch (Exception exception)

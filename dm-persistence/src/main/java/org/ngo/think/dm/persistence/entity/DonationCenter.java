@@ -50,6 +50,9 @@ public class DonationCenter implements Serializable
 	private String pinCode;
 
 	private String state;
+	
+	@Transient
+	private String centerAddress;
 
 	// bi-directional many-to-one association to CommunicationHistory
 	@OneToMany(mappedBy = "donationCenter")
@@ -194,5 +197,17 @@ public class DonationCenter implements Serializable
 
 		return communicationHistory;
 	}
+
+	public String getCenterAddress()
+	{
+		return centerAddress;
+	}
+
+	public void setCenterAddress(String centerAddress)
+	{
+		this.centerAddress = centerAddress;
+	}
+	
+	
 
 }

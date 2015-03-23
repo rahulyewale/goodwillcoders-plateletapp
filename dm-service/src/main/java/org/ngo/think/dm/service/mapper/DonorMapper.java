@@ -16,8 +16,15 @@ public class DonorMapper
 		donorDTO.setBloodGroup(donor.getBloodGroup());
 		donorDTO.setDistanceKm(donor.getDistanceInKm());
 		donorDTO.setDonationComponentType(donor.getDonationComponentType());
-		donorDTO.setDonorAddressDetailsDTO(DonorAddressMapper.toDTO(donor.getDonorAddressDetails().get(0)));
-		donorDTO.setDonorContactDetailsDTO(DonorContactMapper.toDTO(donor.getDonorContactDetails().get(0)));
+		
+		if(null!=donor.getDonorAddressDetails()&&donor.getDonorAddressDetails().size()!=0)
+		{
+			donorDTO.setDonorAddressDetailsDTO(DonorAddressMapper.toDTO(donor.getDonorAddressDetails().get(0)));	
+		}
+		if (null != donor.getDonorContactDetails() && donor.getDonorContactDetails().size() != 0)
+		{
+			donorDTO.setDonorContactDetailsDTO(DonorContactMapper.toDTO(donor.getDonorContactDetails().get(0)));
+		}
 		donorDTO.setDonorId(donor.getDonorId());
 		donorDTO.setDonorUuid(donor.getDonorUuid());
 		donorDTO.setFirstName(donor.getFirstName());
