@@ -1,11 +1,10 @@
 package org.ngo.think.dm.web.managebeans;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.io.IOUtils;
@@ -21,7 +20,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 import org.primefaces.model.UploadedFile;
 
 @ManagedBean(name = "fileUploadMB")
-@SessionScoped
+@RequestScoped
 public class DonorDataFileUploadMB
 {
 

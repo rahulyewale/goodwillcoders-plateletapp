@@ -1,5 +1,6 @@
 package org.ngo.think.dm.service.domain;
 
+import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.persistence.entity.DonorAddressDetail;
 import org.ngo.think.dm.service.rest.RestServiceInvoker;
@@ -12,7 +13,7 @@ public class DistanceCalculator
 	@Autowired
 	RestServiceInvoker restServiceInvoker;
 
-	public void populateDistance(String donationCenterAddress, Donor donor)
+	public void populateDistance(Donor donor, DonationCenter center)
 	{
 		donor.setDistanceInMeter(100);
 		donor.setDistanceInKm("NA");
@@ -21,16 +22,16 @@ public class DistanceCalculator
 		{
 			System.out.println("No Address Configured for Donor : " + donor.getFirstName()+" "+donor.getLastName());
 		}
-		else if (null != donationCenterAddress)
+		else if (null != center.getAddressLine1())
 		{
 			DonorAddressDetail addressDetail = donor.getDonorAddressDetails().get(0);
 
 			String donorLocation = addressDetail.getCity() + "," + addressDetail.getPinCode() + "," + addressDetail.getState();
-			String centerLocation = donationCenterAddress;
+			String centerLocation = center.getCity()+","+center.getPinCode()+","+center.getState();
 
-			LocationResposne locationResposne = restServiceInvoker.invokeRestService(donorLocation, centerLocation);
+			LocationResponse locationResposne = restServiceInvoker.invokeRestService(donorLocation, centerLocation);
 
-			if (null != locationResposne.getRows() && !locationResposne.getRows().isEmpty())
+			if (null != locationResposne && null != locationResposne.getRows() && !locationResposne.getRows().isEmpty())
 			{
 				RowsHolder rowsHolder = locationResposne.getRows().get(0);
 

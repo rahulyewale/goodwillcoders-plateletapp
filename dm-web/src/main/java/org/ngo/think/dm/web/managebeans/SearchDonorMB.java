@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -22,7 +22,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
-@SessionScoped
+@RequestScoped
 public class SearchDonorMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
@@ -32,6 +32,8 @@ public class SearchDonorMB implements Serializable
 	private String smsMsg;
 	private String uniqueRequestId;
 	private String confirmMsg;
+	
+	private String theme ;
 
 	public SearchDonorMB()
 	{
@@ -191,6 +193,16 @@ public class SearchDonorMB implements Serializable
 	public void setUniqueRequestId(String uniqueRequestId)
 	{
 		this.uniqueRequestId = uniqueRequestId;
+	}
+
+	public String getTheme()
+	{
+		return theme;
+	}
+
+	public void setTheme(String theme)
+	{
+		this.theme = theme;
 	}
 
 }

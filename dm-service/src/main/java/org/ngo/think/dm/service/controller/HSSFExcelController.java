@@ -27,6 +27,9 @@ public class HSSFExcelController
 
 	public void readHSSFExcel(InputStream fileStream)
 	{
+		headerRowMap = new HashMap<Integer, String>();
+		donors = new ArrayList<Donor>();
+		
 		try
 		{
 			HSSFWorkbook workbook = new HSSFWorkbook(fileStream);

@@ -3,3 +3,5 @@
 3;"Shree Clinic";"C-302,Shree Apt";"Plot-55";"Dadar";"Maharashtra";"400028";"system";"2015-01-30 00:00:00";"";"";
 4;"Apollo clinic";"A-303,lake view";"Plot-05";"Andheri";"Maharashtra";"400069";"system";"2015-01-30 00:00:00";"";"";
 5;"MGM Hospital";"A-101,Dynamic Enclave";"Plot-29";"Panvel";"Maharashtra";"410209";"system";"2015-01-30 00:00:00";"";"";
+
+Om Sai Ram Diagostic,A-204,Sai Arcade,Plot-25,Airoli,Maharashtra,400708

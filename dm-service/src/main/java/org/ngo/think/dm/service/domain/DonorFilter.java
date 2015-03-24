@@ -81,7 +81,7 @@ public class DonorFilter
 
 			}
 			
-			distanceCalculator.populateDistance(searchDonorRequestDTO.getCenterAddress(),donor);
+			distanceCalculator.populateDistance(donor,center);
 			populateRating(donor,donationInfo);
 			donor.setLastDonationDate(donationInfo.getLastDonationDate());
 			

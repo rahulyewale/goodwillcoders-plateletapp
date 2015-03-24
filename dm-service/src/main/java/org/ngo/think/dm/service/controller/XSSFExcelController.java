@@ -31,6 +31,9 @@ public class XSSFExcelController
 
 	public void readXSSFExcel(InputStream fileStream)
 	{
+		headerRowMap = new HashMap<Integer, String>();
+		donors = new ArrayList<Donor>();
+		
 		try
 		{
 			XSSFWorkbook workbook = new XSSFWorkbook(fileStream);
@@ -88,7 +91,7 @@ public class XSSFExcelController
 							// case 5:
 							// Double doubleValue = cell.getNumericCellValue();
 							// Long longValue = new Long(doubleValue.longValue());
-							donor.setPincode(cell.getStringCellValue());
+							donor.setPincode(cell.getRawValue());//StringCellValue());
 							break;
 
 						case "CITY":
@@ -105,7 +108,7 @@ public class XSSFExcelController
 							// case 8:
 							// Double doubleValueCN = cell.getNumericCellValue();
 							// Long longValueCN = new Long(doubleValueCN.longValue());
-							donor.setContactNumber(cell.getStringCellValue());
+							donor.setContactNumber(cell.getRawValue());//cell.getStringCellValue());
 							break;
 
 						case "EMAIL":

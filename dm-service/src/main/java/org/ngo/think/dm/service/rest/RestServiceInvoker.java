@@ -1,11 +1,14 @@
 package org.ngo.think.dm.service.rest;
 
+import java.net.UnknownHostException;
+
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
-import org.ngo.think.dm.service.domain.LocationResposne;
+import org.ngo.think.dm.service.domain.LocationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 
 public class RestServiceInvoker
@@ -36,9 +39,9 @@ public class RestServiceInvoker
 		this.restServiceURL = restServiceURL;
 	}
 
-	public LocationResposne invokeRestService(String origin, String destination)
+	public LocationResponse invokeRestService(String origin, String destination)
 	{
-		LocationResposne locationResposne =null;
+		LocationResponse locationResposne =null;
 		try
 		{
 			// String origin = "410209";
@@ -46,7 +49,7 @@ public class RestServiceInvoker
 			final String url = "http://maps.googleapis.com/maps/api/distancematrix/json?origins={origin}&destinations={destination}&mode=driving&sensor=false&language=en-EN&units=metric";
 
 			RestTemplate restTemplate = new RestTemplate();
-			ResponseEntity<LocationResposne> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, LocationResposne.class, origin, destination);
+			ResponseEntity<LocationResponse> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, LocationResponse.class, origin, destination);
 
 			 locationResposne = responseEntity.getBody();
 
