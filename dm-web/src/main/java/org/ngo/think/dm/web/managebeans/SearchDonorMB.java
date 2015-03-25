@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
@@ -34,6 +35,9 @@ public class SearchDonorMB implements Serializable
 	private String confirmMsg;
 	
 	private String theme ;
+	
+	@ManagedProperty(value="#{searchDonorResponseMB}")
+	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
 
 	public SearchDonorMB()
 	{
@@ -74,6 +78,12 @@ public class SearchDonorMB implements Serializable
 		}
 
 		searchDonorList = responseDTO.getDonorDTOList();
+		
+		searchDonorResponseMB.setSearchDonorResponseDTO(responseDTO);
+		searchDonorResponseMB.setSearchDonorList(searchDonorList);
+		searchDonorResponseMB.setDonorRequestDTO(donorRequestDTO);
+		
+		
 		smsMsg = responseDTO.getIntialSmsText();
 		confirmMsg = responseDTO.getConfirmSmsText();
 		uniqueRequestId = responseDTO.getUniqueRequestId();
@@ -101,6 +111,10 @@ public class SearchDonorMB implements Serializable
 
 			e.printStackTrace();
 		}
+		
+		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
+		searchDonorResponseMB.setDonorRequestDTO(new SearchDonorRequestDTO());
+		searchDonorResponseMB.setSearchDonorResponseDTO(new SearchDonorResponseDTO());
 
 	}
 
@@ -108,19 +122,19 @@ public class SearchDonorMB implements Serializable
 	{
 		DonorAppointmentDTO donorAppointment = new DonorAppointmentDTO();
 		donorAppointment.setDonors(selectedDonorList);
-		donorAppointment.setCenterId(donorRequestDTO.getDonationCentre());
-		donorAppointment.setConfirmSMS(confirmMsg);
-		donorAppointment.setInitialSMS(smsMsg);
-		donorAppointment.setRequestedDate(donorRequestDTO.getRequestDate());
-		donorAppointment.setRequestTxnId(uniqueRequestId);
-		for (DonorDTO donorDTO : searchDonorList)
+		donorAppointment.setCenterId(searchDonorResponseMB.getDonorRequestDTO().getDonationCentre());
+		donorAppointment.setConfirmSMS(searchDonorResponseMB.getSearchDonorResponseDTO().getConfirmSmsText());
+		donorAppointment.setInitialSMS(searchDonorResponseMB.getSearchDonorResponseDTO().getIntialSmsText());
+		donorAppointment.setRequestedDate(searchDonorResponseMB.getDonorRequestDTO().getRequestDate());
+		donorAppointment.setRequestTxnId(searchDonorResponseMB.getSearchDonorResponseDTO().getUniqueRequestId());
+		for (DonorDTO donorDTO : searchDonorResponseMB.getSearchDonorList())
 		{
 			if (donorDTO.isSelectedDonor())
 			{
 				selectedDonorList.add(donorDTO);
 			}
 		}
-		donorAppointment.setDonors(searchDonorList);
+		donorAppointment.setDonors(selectedDonorList);
 
 		return donorAppointment;
 	}
@@ -142,6 +156,10 @@ public class SearchDonorMB implements Serializable
 			e.printStackTrace();
 		}
 		System.out.println("phone " + donorAppointment.getDonors().size());
+		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
+		searchDonorResponseMB.setDonorRequestDTO(new SearchDonorRequestDTO());
+		searchDonorResponseMB.setSearchDonorResponseDTO(new SearchDonorResponseDTO());
+
 	}
 
 	public List<DonorDTO> getSearchDonorList()
@@ -203,6 +221,16 @@ public class SearchDonorMB implements Serializable
 	public void setTheme(String theme)
 	{
 		this.theme = theme;
+	}
+
+	public SearchDonorResponseMB getSearchDonorResponseMB()
+	{
+		return searchDonorResponseMB;
+	}
+
+	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
+	{
+		this.searchDonorResponseMB = searchDonorResponseMB;
 	}
 
 }

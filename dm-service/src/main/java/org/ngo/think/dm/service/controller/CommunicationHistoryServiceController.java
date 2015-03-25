@@ -3,6 +3,7 @@ package org.ngo.think.dm.service.controller;
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
+import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.service.CommunicationHistoryService;
 import org.ngo.think.dm.service.util.ServiceUtil;
@@ -23,7 +24,7 @@ public class CommunicationHistoryServiceController
 	@ResponseBody
 	public ServiceResponse sendSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{
-		DonorAppointmentDTO donorAppointmentDTO = (DonorAppointmentDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, "donorAppointmentDTO", DonorAppointmentDTO.class);
+		DonorAppointmentDTO donorAppointmentDTO = (DonorAppointmentDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.SEND_SMS_REQUEST, DonorAppointmentDTO.class);
 		
 		ResponseData responseData = communicationHistoryService.sendSMSToDonors(donorAppointmentDTO);
 		ServiceResponse response = new ServiceResponse(responseData);

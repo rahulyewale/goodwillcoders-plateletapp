@@ -148,10 +148,10 @@
 				</p:panel>
 			</p:tab>
 		</p:accordionPanel>
-		<p:commandButton value="Search"
+		<h:commandButton value="Search"
 			actionListener="#{searchDonorMB.searchDonor}">
 			<f:ajax execute="@form" render=":searchresult_frm_id" />
-		</p:commandButton>
+		</h:commandButton>
 
 	</h:form>
 	
@@ -159,7 +159,7 @@
 		<p:accordionPanel>
 			<p:tab title="Search Results:">
 				<h:panelGrid>
-					<p:dataTable value="#{searchDonorMB.searchDonorList}" var="donor"
+					<p:dataTable value="#{searchDonorResponseMB.searchDonorList}" var="donor"
 						 paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
@@ -202,7 +202,7 @@
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
 							<h:inputTextarea rows="5"
-								value="#{searchDonorMB.smsMsg}"
+								value="#{searchDonorResponseMB.searchDonorResponseDTO.intialSmsText}"
 								cols="40" maxlength="140"
 								 autoResize="true" />
 
@@ -219,7 +219,7 @@
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
 
 							<h:inputTextarea rows="5"
-								value="#{searchDonorMB.confirmMsg}"
+								value="#{searchDonorResponseMB.searchDonorResponseDTO.confirmSmsText}"
 								cols="40" maxlength="140"
 								 autoResize="true" />
 

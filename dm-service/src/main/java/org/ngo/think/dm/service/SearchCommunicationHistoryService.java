@@ -117,6 +117,7 @@ public class SearchCommunicationHistoryService
 			communicationHistoryResultDTO.setRequestedDate(communicationHistory.getRequestedDate());
 			communicationHistoryResultDTO.setSmsSentDate(communicationHistory.getSmsSentDate());
 			communicationHistoryResultDTO.setStatus(communicationHistory.getStatus());
+			communicationHistoryResultDTO.setRequestId(communicationHistory.getRequestId());
 			
 			communicationHistoryResultDTOs.add(communicationHistoryResultDTO);
 			
