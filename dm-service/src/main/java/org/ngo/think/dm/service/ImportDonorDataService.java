@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.ngo.think.dm.common.dto.ImportDonorDataRequestDTO;
+import org.ngo.think.dm.common.enums.RandomNumberType;
+import org.ngo.think.dm.common.util.RandomNumberGenerator;
 import org.ngo.think.dm.persistence.dao.DonorDAO;
 import org.ngo.think.dm.persistence.domain.ExcelTypes;
 import org.ngo.think.dm.service.controller.HSSFExcelController;
@@ -29,7 +31,7 @@ public class ImportDonorDataService
 	
 	@Autowired
 	private DonorDAO donorDAO;
-
+	
 
 	@Transactional
 	public ImportDonorDataRequestDTO importDonorData(ImportDonorDataRequestDTO importDonorDataRequestDTO) throws Exception
@@ -40,7 +42,7 @@ public class ImportDonorDataService
 
 		if (fileExtension == null)
 		{
-			System.out.println("Programe terminated due to incorrect file type.");
+			System.out.println("Program terminated due to incorrect file type.");
 			return null;
 		}
 
@@ -70,6 +72,8 @@ public class ImportDonorDataService
 		
 		for(org.ngo.think.dm.persistence.entity.Donor donor : donorEntityList )
 		{
+			String donorUuid = RandomNumberGenerator.generateRandomNumber(RandomNumberType.DONOR_UUID);
+			donor.setDonorUuid(donorUuid);
 			donorDAO.save(donor);
 		}
 		
