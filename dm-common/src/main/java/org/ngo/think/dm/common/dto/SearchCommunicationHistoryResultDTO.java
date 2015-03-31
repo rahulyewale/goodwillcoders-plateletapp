@@ -17,7 +17,7 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 	private String mobileNumber;
 	private Date requestedDate;
 	private String status;
-	private Date smsSentDate;
+	private String smsSentDate;
 	private boolean historySelected;
 	
 	private Long communicationHistoryId;
@@ -94,12 +94,12 @@ public class SearchCommunicationHistoryResultDTO implements Serializable
 		this.status = status;
 	}
 
-	public Date getSmsSentDate()
+	public String getSmsSentDate()
 	{
 		return smsSentDate;
 	}
 
-	public void setSmsSentDate(Date smsSentDate)
+	public void setSmsSentDate(String smsSentDate)
 	{
 		this.smsSentDate = smsSentDate;
 	}

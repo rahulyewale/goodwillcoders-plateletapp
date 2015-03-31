@@ -1,0 +1,43 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+   <title>Dashboard</title>
+  </h:head>
+<h:body>
+
+<ui:include src="header.xhtml"></ui:include>
+
+<h:form id="tabFormId">
+ 
+    <p:tabMenu activeIndex="#{bean.currentTab}">
+   
+    <p:menuitem value="Search Donor"  icon="ui-icon-search" actionListener="#{bean.setPageInfo('searchdonor',0)}" ajax="true" 
+            update="tabFormId,:include" >
+       <f:param name="i" value="0" />
+    </p:menuitem>
+    
+    <p:menuitem value="Search Communication History" icon="ui-icon-search" actionListener="#{bean.setPageInfo('searchcommunicationhistory',1)}" ajax="true" 
+            update="tabFormId,:include">
+       <f:param name="i" value="1" />
+    </p:menuitem>
+    
+    <p:menuitem value="Import Donors"  icon="ui-icon-document" actionListener="#{bean.setPageInfo('donorexcelimport',2)}" ajax="true" 
+            update="tabFormId,:include">
+       <f:param name="i" value="2" />
+    </p:menuitem>
+    
+</p:tabMenu>
+</h:form>
+
+<h:panelGroup id="include" >
+    <ui:include src="#{bean.page}.xhtml" />
+</h:panelGroup>
+
+<ui:include src="footer.xhtml"></ui:include>
+
+</h:body>
+</html>

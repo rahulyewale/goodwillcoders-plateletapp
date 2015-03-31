@@ -1,54 +1,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<title>Donor Excel Import</title>
 	
-    <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #left {
-            position: relative;
-            margin-right: 250px;
-            background-color: white;
-        }
-
-        #right {
-            float: right;
-            position: relative;
-            text-align: left;
-            width: 250px;
-            background-color: white;
-        }
-    </style>
-	
-	
 </h:head>
 <h:body>
-<h:form>
-<div id="right">
-   <h:commandLink value="click here to go to dashboard" style="color:black;"
-		action="#{dashbord.navigateToDashbord}">
-		<p:graphicImage id="dashBoard" value="/image/dashbord.gif" height="30px"
-			width="30px" />
-			
-</h:commandLink>
-</div>
 
-<div id="left">
-    <h3 style="margin-top:0"><p:graphicImage value="/image/logo.gif" height="50px"
-			width="150px"  /> 
-</h3>
-</div>
-</h:form>
-
-<h3>Upload Donor Excel File</h3>
-		
 <h:form enctype="multipart/form-data">
 <p:accordionPanel>
 <p:tab title="Choose Existing Donor Excel File to Upload">
@@ -60,7 +21,6 @@
     </p:tab>
     </p:accordionPanel>
 </h:form>
-
 
 
 </h:body>

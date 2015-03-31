@@ -13,46 +13,8 @@
 	
    <h:head>
    <title>Search Communication History</title>
-   <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #left {
-            position: relative;
-            margin-right: 250px;
-            background-color: white;
-        }
-
-        #right {
-            float: right;
-            position: relative;
-            text-align: left;
-            width: 250px;
-            background-color: white;
-        }
-    </style>
    </h:head>
 <h:body>
-<h:form>
-<div id="right">
-   <h:commandLink value="click here to go to dashboard" style="color:black;"
-		action="#{dashbord.navigateToDashbord}">
-		<p:graphicImage id="dashBoard" value="/image/dashbord.gif" height="30px"
-			width="30px" />
-			
-</h:commandLink>
-</div>
-
-<div id="left">
-    <h3 style="margin-top:0"><p:graphicImage value="/image/logo.gif" height="50px"
-			width="150px"  /> 
-</h3>
-</div>
-</h:form>
-
-<h3>Search Communication History</h3>
 
 
  		<h:form id="asd">
@@ -88,9 +50,9 @@
 		</h:form>
      
 
-        	<h:form id="basd">
+        	<h:form id="basd">	
         	<p:accordionPanel>
-        	<p:tab title="Search Communication History Result">
+        	<p:tab title="Communication History Result">
             <h:panelGrid  cellpadding="10" >
                 
                <p:dataTable rows="10"  value="#{srchCommHistMB.srchCommnHistResultList}" var="commnHist"
@@ -120,9 +82,9 @@
 			      </p:column>
 			 
 			      <p:column headerText="Donation Center">
-			            <h:outputText value="#{commnHist.donationCenterDTO.donationCenterName}, &lt;br/&gt; #{commnHist.donationCenterDTO.addressLine1},&lt;br/&gt;
-			            #{commnHist.donationCenterDTO.addressLine2},&lt;br/&gt;
-			            #{commnHist.donationCenterDTO.city}, #{commnHist.donationCenterDTO.state},&lt;br/&gt;
+			            <h:outputText value="#{commnHist.donationCenterDTO.donationCenterName},  #{commnHist.donationCenterDTO.addressLine1},
+			            #{commnHist.donationCenterDTO.addressLine2},
+			            #{commnHist.donationCenterDTO.city}, #{commnHist.donationCenterDTO.state},
 			            #{commnHist.donationCenterDTO.pinCode}" />
 			      </p:column>
 			      
@@ -144,7 +106,6 @@
             </p:accordionPanel>
             </h:form>
        
- 
  
 </h:body>
 </html>

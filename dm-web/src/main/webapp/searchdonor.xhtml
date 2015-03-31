@@ -5,48 +5,10 @@
 
 <h:head>
    <title>Search Donor</title>
-   <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #left {
-            position: relative;
-            margin-right: 250px;
-            background-color: white;
-        }
-
-        #right {
-            float: right;
-            position: relative;
-            text-align: left;
-            width: 250px;
-            background-color: white;
-        }
-    </style>
+   
  </h:head>
 <h:body>
 
-
-<h:form>
-<div id="right">
-   <h:commandLink value="click here to go to dashboard" style="color:black;"
-		action="#{dashbord.navigateToDashbord}">
-		<p:graphicImage id="dashBoard" value="/image/dashbord.gif" height="30px"
-			width="30px" />
-			
-</h:commandLink>
-</div>
-
-<div id="left">
-    <h3 style="margin-top:0"><p:graphicImage value="/image/logo.gif" height="50px"
-			width="150px"  /> 
-</h3>
-</div>
-</h:form>
-
-<h3>Search Donor</h3>
 
 
 	<h:form id="searchcriteria_frm_id">
@@ -55,7 +17,7 @@
 			<p:tab title="Search Criteria:">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
-					<h:outputText value="Donation Type:" />
+					<h:outputText value="Donation Type:"/>
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
@@ -79,16 +41,13 @@
 
 				</h:panelGrid>
 				
-				<h:panelGrid columns="3" columnClasses="label, value,label">
-
-			 </h:panelGrid>
-				
 			</p:tab>
 		</p:accordionPanel>
 		<p:accordionPanel id="advancesearch_id" style="display: block">
-			<p:tab title="Advance Search Criteria:">
-				<p:panel style="border:0">
-					<h:outputText value="Not donated in last " />
+			<p:tab title="Advanced Search Criteria:" >
+			
+			<h:panelGrid columns="3" columnClasses="label, value,label">
+				<h:outputLabel value="Not donated in last " />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.notDonatedInLastMonthsCount}">
 						<f:selectItem itemValue="0" itemLabel="0" />
@@ -106,11 +65,8 @@
 						<f:selectItem itemValue="12" itemLabel="12" />
 						
 					</h:selectOneMenu>
-					<h:outputText value=" months." />
-				</p:panel>
-
-				<p:panel style="border:0">
-					<h:outputText value="Donation Count less than " />
+					<h:outputLabel value=" months." />
+					<h:outputLabel value="Donation Count less than " />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.numberOfDonationsLessThanCount}">
 						<f:selectItem itemValue="24" itemLabel="24" />
@@ -139,13 +95,16 @@
 						<f:selectItem itemValue="01" itemLabel="01" />
 						
 					</h:selectOneMenu>
-					<h:outputText value=" months in last 12 months" />
-				</p:panel>
-				<p:panel style="border:0">
-					<h:outputText value="Search immediately available donors " />
+					<h:outputLabel value=" in last 12 months" />
+					
+			 </h:panelGrid>
+			 
+			 <h:panelGrid columns="2" columnClasses="label, value">
+				<h:outputText value="Search immediately available donors " />
 					<p:selectBooleanCheckbox
 						value="#{searchDonorMB.donorRequestDTO.searchAvailableDonorsOnly}" />
-				</p:panel>
+			 </h:panelGrid>
+			 
 			</p:tab>
 		</p:accordionPanel>
 		<h:commandButton value="Search"

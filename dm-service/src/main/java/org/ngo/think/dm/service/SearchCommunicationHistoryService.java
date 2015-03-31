@@ -1,5 +1,6 @@
 package org.ngo.think.dm.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -68,7 +69,13 @@ public class SearchCommunicationHistoryService
 		DonationCenter center = null;
 		try
 		{
-			center = centerDAO.findByPrimaryKey(uniqueRequestTxn.getDonationCenterId());
+			String centerDetails = null;
+			if(null!=uniqueRequestTxn)
+			{
+				center = centerDAO.findByPrimaryKey(uniqueRequestTxn.getDonationCenterId());	
+				centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
+			}
+			
 		}
 		catch (Exception e)
 		{
@@ -76,7 +83,7 @@ public class SearchCommunicationHistoryService
 		}
 		System.out.println("In SearchCommunicationHistoryService : searchcommunicationhistory !!!");
 		
-		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
+		
 		
 		/*String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
 		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(reqDate));
@@ -98,6 +105,7 @@ public class SearchCommunicationHistoryService
 			donationCenterDTO.setDonationCenterName(donationCenter.getDonationCenterName());
 			donationCenterDTO.setPinCode(donationCenter.getPinCode());
 			donationCenterDTO.setState(donationCenter.getState());
+			donationCenterDTO.setCity(donationCenter.getCity());
 			
 			Donor donor = null;
 			try
@@ -115,7 +123,9 @@ public class SearchCommunicationHistoryService
 			communicationHistoryResultDTO.setDonorUuid(donor.getDonorUuid());
 			communicationHistoryResultDTO.setMobileNumber(donor.getDonorContactDetails().get(0).getContactNumber());
 			communicationHistoryResultDTO.setRequestedDate(communicationHistory.getRequestedDate());
-			communicationHistoryResultDTO.setSmsSentDate(communicationHistory.getSmsSentDate());
+			
+			communicationHistoryResultDTO.setSmsSentDate(DateUtil.dateToString(communicationHistory.getSmsSentDate()));
+			
 			communicationHistoryResultDTO.setStatus(communicationHistory.getStatus());
 			communicationHistoryResultDTO.setRequestId(communicationHistory.getRequestId());
 			

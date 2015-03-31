@@ -168,6 +168,6 @@ public class Way2Sms
 	private static void exit(String errorMsg)
 	{
 		System.err.println(errorMsg);
-		System.exit(1);
+		//System.exit(1);
 	}
 }

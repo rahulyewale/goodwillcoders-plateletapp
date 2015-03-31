@@ -1,0 +1,45 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+   <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #left {
+            position: relative;
+            margin-right: 250px;
+            background-color: white;
+        }
+
+        #right {
+            float: right;
+            position: relative;
+            text-align: left;
+            width: 250px;
+            background-color: white;
+        }
+    </style>
+ </h:head>
+<h:body>
+
+
+<h:form>
+
+<div id="left">
+
+<h:commandLink value="" style="color:black;"
+		action="#{dashbord.navigateToDashbord}">
+		<p:graphicImage value="/image/logo.gif" height="50px"
+			width="150px"  />
+</h:commandLink> 
+
+</div>
+</h:form>
+
+</h:body>
+</html>

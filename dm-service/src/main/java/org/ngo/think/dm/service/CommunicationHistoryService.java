@@ -67,6 +67,8 @@ public class CommunicationHistoryService
 					communicationHistory.setDonorId(donorDTO.getDonorId());
 					communicationHistory.setDonationCenter(donationCenter);
 					communicationHistory.setRequestedDate(requestedDate);
+					communicationHistory.setSmsSentDate(new Date());
+					communicationHistory.setMobileNumber(donorDTO.getDonorContactDetailsDTO().getContactNumber());
 
 					communicationHistory.setStatus("SMS_SENT");
 					communicationHistory.setCreatedDate(new Date());
