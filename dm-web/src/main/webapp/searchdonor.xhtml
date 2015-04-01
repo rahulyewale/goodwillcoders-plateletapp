@@ -1,16 +1,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-   <title>Search Donor</title>
+   <title>Search Donors</title>
    
  </h:head>
 <h:body>
 
-
-
+<ui:include src="header.xhtml"></ui:include>
+	<h2>Search Donors</h2>
 	<h:form id="searchcriteria_frm_id">
 	 <p:messages id="messages"  autoUpdate="true" closable="true" />
 		<p:accordionPanel >
@@ -27,11 +28,8 @@
 					<h:outputText value="Donation Center:" />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
-						<f:selectItem itemValue="1" itemLabel="Om Sai Ram Diagostic,Sec-35,Airoli,400708" />
-						<f:selectItem itemValue="2" itemLabel="Jupiter Hospital,Sec-12,Thane,400601" />
-						<f:selectItem itemValue="3" itemLabel="Shree Clinic,Plot-55, Dadar 400028" />
-						<f:selectItem itemValue="4" itemLabel="Apollo clinic,A-303,lake view Plot-05, Andheri 400069" />
-						<f:selectItem itemValue="5" itemLabel="MGM Hospital A-101 Dynamic Enclave Plot-29 Panvel 410209" />
+						<f:selectItems value="#{searchDonorResponseMB.donationCenterDTOList}" var="donationCenterDTO"
+   							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}" itemValue="#{donationCenterDTO.donationCenterId}" />
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
@@ -195,7 +193,7 @@
 		<p:commandButton oncomplete="donorDialogConfirm.show();" value="Confirm via Call"	  />
 
 	</h:form>
-
+<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>
 </html>

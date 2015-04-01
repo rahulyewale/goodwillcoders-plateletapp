@@ -20,6 +20,7 @@ public class CommonConstants
 		public static final String SEARCH_DONOR_RESPONSE = "searchDonorResponse";
 		public static final String SEARCH_COMMUNICATION_HISTORY_RESPONSE = "searchCommunicationHistoryResponse";
 		public static final String CONFIRM_COMMUNICATION_HISTORY_RESPONSE = "confirmCommunicationHistoryResponse";
+		public static final String SEARCH_DOATION_CENTER_RESPONSE = "donationCenterResponse";
 	}
 	
 	public static class ApplicationConstant

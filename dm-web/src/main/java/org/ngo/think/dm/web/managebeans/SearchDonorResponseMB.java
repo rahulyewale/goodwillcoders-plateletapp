@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
@@ -16,9 +17,17 @@ import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 public class SearchDonorResponseMB implements Serializable
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 	private SearchDonorResponseDTO searchDonorResponseDTO = new SearchDonorResponseDTO();
+	
+	public DonationCenterDTO[] donationCenterDTOList = new DonationCenterDTO[50];
+	
+	private boolean donationCentersSet = false;
 	
 
 	public List<DonorDTO> getSearchDonorList()
@@ -49,6 +58,26 @@ public class SearchDonorResponseMB implements Serializable
 	public void setSearchDonorResponseDTO(SearchDonorResponseDTO searchDonorResponseDTO)
 	{
 		this.searchDonorResponseDTO = searchDonorResponseDTO;
+	}
+
+	public DonationCenterDTO[] getDonationCenterDTOList()
+	{
+		return donationCenterDTOList;
+	}
+
+	public void setDonationCenterDTOList(DonationCenterDTO[] donationCenterDTOList)
+	{
+		this.donationCenterDTOList = donationCenterDTOList;
+	}
+
+	public boolean isDonationCentersSet()
+	{
+		return donationCentersSet;
+	}
+
+	public void setDonationCentersSet(boolean donationCentersSet)
+	{
+		this.donationCentersSet = donationCentersSet;
 	}
 	
 
