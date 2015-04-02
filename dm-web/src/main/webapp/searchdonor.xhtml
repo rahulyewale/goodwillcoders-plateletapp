@@ -2,11 +2,24 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
    <title>Search Donors</title>
    
+   <script type="text/javascript">
+   	function unblockUi(data)
+   	{
+   		if(data.status==="success")
+   		{
+   			PF('blockUIWidget').unblock();
+   		}
+   		
+   	}
+   
+   
+   </script>
  </h:head>
 <h:body>
 
@@ -105,10 +118,21 @@
 			 
 			</p:tab>
 		</p:accordionPanel>
-		<h:commandButton value="Search"
-			actionListener="#{searchDonorMB.searchDonor}">
-			<f:ajax execute="@form" render=":searchresult_frm_id" />
-		</h:commandButton>
+		<h:commandLink  id="searchDonorId" value=""
+			actionListener="#{searchDonorMB.searchDonor}" onclick="PF('blockUIWidget').block()">
+			<p:graphicImage
+			value="/image/search.jpg"/>
+			<f:ajax execute="@form"  render=":searchresult_frm_id" onevent="unblockUi"/>
+		</h:commandLink>
+		
+
+	<pe:blockUI widgetVar="blockUIWidget">  
+    <h:panelGrid columns="2">  
+        <p:graphicImage
+			value="/image/loader.GIF" /> 
+        <h:outputText value="Please wait..." style="white-space: nowrap;" />  
+    </h:panelGrid>  
+</pe:blockUI> 
 
 	</h:form>
 	
@@ -116,7 +140,7 @@
 		<p:accordionPanel>
 			<p:tab title="Search Results:">
 				<h:panelGrid>
-					<p:dataTable value="#{searchDonorResponseMB.searchDonorList}" var="donor"
+					<p:dataTable id="searchResultId" value="#{searchDonorResponseMB.searchDonorList}" var="donor"
 						 paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
@@ -189,8 +213,10 @@
 			</p:tab>
 
 		</p:accordionPanel>
-		<p:commandButton oncomplete="donorDialog.show();" value="Send SMS"> </p:commandButton>
-		<p:commandButton oncomplete="donorDialogConfirm.show();" value="Confirm via Call"	  />
+		<h:commandButton  image="image/sendsms.jpg"  onclick="donorDialog.show();return false;" value=""> </h:commandButton>
+		<p:graphicImage
+		value="/image/separator.jpg"/>
+		<h:commandButton image="image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" value=""></h:commandButton>
 
 	</h:form>
 <ui:include src="footer.xhtml"></ui:include>

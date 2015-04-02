@@ -10,7 +10,7 @@ public class DistanceComparator implements Comparator<Donor>
 	@Override
 	public int compare(Donor donor1, Donor donor2)
 	{
-		return donor1.getDistanceInMeter()-donor2.getDistanceInMeter();
+		return (int)(donor1.getDistanceInMeter()-donor2.getDistanceInMeter());
 	}
 
 }

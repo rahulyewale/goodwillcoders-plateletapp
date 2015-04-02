@@ -97,9 +97,9 @@ public class Donor implements Serializable
 	private Date lastDonationDate;
 	
 	@Transient
-	private Integer distanceInMeter;
+	private double distanceInMeter;
 
-	public Integer getDistanceInMeter()
+	public double getDistanceInMeter()
 	{
 		return distanceInMeter;
 	}
@@ -356,7 +356,7 @@ public class Donor implements Serializable
 		this.lastDonationDate = lastDonationDate;
 	}
 
-	public void setDistanceInMeter(Integer distanceInMeter)
+	public void setDistanceInMeter(double distanceInMeter)
 	{
 		this.distanceInMeter = distanceInMeter;
 		

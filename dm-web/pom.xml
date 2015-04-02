@@ -21,7 +21,7 @@
 		<dependency>
 			<groupId>org.primefaces</groupId>
 			<artifactId>primefaces</artifactId>
-			<version>3.4</version>
+			<version>4.0</version>
 		</dependency>
 
 		<dependency>
@@ -83,9 +83,14 @@
 			<artifactId>commons-fileupload</artifactId>
 			<version>1.2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>org.primefaces.extensions</groupId>
+			<artifactId>primefaces-extensions</artifactId>
+			<version>2.1.0</version>
+		</dependency>
 	</dependencies>
 	<build>
-	<finalName>dm-web</finalName>
+		<finalName>dm-web</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
