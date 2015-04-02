@@ -17,7 +17,7 @@ public class WebConstant
 		private static final String SEARCH_COMMUNICATION_HISTORY = "searchcommunicationhistory";
 		private static final String CONFIRM_COMMUNICATION_HISTORY = "confirmcommunicationhistory";
 		private static final String IMPORT_DONOR_DATA = "importdonordata";
-		
+		private static final String GET_DONATION_CENTERS = "getdonationcenters";
 
 	}
 	
@@ -29,6 +29,8 @@ public class WebConstant
 		public static final String IMPORT_DONOR_DATA_URL = BASE_URL + ServiceName.IMPORT_DONOR_DATA;
 		
 		public static final String SEND_SMS_TO_DONORS_SERVICE_URL = BASE_URL + "sendSMSToDonors/";
+		
+		public static final String GET_DONATION_CENTERS_URL = BASE_URL + ServiceName.GET_DONATION_CENTERS;
 		
 		public static final String COMMUNICATION_HISTORY_SEARCH_SERVICE_URL = BASE_URL + ServiceName.SEARCH_COMMUNICATION_HISTORY;
 		public static final String CONFIRM_COMMUNICATION_HISTORY_URL = BASE_URL + ServiceName.CONFIRM_COMMUNICATION_HISTORY;
