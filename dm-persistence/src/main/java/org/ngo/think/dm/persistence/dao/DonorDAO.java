@@ -7,5 +7,5 @@ import org.ngo.think.dm.persistence.generic.dao.BaseDAO;
 
 public interface DonorDAO  extends BaseDAO<Donor>
 {
-	List<Donor> getAllDonors();
+	List<Donor> getAllDonors(String bloodGroup);
 }

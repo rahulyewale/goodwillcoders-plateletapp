@@ -64,7 +64,7 @@ public class SearchDonorService
 		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
 		
 		// Call DAOImpl to get donor master List
-		List<Donor> donorList = donorDAO.getAllDonors();
+		List<Donor> donorList = donorDAO.getAllDonors(searchDonorRequestDTO.getBloodGroup());
 		DonorAppointmentDTO appointmentDTO = new DonorAppointmentDTO();
 		appointmentDTO.setCenterId(center.getDonationCenterId());
 		appointmentDTO.setRequestedDate(searchDonorRequestDTO.getRequestDate());

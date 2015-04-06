@@ -23,7 +23,7 @@ import javax.persistence.Transient;
  * The persistent class for the donor database table.
  */
 @Entity
-@NamedQuery(name = "Donor.findAll", query = "SELECT d FROM Donor d")
+@NamedQuery(name = "Donor.findAll", query = "SELECT d FROM Donor d where d.bloodGroup IN (:bloodGroup) ")
 public class Donor implements Serializable
 {
 	private static final long serialVersionUID = 1L;

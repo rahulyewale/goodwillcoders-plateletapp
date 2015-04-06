@@ -37,6 +37,23 @@
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
 					</h:selectOneMenu>
 					
+					<h:outputLabel value="Blood Group: " />
+					<h:selectOneMenu
+						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
+						<f:selectItem itemValue="" itemLabel="Select" />
+						<f:selectItem itemValue="A+" itemLabel="A+" />
+						<f:selectItem itemValue="A-" itemLabel="A-" />
+						<f:selectItem itemValue="B+" itemLabel="B+" />
+						<f:selectItem itemValue="B-" itemLabel="B-" />
+						<f:selectItem itemValue="AB+" itemLabel="AB+" />
+						<f:selectItem itemValue="AB-" itemLabel="AB-" />
+						<f:selectItem itemValue="O+" itemLabel="O+" />
+						<f:selectItem itemValue="O-" itemLabel="O-" />
+						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
+						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
+						
+					</h:selectOneMenu>
+					
 					
 					<h:outputText value="Donation Center:" />
 					<h:selectOneMenu

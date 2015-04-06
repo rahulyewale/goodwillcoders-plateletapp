@@ -34,6 +34,8 @@ public class SearchDonorMB implements Serializable
 	private String uniqueRequestId;
 	private String confirmMsg;
 	
+	private String bloodGroup;
+	
 	private String theme ;
 	
 	@ManagedProperty(value="#{searchDonorResponseMB}")
@@ -231,6 +233,16 @@ public class SearchDonorMB implements Serializable
 	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
 	{
 		this.searchDonorResponseMB = searchDonorResponseMB;
+	}
+
+	public String getBloodGroup()
+	{
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup)
+	{
+		this.bloodGroup = bloodGroup;
 	}
 
 }
