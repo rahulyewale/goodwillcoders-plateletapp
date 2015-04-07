@@ -10,23 +10,23 @@
 		<navigation-case>
 		 <from-action>#{dashbord.navigateToSearchDonor}</from-action>
 		 <from-outcome>success</from-outcome>
-		 <to-view-id>searchdonor.xhtml</to-view-id>
+		 <to-view-id>secured/searchdonor.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 		 <from-action>#{dashbord.navigateToDashbord}</from-action>
 		 <from-outcome>success</from-outcome>
-		 <to-view-id>dashboard.xhtml</to-view-id>
+		 <to-view-id>secured/dashboard.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
 		 <from-action>#{dashbord.navigateToSearchCommunicationHistory}</from-action>
 		 <from-outcome>success</from-outcome>
-		 <to-view-id>searchcommunicationhistory.xhtml</to-view-id>
+		 <to-view-id>secured/searchcommunicationhistory.xhtml</to-view-id>
 		</navigation-case>
 		
 		<navigation-case>
 		 <from-action>#{dashbord.navigateToExcelUpload}</from-action>
 		 <from-outcome>success</from-outcome>
-		 <to-view-id>donorexcelimport.xhtml</to-view-id>
+		 <to-view-id>secured/donorexcelimport.xhtml</to-view-id>
 		</navigation-case>
 		
 		

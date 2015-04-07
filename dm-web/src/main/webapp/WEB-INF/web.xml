@@ -7,6 +7,17 @@
 
 	<!-- The Bootstrap listener to start up and shut down Spring's root WebApplicationContext. 
 		It is registered to Servlet Container -->
+		
+		<!-- Login filter -->
+    <filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>org.ngo.think.dm.web.filter.LoginFilter</filter-class>
+    </filter>
+    <!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>
 
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -20,7 +31,7 @@
 
 	
 	<welcome-file-list>
-		<welcome-file>/dashboard.xhtml</welcome-file>
+		<welcome-file>secured/dashboard.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<filter>
