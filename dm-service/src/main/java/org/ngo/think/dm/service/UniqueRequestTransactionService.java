@@ -1,10 +1,17 @@
 package org.ngo.think.dm.service;
 
+import java.util.List;
+
+import org.ngo.think.dm.common.constant.RequestStatus;
+import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
+import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.enums.RandomNumberType;
 import org.ngo.think.dm.common.util.RandomNumberGenerator;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
+import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
+import org.ngo.think.dm.service.mapper.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,9 +33,12 @@ public class UniqueRequestTransactionService
 			try
 			{
 				UniqueRequestTxn uniqueRequestTxn2 = new UniqueRequestTxn();
-				uniqueRequestTxn2.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
+				DonationCenter donationCenter = new DonationCenter();
+				donationCenter.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
+				uniqueRequestTxn2.setDonationCenter(donationCenter);
 				uniqueRequestTxn2.setRequestDate(searchDonorRequestDTO.getRequestDate());
 				uniqueRequestTxn2.setRequestId(uniqueRequestNumber);
+				uniqueRequestTxn2.setRequestStatus(RequestStatus.OPEN.toString());
 				requestDAO.save(uniqueRequestTxn2);
 			}
 			catch (Exception e)
@@ -43,6 +53,16 @@ public class UniqueRequestTransactionService
 		}
 		
 		return uniqueRequestNumber;
+	}
+	
+	
+	public List<UniqueRequestDTO> getRequestList(GetRequestListInputDTO getRequestListInputDTO)
+	{
+		List<UniqueRequestTxn> uniqueRequestTxnList = requestDAO.getRequestList(getRequestListInputDTO);
+
+		List<UniqueRequestDTO> requestDTOList = RequestMapper.toDTOList(uniqueRequestTxnList);
+
+		return requestDTOList;
 	}
 
 }

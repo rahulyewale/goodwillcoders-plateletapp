@@ -6,7 +6,10 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
+import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
+import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
+import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
 import org.ngo.think.dm.persistence.generic.dao.impl.BaseDAOImpl;
 import org.springframework.stereotype.Repository;
@@ -48,6 +51,52 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 		}
 
 		return resultUniqueRequestTxn;
+	}
+	
+	@Override
+	public List<UniqueRequestTxn> getRequestList(GetRequestListInputDTO getRequestListInputDTO)
+	{
+		String baseQuery = "SELECT u FROM UniqueRequestTxn u";
+		String whereClause = " WHERE";
+
+		if (null != getRequestListInputDTO.getRequestNumber() && !getRequestListInputDTO.getRequestNumber().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestId =:requestId";
+			whereClause = " AND";
+		}
+
+		if (null != getRequestListInputDTO.getDonationRequestFromDate() && null != getRequestListInputDTO.getDonationRequestToDate())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestDate >=:fromDate AND u.requestDate <=:toDate";
+			whereClause = " AND";
+
+		}
+
+		if (null != getRequestListInputDTO.getStatus() && !getRequestListInputDTO.getStatus().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestStatus =:requestStatus";
+		}
+
+		Query query = getEntityManager().createQuery(baseQuery);
+
+		if (null != getRequestListInputDTO.getRequestNumber() && !getRequestListInputDTO.getRequestNumber().isEmpty())
+		{
+			query.setParameter("requestId", getRequestListInputDTO.getRequestNumber());
+		}
+
+		if (null != getRequestListInputDTO.getDonationRequestFromDate() && null != getRequestListInputDTO.getDonationRequestToDate())
+		{
+			query.setParameter("fromDate", getRequestListInputDTO.getDonationRequestFromDate(), TemporalType.DATE);
+			query.setParameter("toDate", getRequestListInputDTO.getDonationRequestToDate(), TemporalType.DATE);
+		}
+
+		if (null != getRequestListInputDTO.getStatus() && !getRequestListInputDTO.getStatus().isEmpty())
+		{
+			query.setParameter("requestStatus", getRequestListInputDTO.getStatus());
+		}
+
+		List<UniqueRequestTxn> requestTxnList = query.getResultList();
+		return requestTxnList;
 	}
 	
 	

@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "unique_request_txn")
 @NamedQueries({
 					@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u"),
-               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenterId =:donationCentreId AND u.requestDate = :requestDate"),
+               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenter.donationCenterId =:donationCentreId AND u.requestDate = :requestDate"),
                @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByID", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestId =:requestId")
 					})
 
@@ -25,8 +25,9 @@ public class UniqueRequestTxn implements Serializable
 	@Column(name = "unique_request_txn_id")
 	private Long uniqueRequestTxnId;
 
-	@Column(name = "donation_center_id")
-	private Long donationCenterId;
+	@ManyToOne
+	@JoinColumn(name="donation_center_id")
+	private DonationCenter donationCenter;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "request_date")
@@ -34,6 +35,9 @@ public class UniqueRequestTxn implements Serializable
 
 	@Column(name = "request_id")
 	private String requestId;
+	
+	@Column(name = "request_status")
+	private String requestStatus;
 
 	public UniqueRequestTxn()
 	{
@@ -49,14 +53,15 @@ public class UniqueRequestTxn implements Serializable
 		this.uniqueRequestTxnId = uniqueRequestTxnId;
 	}
 
-	public Long getDonationCenterId()
+
+	public DonationCenter getDonationCenter()
 	{
-		return this.donationCenterId;
+		return donationCenter;
 	}
 
-	public void setDonationCenterId(Long donationCenterId)
+	public void setDonationCenter(DonationCenter donationCenter)
 	{
-		this.donationCenterId = donationCenterId;
+		this.donationCenter = donationCenter;
 	}
 
 	public Date getRequestDate()
@@ -77,6 +82,16 @@ public class UniqueRequestTxn implements Serializable
 	public void setRequestId(String requestId)
 	{
 		this.requestId = requestId;
+	}
+
+	public String getRequestStatus()
+	{
+		return requestStatus;
+	}
+
+	public void setRequestStatus(String requestStatus)
+	{
+		this.requestStatus = requestStatus;
 	}
 
 }

@@ -72,7 +72,7 @@ public class SearchCommunicationHistoryService
 			String centerDetails = null;
 			if(null!=uniqueRequestTxn)
 			{
-				center = centerDAO.findByPrimaryKey(uniqueRequestTxn.getDonationCenterId());	
+				center = uniqueRequestTxn.getDonationCenter();
 				centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 			}
 			
@@ -101,7 +101,7 @@ public class SearchCommunicationHistoryService
 			DonationCenter donationCenter = communicationHistory.getDonationCenter();
 			DonationCenterDTO donationCenterDTO = new DonationCenterDTO();
 			donationCenterDTO.setAddressLine1(donationCenter.getAddressLine1());
-			donationCenterDTO.setAddressLine2(donationCenter.getAddressLine2());
+			//donationCenterDTO.setAddressLine2(donationCenter.getAddressLine2());
 			donationCenterDTO.setDonationCenterName(donationCenter.getDonationCenterName());
 			donationCenterDTO.setPinCode(donationCenter.getPinCode());
 			donationCenterDTO.setState(donationCenter.getState());

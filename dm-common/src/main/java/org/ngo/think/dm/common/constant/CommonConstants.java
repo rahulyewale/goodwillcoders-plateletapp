@@ -13,6 +13,7 @@ public class CommonConstants
 		public static final String CONFIRM_COMMUNICATION_HISTORY_REQUEST = "confirmCommunicationHistoryRequest";
 		
 		public static final String IMPORT_DONOR_EXCEL_REQUEST = "importDonorExcel";
+		public static final String GET_REQUEST_LIST_REQUEST = "getRequestListRequest";
 	}
 	
 	public static class ResponseKey
@@ -21,6 +22,8 @@ public class CommonConstants
 		public static final String SEARCH_COMMUNICATION_HISTORY_RESPONSE = "searchCommunicationHistoryResponse";
 		public static final String CONFIRM_COMMUNICATION_HISTORY_RESPONSE = "confirmCommunicationHistoryResponse";
 		public static final String SEARCH_DOATION_CENTER_RESPONSE = "donationCenterResponse";
+		public static final String GET_REQUEST_LIST_RESPONSE = "getRequestListResponse";
+		
 	}
 	
 	public static class ApplicationConstant

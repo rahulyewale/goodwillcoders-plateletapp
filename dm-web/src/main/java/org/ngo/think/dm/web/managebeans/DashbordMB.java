@@ -1,6 +1,7 @@
 package org.ngo.think.dm.web.managebeans;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -13,8 +14,12 @@ import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
+import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
+import org.ngo.think.dm.common.dto.GetRequestListResponse;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
+import org.ngo.think.dm.common.dto.UniqueRequestDTO;
+import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
@@ -24,11 +29,26 @@ import org.ngo.think.dm.web.constant.WebConstant;
 public class DashbordMB
 {
 
-	@ManagedProperty(value="#{searchDonorResponseMB}")
+	@ManagedProperty(value = "#{searchDonorResponseMB}")
 	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
-
 	
+	@ManagedProperty(value = "#{requestListMB}")
+	private RequestListMB requestListMB = new RequestListMB();
+
+
 	public String navigateToSearchDonor()
+	{
+		populateDonationCenters();
+
+		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
+		searchDonorResponseMB.setDonorRequestDTO(new SearchDonorRequestDTO());
+		searchDonorResponseMB.setSearchDonorResponseDTO(new SearchDonorResponseDTO());
+
+		System.out.println("navigating to search donor");
+		return "success";
+	}
+
+	private GetDonationCenterResponseDTO fetchDonationCenters()
 	{
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
 		String serviceResponseString = null;
@@ -47,21 +67,7 @@ public class DashbordMB
 
 			e.printStackTrace();
 		}
-		
-		DonationCenterDTO[] centerDTOs  = new DonationCenterDTO[donationCenterResponseDTO.getDonationCenterDTOList().size()];
-		for (int i = 0; i < donationCenterResponseDTO.getDonationCenterDTOList().size(); i++)
-		{
-			centerDTOs[i] = donationCenterResponseDTO.getDonationCenterDTOList().get(i);
-		}
-		searchDonorResponseMB.setDonationCenterDTOList(centerDTOs);
-		searchDonorResponseMB.setDonationCentersSet(true);
-		
-		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
-		searchDonorResponseMB.setDonorRequestDTO(new SearchDonorRequestDTO());
-		searchDonorResponseMB.setSearchDonorResponseDTO(new SearchDonorResponseDTO());
-
-		System.out.println("navigating to search donor");
-		return "success";
+		return donationCenterResponseDTO;
 	}
 
 	public String navigateToDashbord()
@@ -76,12 +82,12 @@ public class DashbordMB
 		System.out.println("navigating to search communication history");
 		return "success";
 	}
-	
+
 	public String navigateToExcelUpload()
 	{
 		return "success";
 	}
-	
+
 	public SearchDonorResponseMB getSearchDonorResponseMB()
 	{
 		return searchDonorResponseMB;
@@ -91,4 +97,74 @@ public class DashbordMB
 	{
 		this.searchDonorResponseMB = searchDonorResponseMB;
 	}
+
+	public String navigateToRequestList()
+	{
+		System.out.println("navigating to request list");
+
+		requestListMB.setRequestDTOList(new ArrayList<UniqueRequestDTO>());
+		
+		populateDonationCenters();
+
+		Date donationRequestFromDate = new Date();
+
+		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 90);
+
+		String status = "OPEN";
+
+		GetRequestListInputDTO getRequestListInputDTO = new GetRequestListInputDTO();
+		getRequestListInputDTO.setDonationRequestFromDate(donationRequestFromDate);
+		getRequestListInputDTO.setDonationRequestToDate(donationRequestToDate);
+		getRequestListInputDTO.setStatus(status);
+		
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
+		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO);
+		String serviceResponseString = null;
+		ServiceResponse serviceResponse = null;
+		GetRequestListResponse getRequestListResponse = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_REQUEST_LIST_URL, serviceRequest);
+
+			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.GET_REQUEST_LIST_RESPONSE));
+			getRequestListResponse = (GetRequestListResponse) JsonUtil.convertJsonToObject(serviceResponseString, GetRequestListResponse.class);
+
+		}
+		catch (Exception e)
+		{
+
+			e.printStackTrace();
+		}
+
+		requestListMB.setRequestDTOList(getRequestListResponse.getRequestListOutputList());
+		
+		return "success";
+	}
+
+	private void populateDonationCenters()
+	{
+		if (!searchDonorResponseMB.isDonationCentersSet())
+		{
+			GetDonationCenterResponseDTO donationCenterResponseDTO = fetchDonationCenters();
+
+			DonationCenterDTO[] centerDTOs = new DonationCenterDTO[donationCenterResponseDTO.getDonationCenterDTOList().size()];
+			for (int i = 0; i < donationCenterResponseDTO.getDonationCenterDTOList().size(); i++)
+			{
+				centerDTOs[i] = donationCenterResponseDTO.getDonationCenterDTOList().get(i);
+			}
+			searchDonorResponseMB.setDonationCenterDTOList(centerDTOs);
+			searchDonorResponseMB.setDonationCentersSet(true);
+		}
+	}
+
+	public RequestListMB getRequestListMB()
+	{
+		return requestListMB;
+	}
+
+	public void setRequestListMB(RequestListMB requestListMB)
+	{
+		this.requestListMB = requestListMB;
+	}
+	
 }

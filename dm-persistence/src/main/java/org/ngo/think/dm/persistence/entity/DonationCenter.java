@@ -21,12 +21,10 @@ public class DonationCenter implements Serializable
 	@Column(name = "donation_center_id")
 	private Long donationCenterId;
 
-	@Column(name = "address_line_1")
+	@Column(name = "donation_center_address")
 	private String addressLine1;
 
-	@Column(name = "address_line_2")
-	private String addressLine2;
-
+	@Column(name = "location")
 	private String city;
 
 	@Column(name = "created_by")
@@ -50,6 +48,16 @@ public class DonationCenter implements Serializable
 	private String pinCode;
 
 	private String state;
+	
+	@Column(name = "primary_telephone_number")
+	private String primaryTelephoneNo;
+	
+	@Column(name = "secondary_telephone_number")
+	private String secondaryTelephoneNo;
+	
+	@Column(name = "fax_number")
+	private String faxNumber;
+	
 	
 	@Transient
 	private String centerAddress;
@@ -80,16 +88,6 @@ public class DonationCenter implements Serializable
 	public void setAddressLine1(String addressLine1)
 	{
 		this.addressLine1 = addressLine1;
-	}
-
-	public String getAddressLine2()
-	{
-		return this.addressLine2;
-	}
-
-	public void setAddressLine2(String addressLine2)
-	{
-		this.addressLine2 = addressLine2;
 	}
 
 	public String getCity()
