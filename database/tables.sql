@@ -1,3 +1,27 @@
+CREATE TABLE donation_center
+(
+  donation_center_id bigint NOT NULL,
+  donation_center_name character varying(90),
+  location character varying,
+  primary_telephone_number character varying,
+  secondary_telephone_number character varying,
+  fax_number character varying,
+  donation_center_address character varying,
+  pin_code character varying,
+  state character varying,
+  created_by character varying NOT NULL,
+  created_date date NOT NULL,
+  modified_by character varying,
+  modified_date date,
+  CONSTRAINT donation_center_pkey PRIMARY KEY (donation_center_id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE donation_center
+  OWNER TO postgres;
+
+  
 -- Table: donor
 
 -- DROP TABLE donor;
@@ -24,6 +48,8 @@ WITH (
 );
 ALTER TABLE donor
   OWNER TO postgres;
+
+
 
 -- Table: donation_history
 
@@ -52,6 +78,8 @@ WITH (
 ALTER TABLE donation_history
   OWNER TO postgres;
 
+ 
+  
  -- Table: donor_address_details
 
 -- DROP TABLE donor_address_details;
@@ -101,35 +129,34 @@ WITH (
 );
 ALTER TABLE donor_contact_details
   OWNER TO postgres;
+ 
+  
+-- Table: unique_request_txn
 
--- Table: donation_center
+-- DROP TABLE unique_request_txn;
 
--- DROP TABLE donation_center;
-
-CREATE TABLE donation_center
+CREATE TABLE unique_request_txn
 (
+  unique_request_txn_id bigint NOT NULL,
+  request_date date NOT NULL,
   donation_center_id bigint NOT NULL,
-  donation_center_name character varying(30),
-  address_line_1 character varying,
-  address_line_2 character varying,
-  city character varying,
-  state character varying,
-  pin_code character varying,
-  created_by character varying NOT NULL,
-  created_date date NOT NULL,
-  modified_by character varying,
-  modified_date date,
-  CONSTRAINT donation_center_pkey PRIMARY KEY (donation_center_id)
+  request_id character varying NOT NULL,
+  request_status character varying NOT NULL,
+  CONSTRAINT unique_request_txn_pkey PRIMARY KEY (unique_request_txn_id),
+  CONSTRAINT unique_request_txn_donation_center_id_fkey FOREIGN KEY (donation_center_id)
+      REFERENCES donation_center (donation_center_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE donation_center
+ALTER TABLE unique_request_txn
   OWNER TO postgres;
+ 
+ 
+ -- Table: communication_history
 
-  -- Table: donation_center
-
--- DROP TABLE donation_center;
+-- DROP TABLE communication_history;
 
 CREATE TABLE communication_history
 (
@@ -144,6 +171,9 @@ CREATE TABLE communication_history
   created_by character varying NOT NULL,
   created_date date NOT NULL,
   CONSTRAINT communication_history_id PRIMARY KEY (communication_history_id),
+  CONSTRAINT communication_history_donor_id_fkey FOREIGN KEY (donor_id)
+      REFERENCES donor (donor_id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT donation_center_donation_center_id_fkey FOREIGN KEY (donation_center_id)
       REFERENCES donation_center (donation_center_id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
@@ -153,21 +183,22 @@ WITH (
 );
 ALTER TABLE communication_history
   OWNER TO postgres;
-  
--- Table: unique_request_txn
--- DROP TABLE unique_request_txn;
+ 
+-- Table: postal_code_master
 
-CREATE TABLE unique_request_txn
+-- DROP TABLE postal_code_master;
+
+CREATE TABLE postal_code_master
 (
-  unique_request_txn_id bigint NOT NULL,
-  request_date date NOT NULL,
-  donation_center_id bigint NOT NULL,
-  request_id character varying NOT NULL,
-  CONSTRAINT unique_request_txn_pkey PRIMARY KEY (unique_request_txn_id)
-  
+  postal_code_mst_id bigint NOT NULL,
+  postalcode character varying,
+  lattitude double precision,
+  longitude double precision,
+  CONSTRAINT postal_code_master_pkey PRIMARY KEY (postal_code_mst_id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE unique_request_txn
+ALTER TABLE postal_code_master
   OWNER TO postgres;
+  
