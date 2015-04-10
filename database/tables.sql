@@ -141,6 +141,7 @@ CREATE TABLE unique_request_txn
   request_date date NOT NULL,
   donation_center_id bigint NOT NULL,
   request_id character varying NOT NULL,
+   blood_group character varying,
   request_status character varying NOT NULL,
   CONSTRAINT unique_request_txn_pkey PRIMARY KEY (unique_request_txn_id),
   CONSTRAINT unique_request_txn_donation_center_id_fkey FOREIGN KEY (donation_center_id)

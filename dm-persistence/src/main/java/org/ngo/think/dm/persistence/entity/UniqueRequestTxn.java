@@ -1,7 +1,9 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 /**
@@ -38,6 +40,9 @@ public class UniqueRequestTxn implements Serializable
 	
 	@Column(name = "request_status")
 	private String requestStatus;
+	
+	@Column(name = "blood_group")
+	private String bloodGroup;
 
 	public UniqueRequestTxn()
 	{
@@ -92,6 +97,16 @@ public class UniqueRequestTxn implements Serializable
 	public void setRequestStatus(String requestStatus)
 	{
 		this.requestStatus = requestStatus;
+	}
+
+	public String getBloodGroup()
+	{
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup)
+	{
+		this.bloodGroup = bloodGroup;
 	}
 
 }

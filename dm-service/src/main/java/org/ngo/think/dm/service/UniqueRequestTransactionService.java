@@ -38,6 +38,7 @@ public class UniqueRequestTransactionService
 				uniqueRequestTxn2.setDonationCenter(donationCenter);
 				uniqueRequestTxn2.setRequestDate(searchDonorRequestDTO.getRequestDate());
 				uniqueRequestTxn2.setRequestId(uniqueRequestNumber);
+				uniqueRequestTxn2.setBloodGroup(searchDonorRequestDTO.getBloodGroup());
 				uniqueRequestTxn2.setRequestStatus(RequestStatus.OPEN.toString());
 				requestDAO.save(uniqueRequestTxn2);
 			}
