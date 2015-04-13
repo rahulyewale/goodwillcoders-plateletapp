@@ -26,7 +26,7 @@ public class DonationCenterServiceController
 	
 	@RequestMapping(value="/getdonationcenters",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
-	public ServiceResponse searchDonor(@RequestBody ServiceRequest serviceRequest)
+	public ServiceResponse getDonationCenters(@RequestBody ServiceRequest serviceRequest)
 	{
 		
 		GetDonationCenterResponseDTO getDonationCenterResponseDTO =  donationCenterService.getDonationCenters();

@@ -51,7 +51,7 @@ public class NavigationBean implements Serializable {
      * @return Welcome page name.
      */
     public String redirectToWelcome() {
-        return "/secured/dashboard.xhtml?faces-redirect=true";
+        return "/secured/searchdonor.xhtml?faces-redirect=true";
     }
      
     /**

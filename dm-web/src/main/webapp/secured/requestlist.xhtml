@@ -7,118 +7,139 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-	
-	
-	
-   <h:head>
-   <title>Request List</title>
-   </h:head>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+
+
+<h:head>
+	<title>Request List</title>
+	<script type="text/javascript">
+   	function unblockUi(data)
+   	{
+   		if(data.status==="success")
+   		{
+   			PF('blockUIWidget').unblock();
+   		}
+   		
+   	}
+   
+   
+   </script>
+</h:head>
 <h:body>
 
-
-<ui:include src="header.xhtml"></ui:include>
+	<ui:include src="header.xhtml"></ui:include>
 
 	<h2>Request List</h2>
- 		<h:form id="asd">
- 		<p:accordionPanel>
- 		<p:tab title="Search Request List Criteria">
-            <h:panelGrid columns="2" cellpadding="10">
-               
-	 	 	<p:outputLabel for="requestId" value="Request Id :" /> 
-		 	<p:inputText id="requestId"  value="#{srchCommHistMB.srchCommnHistReqDTO.requestTxnId}" label="requestId"/>
-		 	
-		 		 	
-            <p:outputLabel for="donationRequestfromDate" value="Donation Request From Date :" />
-            <p:calendar id="donationRequestDate" value="#{srchCommHistMB.srchCommnHistReqDTO.donationRequestDate}" showOn="button" pattern="dd-MMM-yyyy" />
-		     
-		    <p:outputLabel for="donationRequestfromDate" value="Donation Request From Date :" />
-            <p:calendar id="donationRequestDate" value="#{srchCommHistMB.srchCommnHistReqDTO.donationRequestDate}" showOn="button" pattern="dd-MMM-yyyy" />
-		        
-		           
-		    <h:outputText value="Donation Center:" />
+	<h:form id="requestListForm">
+		<p:accordionPanel>
+			<p:tab title="Search Request List Criteria">
+				<h:panelGrid columns="2" cellpadding="10">
+
+					<p:outputLabel for="requestNumber" value="Request Number :" />
+					<p:inputText id="requestNumber"
+						value="#{requestListMB.requestListInputDTO.requestNumber}"
+						label="requestNumber" />
+
+
+					<p:outputLabel for="donationRequestFromDate"
+						value="Donation Request From Date :" />
+					<p:calendar id="donationRequestFromDate"
+						value="#{requestListMB.requestListInputDTO.donationRequestFromDate}"
+						showOn="button" pattern="dd-MMM-yyyy" />
+
+					<p:outputLabel for="donationRequestToDate"
+						value="Donation Request To Date :" />
+					<p:calendar id="donationRequestToDate"
+						value="#{requestListMB.requestListInputDTO.donationRequestToDate}"
+						showOn="button" pattern="dd-MMM-yyyy" />
+
+
+					<h:outputText value="Donation Center:" />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
-						<f:selectItems value="#{searchDonorResponseMB.donationCenterDTOList}" var="donationCenterDTO"
-   							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}" itemValue="#{donationCenterDTO.donationCenterId}" />
-			</h:selectOneMenu>
-			
-	        <p:outputLabel for="status" value="Status :" /> 
-	        <p:selectOneMenu id="status" value="#{srchCommHistMB.srchCommnHistReqDTO.status}"   label="status" >
-	   			<f:selectItem itemLabel="--Select--" itemValue="-1" />
-	  			<f:selectItem itemLabel="SMS sent" itemValue="SMS_SENT" />
-	  			<f:selectItem itemLabel="Confirm" itemValue="CONFIRMED" />
-	  			<f:selectItem itemLabel="Cancel" itemValue="CANCELLED" />
-	   		</p:selectOneMenu>
-		        
-            </h:panelGrid>
-            <h:panelGrid cellpadding="10">
-            	<h:commandButton value="Search" actionListener="#{srchCommHistMB.searchCommunications}"> 
-            		<f:ajax execute="@form" render=":basd" />
-            	</h:commandButton>
-            </h:panelGrid>
-            </p:tab>
-            </p:accordionPanel>
-		</h:form>
-     
+						<f:selectItems
+							value="#{searchDonorResponseMB.donationCenterDTOList}"
+							var="donationCenterDTO"
+							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
+							itemValue="#{donationCenterDTO.donationCenterId}" />
+					</h:selectOneMenu>
 
-        	<h:form id="basd">	
-        	<p:accordionPanel>
-        	<p:tab title="Communication History Result">
-            <h:panelGrid  cellpadding="10" >
-                
-               <p:dataTable rows="10"  value="#{srchCommHistMB.srchCommnHistResultList}" var="commnHist"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
-            	 <f:facet name="header">   <h:outputText value="Communication History List" /> </f:facet>
-            	 
-            	  <p:column headerText="Select">
-			            <h:selectBooleanCheckbox value="#{commnHist.historySelected}" />
-			      </p:column>
-			 
-			      <p:column headerText="Request Id">
-			            <h:outputText value="#{commnHist.requestId}" />
-			      </p:column>
-			 
-			      <p:column headerText="Donor UUID">
-			            <h:outputText value="#{commnHist.donorUuid}" />
-			      </p:column>
-			 
-			      <p:column headerText="Name">
-			            <h:outputText value="#{commnHist.donorName}" />
-			      </p:column>
-			      
-			      <p:column headerText="Mobile No">
-			            <h:outputText value="#{commnHist.mobileNumber}" />
-			      </p:column>
-			 
-			      <p:column headerText="Donation Center">
-			            <h:outputText value="#{commnHist.donationCenterDTO.donationCenterName},  #{commnHist.donationCenterDTO.addressLine1},
-			            #{commnHist.donationCenterDTO.addressLine2},
-			            #{commnHist.donationCenterDTO.city}, #{commnHist.donationCenterDTO.state},
-			            #{commnHist.donationCenterDTO.pinCode}" />
-			      </p:column>
-			      
-   			      <p:column headerText="SMS Sent Date">
-			            <h:outputText value="#{commnHist.smsSentDate}" />
-			      </p:column>
-			      
-   			      <p:column headerText="Status">
-			            <h:outputText value="#{commnHist.status}" />
-			      </p:column>
-			      
-               </p:dataTable>
-            </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="10">
-          	            <p:commandButton value="Confirm" > </p:commandButton>
-          	            <p:commandButton value="Cancel" > </p:commandButton>
-            </h:panelGrid>
-            </p:tab>
-            </p:accordionPanel>
-            </h:form>
+					<p:outputLabel for="status" value="Status :" />
+					<p:selectOneMenu id="status"
+						value="#{requestListMB.requestListInputDTO.status}" label="status">
+						<f:selectItem itemLabel="--Select--" itemValue="-1" />
+						<f:selectItem itemLabel="Open" itemValue="OPEN" />
+						<f:selectItem itemLabel="Close" itemValue="CLOSE" />
+					</p:selectOneMenu>
 
-<ui:include src="footer.xhtml"></ui:include>
- 
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+
+
+		<h:commandLink id="searchRequestListId" value=""
+			actionListener="#{requestListMB.searchRequestList}"
+			onclick="PF('blockUIWidget').block()">
+			<p:graphicImage value="/secured/image/search.jpg" />
+			<f:ajax execute="@form" render=":requestListResultForm"
+				onevent="unblockUi" />
+		</h:commandLink>
+
+
+		<pe:blockUI widgetVar="blockUIWidget">
+			<h:panelGrid columns="2">
+				<p:graphicImage value="/secured/image/loader.GIF" />
+				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+			</h:panelGrid>
+		</pe:blockUI>
+
+
+	</h:form>
+
+
+	<h:form id="requestListResultForm">
+		<p:accordionPanel>
+			<p:tab title="Request List Result">
+				<h:panelGrid cellpadding="10">
+
+					<p:dataTable rows="10"
+						value="#{requestListMB.requestDTOList}" var="requestDTO"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15">
+						<f:facet name="header">
+							<h:outputText value="Request List" />
+						</f:facet>
+
+						<p:column headerText="Request Number">
+							
+							<h:commandLink actionListener="#{requestListMB.openRequest(requestDTO)}"
+                             ajax="false" action="/secured/searchdonor.xhtml" target="_blank"
+                             value="#{requestDTO.requestNumber}"/>
+						</p:column>
+
+						<p:column headerText="Requested Date">
+							<h:outputText value="#{requestDTO.requestedDate}" />
+						</p:column>
+
+						<p:column headerText="Donation Center">
+							<h:outputText value="#{requestDTO.donationCenterDTO.donationCenterName},#{requestDTO.donationCenterDTO.city}" />
+						</p:column>
+
+						<p:column headerText="Status">
+							<h:outputText value="#{requestDTO.status}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:panelGrid>
+				
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+
+	<ui:include src="footer.xhtml"></ui:include>
+
 </h:body>
 </html>

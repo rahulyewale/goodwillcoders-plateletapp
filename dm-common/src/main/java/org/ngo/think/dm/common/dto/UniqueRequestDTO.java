@@ -11,7 +11,7 @@ public class UniqueRequestDTO implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private String requestNumber;
-	private Date requestedDate;
+	private String requestedDate;
 	private String status;
 	private Long uniqueRequestTxnId;
 	private DonationCenterDTO donationCenterDTO;
@@ -27,12 +27,12 @@ public class UniqueRequestDTO implements Serializable
 	}
 
 
-	public Date getRequestedDate()
+	public String getRequestedDate()
 	{
 		return requestedDate;
 	}
 
-	public void setRequestedDate(Date requestedDate)
+	public void setRequestedDate(String requestedDate)
 	{
 		this.requestedDate = requestedDate;
 	}

@@ -31,7 +31,7 @@
 
 	
 	<welcome-file-list>
-		<welcome-file>secured/dashboard.xhtml</welcome-file>
+		<welcome-file>secured/searchdonor.xhtml</welcome-file>
 	</welcome-file-list>
 
 	<filter>

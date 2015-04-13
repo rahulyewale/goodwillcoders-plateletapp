@@ -22,7 +22,7 @@ public class RequestMapper
 		
 		requestDTO.setDonationCenterDTO(DonationCenterMapper.toDTO(uniqueRequestTxn.getDonationCenter()));
 		
-		requestDTO.setRequestedDate(uniqueRequestTxn.getRequestDate());
+		requestDTO.setRequestedDate(DateUtil.dateToString(uniqueRequestTxn.getRequestDate()));
 		
 		requestDTO.setRequestNumber(uniqueRequestTxn.getRequestId());
 		requestDTO.setStatus(uniqueRequestTxn.getRequestStatus());

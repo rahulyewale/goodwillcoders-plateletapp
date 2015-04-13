@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
@@ -13,8 +14,10 @@ import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
+import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
+import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.util.JsonUtil;
@@ -43,6 +46,12 @@ public class SearchDonorMB implements Serializable
 
 	public SearchDonorMB()
 	{
+	}
+	
+	@PostConstruct
+	public void init()
+	{
+		populateDonationCenters();
 	}
 
 	public void searchDonor()
@@ -93,7 +102,7 @@ public class SearchDonorMB implements Serializable
 		System.out.println("Search submitted");
 	}
 
-	public void sendSMS()
+	public void R()
 	{
 		// sending the list
 
@@ -243,6 +252,44 @@ public class SearchDonorMB implements Serializable
 	public void setBloodGroup(String bloodGroup)
 	{
 		this.bloodGroup = bloodGroup;
+	}
+	
+	private void populateDonationCenters()
+	{
+		if (!searchDonorResponseMB.isDonationCentersSet())
+		{
+			GetDonationCenterResponseDTO donationCenterResponseDTO = fetchDonationCenters();
+
+			DonationCenterDTO[] centerDTOs = new DonationCenterDTO[donationCenterResponseDTO.getDonationCenterDTOList().size()];
+			for (int i = 0; i < donationCenterResponseDTO.getDonationCenterDTOList().size(); i++)
+			{
+				centerDTOs[i] = donationCenterResponseDTO.getDonationCenterDTOList().get(i);
+			}
+			searchDonorResponseMB.setDonationCenterDTOList(centerDTOs);
+			searchDonorResponseMB.setDonationCentersSet(true);
+		}
+	}
+	
+	private GetDonationCenterResponseDTO fetchDonationCenters()
+	{
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
+		String serviceResponseString = null;
+		ServiceResponse serviceResponse = null;
+		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);
+
+			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DOATION_CENTER_RESPONSE));
+			donationCenterResponseDTO = (GetDonationCenterResponseDTO) JsonUtil.convertJsonToObject(serviceResponseString, GetDonationCenterResponseDTO.class);
+
+		}
+		catch (Exception e)
+		{
+
+			e.printStackTrace();
+		}
+		return donationCenterResponseDTO;
 	}
 
 }

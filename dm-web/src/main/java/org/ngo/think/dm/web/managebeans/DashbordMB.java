@@ -14,8 +14,6 @@ import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
-import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
-import org.ngo.think.dm.common.dto.GetRequestListResponse;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
@@ -48,27 +46,6 @@ public class DashbordMB
 		return "success";
 	}
 
-	private GetDonationCenterResponseDTO fetchDonationCenters()
-	{
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
-		String serviceResponseString = null;
-		ServiceResponse serviceResponse = null;
-		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
-		try
-		{
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);
-
-			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DOATION_CENTER_RESPONSE));
-			donationCenterResponseDTO = (GetDonationCenterResponseDTO) JsonUtil.convertJsonToObject(serviceResponseString, GetDonationCenterResponseDTO.class);
-
-		}
-		catch (Exception e)
-		{
-
-			e.printStackTrace();
-		}
-		return donationCenterResponseDTO;
-	}
 
 	public String navigateToDashbord()
 	{
@@ -101,7 +78,7 @@ public class DashbordMB
 	public String navigateToRequestList()
 	{
 		System.out.println("navigating to request list");
-
+		
 		requestListMB.setRequestDTOList(new ArrayList<UniqueRequestDTO>());
 		
 		populateDonationCenters();
@@ -112,31 +89,11 @@ public class DashbordMB
 
 		String status = "OPEN";
 
-		GetRequestListInputDTO getRequestListInputDTO = new GetRequestListInputDTO();
-		getRequestListInputDTO.setDonationRequestFromDate(donationRequestFromDate);
-		getRequestListInputDTO.setDonationRequestToDate(donationRequestToDate);
-		getRequestListInputDTO.setStatus(status);
+		requestListMB.getRequestListInputDTO().setDonationRequestFromDate(donationRequestFromDate);
+		requestListMB.getRequestListInputDTO().setDonationRequestToDate(donationRequestToDate);
+		requestListMB.getRequestListInputDTO().setStatus(status);
 		
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
-		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO);
-		String serviceResponseString = null;
-		ServiceResponse serviceResponse = null;
-		GetRequestListResponse getRequestListResponse = null;
-		try
-		{
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_REQUEST_LIST_URL, serviceRequest);
-
-			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.GET_REQUEST_LIST_RESPONSE));
-			getRequestListResponse = (GetRequestListResponse) JsonUtil.convertJsonToObject(serviceResponseString, GetRequestListResponse.class);
-
-		}
-		catch (Exception e)
-		{
-
-			e.printStackTrace();
-		}
-
-		requestListMB.setRequestDTOList(getRequestListResponse.getRequestListOutputList());
+		requestListMB.searchRequestList();
 		
 		return "success";
 	}
@@ -155,6 +112,28 @@ public class DashbordMB
 			searchDonorResponseMB.setDonationCenterDTOList(centerDTOs);
 			searchDonorResponseMB.setDonationCentersSet(true);
 		}
+	}
+	
+	private GetDonationCenterResponseDTO fetchDonationCenters()
+	{
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
+		String serviceResponseString = null;
+		ServiceResponse serviceResponse = null;
+		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);
+
+			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DOATION_CENTER_RESPONSE));
+			donationCenterResponseDTO = (GetDonationCenterResponseDTO) JsonUtil.convertJsonToObject(serviceResponseString, GetDonationCenterResponseDTO.class);
+
+		}
+		catch (Exception e)
+		{
+
+			e.printStackTrace();
+		}
+		return donationCenterResponseDTO;
 	}
 
 	public RequestListMB getRequestListMB()
