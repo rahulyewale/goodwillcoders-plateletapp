@@ -14,6 +14,7 @@ import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
+import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
@@ -32,10 +33,28 @@ public class DashbordMB
 	
 	@ManagedProperty(value = "#{requestListMB}")
 	private RequestListMB requestListMB = new RequestListMB();
+	
+	@ManagedProperty(value = "#{searchDonorMB}")
+	private SearchDonorMB searchDonorMB = new SearchDonorMB();
+
+
+
+	public SearchDonorMB getSearchDonorMB()
+	{
+		return searchDonorMB;
+	}
+
+
+	public void setSearchDonorMB(SearchDonorMB searchDonorMB)
+	{
+		this.searchDonorMB = searchDonorMB;
+	}
 
 
 	public String navigateToSearchDonor()
 	{
+		this.searchDonorMB.setDonorRequestDTO(new SearchDonorRequestDTO());
+		
 		populateDonationCenters();
 
 		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
@@ -79,13 +98,14 @@ public class DashbordMB
 	{
 		System.out.println("navigating to request list");
 		
+		requestListMB.setRequestListInputDTO(new GetRequestListInputDTO());
 		requestListMB.setRequestDTOList(new ArrayList<UniqueRequestDTO>());
 		
 		populateDonationCenters();
 
 		Date donationRequestFromDate = new Date();
 
-		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 90);
+		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 91);
 
 		String status = "OPEN";
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
@@ -29,6 +30,9 @@ public class RequestListMB implements Serializable
 	private GetRequestListInputDTO requestListInputDTO = new GetRequestListInputDTO();
 	
 	private List<UniqueRequestDTO> requestDTOList = new ArrayList<UniqueRequestDTO>();
+	
+	@ManagedProperty(value="#{requestDetailsMB}")
+	private RequestDetailsMB requestDetailsMB = new RequestDetailsMB();
 
 	
 	public List<UniqueRequestDTO> getRequestDTOList()
@@ -44,6 +48,8 @@ public class RequestListMB implements Serializable
 	
 	public void openRequest(UniqueRequestDTO requestDTO)
 	{
+		requestDetailsMB.getCommunicationHistory(requestDTO);
+		
 		System.out.println(requestDTO.getRequestNumber());
 	}
 
@@ -82,6 +88,18 @@ public class RequestListMB implements Serializable
 	public void setRequestListInputDTO(GetRequestListInputDTO getRequestListInputDTO)
 	{
 		this.requestListInputDTO = getRequestListInputDTO;
+	}
+
+
+	public RequestDetailsMB getRequestDetailsMB()
+	{
+		return requestDetailsMB;
+	}
+
+
+	public void setRequestDetailsMB(RequestDetailsMB requestDetailsMB)
+	{
+		this.requestDetailsMB = requestDetailsMB;
 	}
 	
 	/*public void confirmCommunications()

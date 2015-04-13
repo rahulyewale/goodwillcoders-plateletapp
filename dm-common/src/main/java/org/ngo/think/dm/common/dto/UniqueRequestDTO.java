@@ -1,7 +1,6 @@
 package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
-import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -12,6 +11,7 @@ public class UniqueRequestDTO implements Serializable
 
 	private String requestNumber;
 	private String requestedDate;
+	private String bloodGroup;
 	private String status;
 	private Long uniqueRequestTxnId;
 	private DonationCenterDTO donationCenterDTO;
@@ -67,6 +67,16 @@ public class UniqueRequestDTO implements Serializable
 	public void setUniqueRequestTxnId(Long uniqueRequestTxnId)
 	{
 		this.uniqueRequestTxnId = uniqueRequestTxnId;
+	}
+
+	public String getBloodGroup()
+	{
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup)
+	{
+		this.bloodGroup = bloodGroup;
 	}
 
 	

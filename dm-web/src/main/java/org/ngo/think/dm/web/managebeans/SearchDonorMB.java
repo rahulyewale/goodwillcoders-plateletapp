@@ -8,7 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -26,7 +26,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
-@RequestScoped
+@SessionScoped
 public class SearchDonorMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
@@ -102,7 +102,7 @@ public class SearchDonorMB implements Serializable
 		System.out.println("Search submitted");
 	}
 
-	public void R()
+	public void sendSMS()
 	{
 		// sending the list
 

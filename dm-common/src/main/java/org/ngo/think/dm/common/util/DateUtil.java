@@ -53,5 +53,29 @@ public class DateUtil
 	   return date;
 	}
 	
+	public static Date stringToDate(String referenceStringDate,String format) throws ParseException
+	{
+		DateFormat dateFormat = new SimpleDateFormat(format);
+	   
+	   //to convert Date to String, use format method of SimpleDateFormat class.
+	   Date date = dateFormat.parse(referenceStringDate);
+	   return date;
+	}
+	
+	public static void main(String[] args)
+	{
+		String date = "12-Apr-2015";
+		
+		try
+		{
+			stringToDate(date, "DD-MMM-YYYY");
+		}
+		catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 }
