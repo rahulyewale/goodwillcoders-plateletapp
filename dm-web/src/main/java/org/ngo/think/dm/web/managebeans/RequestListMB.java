@@ -33,6 +33,9 @@ public class RequestListMB implements Serializable
 	
 	@ManagedProperty(value="#{requestDetailsMB}")
 	private RequestDetailsMB requestDetailsMB = new RequestDetailsMB();
+	
+	@ManagedProperty(value = "#{searchDonorMB}")
+	private SearchDonorMB searchDonorMB = new SearchDonorMB();
 
 	
 	public List<UniqueRequestDTO> getRequestDTOList()
@@ -57,6 +60,7 @@ public class RequestListMB implements Serializable
 	public void searchRequestList()
 	{
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
+		getRequestListInputDTO().setDonationCenterId(this.searchDonorMB.getDonorRequestDTO().getDonationCentre());
 		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO());
 		String serviceResponseString = null;
 		ServiceResponse serviceResponse = null;
@@ -100,6 +104,16 @@ public class RequestListMB implements Serializable
 	public void setRequestDetailsMB(RequestDetailsMB requestDetailsMB)
 	{
 		this.requestDetailsMB = requestDetailsMB;
+	}
+
+
+	public SearchDonorMB getSearchDonorMB() {
+		return searchDonorMB;
+	}
+
+
+	public void setSearchDonorMB(SearchDonorMB searchDonorMB) {
+		this.searchDonorMB = searchDonorMB;
 	}
 	
 	/*public void confirmCommunications()

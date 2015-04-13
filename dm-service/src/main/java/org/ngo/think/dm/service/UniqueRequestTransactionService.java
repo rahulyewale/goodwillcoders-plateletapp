@@ -1,5 +1,6 @@
 package org.ngo.think.dm.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.ngo.think.dm.common.constant.RequestStatus;
@@ -11,6 +12,7 @@ import org.ngo.think.dm.common.util.RandomNumberGenerator;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
+import org.ngo.think.dm.service.domain.DateComparator;
 import org.ngo.think.dm.service.mapper.RequestMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -60,6 +62,8 @@ public class UniqueRequestTransactionService
 	public List<UniqueRequestDTO> getRequestList(GetRequestListInputDTO getRequestListInputDTO)
 	{
 		List<UniqueRequestTxn> uniqueRequestTxnList = requestDAO.getRequestList(getRequestListInputDTO);
+		
+		Collections.sort(uniqueRequestTxnList, new DateComparator());
 
 		List<UniqueRequestDTO> requestDTOList = RequestMapper.toDTOList(uniqueRequestTxnList);
 

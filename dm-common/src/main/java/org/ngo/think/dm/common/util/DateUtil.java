@@ -68,13 +68,15 @@ public class DateUtil
 		
 		try
 		{
-			stringToDate(date, "DD-MMM-YYYY");
+			Date date2 = stringToDate(date, "dd-MMM-yyyy");
+			System.out.println();
 		}
 		catch (ParseException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		System.out.println();
 	}
 	
 	

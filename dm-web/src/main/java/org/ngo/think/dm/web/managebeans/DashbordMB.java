@@ -96,6 +96,8 @@ public class DashbordMB
 
 	public String navigateToRequestList()
 	{
+		this.searchDonorMB.setDonorRequestDTO(new SearchDonorRequestDTO());
+		
 		System.out.println("navigating to request list");
 		
 		requestListMB.setRequestListInputDTO(new GetRequestListInputDTO());

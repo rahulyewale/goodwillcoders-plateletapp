@@ -109,7 +109,7 @@ public class RequestDetailsMB implements Serializable
 		
 		try
 		{
-			donorRequestDTO.setRequestDate(DateUtil.stringToDate(requestDTO.getRequestedDate(),"DD-MMM-YYYY"));
+			donorRequestDTO.setRequestDate(DateUtil.stringToDate(requestDTO.getRequestedDate(),"dd-MMM-yyyy"));
 		}
 		catch (ParseException e1)
 		{

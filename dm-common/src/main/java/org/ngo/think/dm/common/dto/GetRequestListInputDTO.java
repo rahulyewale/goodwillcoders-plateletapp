@@ -20,6 +20,8 @@ public class GetRequestListInputDTO implements Serializable
 	private Date donationRequestFromDate;
 	
 	private Date donationRequestToDate;
+	
+	private Long donationCenterId;
 
 	public String getMobileNumber()
 	{
@@ -71,6 +73,14 @@ public class GetRequestListInputDTO implements Serializable
 	public void setDonationRequestToDate(Date donationRequestToDate)
 	{
 		this.donationRequestToDate = donationRequestToDate;
+	}
+
+	public Long getDonationCenterId() {
+		return donationCenterId;
+	}
+
+	public void setDonationCenterId(Long donationCenterId) {
+		this.donationCenterId = donationCenterId;
 	}
 
 }

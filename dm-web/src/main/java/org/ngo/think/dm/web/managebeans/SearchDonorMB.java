@@ -62,6 +62,17 @@ public class SearchDonorMB implements Serializable
 			donorRequestDTO.setRequestDate(new Date());
 		}
 		
+		//TODO set below 3 values from configuration.
+		if(donorRequestDTO.getNotDonatedInLastMonthsCount() == null)
+		{
+			donorRequestDTO.setNotDonatedInLastMonthsCount(0);
+		}
+		//donorRequestDTO.setSearchAvailableDonorsOnly(false);		
+		if(donorRequestDTO.getNumberOfDonationsLessThanCount() == null)
+		{
+			donorRequestDTO.setNumberOfDonationsLessThanCount(24);
+		}
+		
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, donorRequestDTO);
 
 		ServiceResponse serviceResponse = null;

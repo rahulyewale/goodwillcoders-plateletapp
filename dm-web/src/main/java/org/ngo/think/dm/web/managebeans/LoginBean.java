@@ -19,7 +19,7 @@ public class LoginBean implements Serializable {
     private static final long serialVersionUID = 7765876811740798583L;
  
     // Simple user database :)
-    private static final String[] users = {"admin:th!nk123","guest:th!nk123","user:th!nk123"};
+    private static final String[] users = {"admin:th!nk123","guest:th!nk123","officestaff:th!nk123"};
      
     private String username;
     private String password;
