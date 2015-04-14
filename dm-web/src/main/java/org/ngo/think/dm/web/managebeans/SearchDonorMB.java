@@ -136,7 +136,7 @@ public class SearchDonorMB implements Serializable
 
 	private void manageDonorCommunication(String communicationStatus)
 	{
-		this.searchDonorList.clear();
+		this.selectedDonorList.clear();
 		
 		DonorAppointmentDTO donorAppointment = getSelectedDonorList();
 		donorAppointment.setStatus(communicationStatus);
