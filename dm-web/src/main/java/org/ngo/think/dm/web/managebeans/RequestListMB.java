@@ -57,10 +57,14 @@ public class RequestListMB implements Serializable
 	}
 
 
-	public void searchRequestList()
+	public void searchRequestList(String calledFromPage)
 	{
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
-		getRequestListInputDTO().setDonationCenterId(this.searchDonorMB.getDonorRequestDTO().getDonationCentre());
+		if (null != calledFromPage)
+		{
+			getRequestListInputDTO().setDonationCenterId(this.searchDonorMB.getDonorRequestDTO().getDonationCentre());
+		}
+		
 		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO());
 		String serviceResponseString = null;
 		ServiceResponse serviceResponse = null;

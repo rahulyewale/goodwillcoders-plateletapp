@@ -80,7 +80,7 @@
 
 
 		<h:commandLink id="searchRequestListId" value=""
-			actionListener="#{requestListMB.searchRequestList}"
+			actionListener="#{requestListMB.searchRequestList('requestlist')}"
 			onclick="PF('blockUIWidget').block()">
 			<p:graphicImage value="/secured/image/search.jpg" />
 			<f:ajax execute="@form" render=":requestListResultForm"

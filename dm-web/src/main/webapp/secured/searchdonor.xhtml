@@ -17,9 +17,27 @@
    		}
    		
    	}
-   
-   
-   </script>
+   	
+   	function sendSms()
+   	{
+   		donorDialog.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}
+   	
+	function confirmAppointment()
+   	{
+		donorDialogConfirm.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}
+	
+	
+	function contactedDonor() 
+	{
+		PF('blockUIWidget').block();
+	}
+			</script>
  </h:head>
 <h:body>
 
@@ -207,8 +225,8 @@
 								cols="40" maxlength="140"
 								 autoResize="true" />
 
-							<h:commandButton value="Send" oncomplete="donorDialog.hide()"
-								actionListener="#{searchDonorMB.sendSMS}"></h:commandButton>
+							<h:commandButton value="Send"
+								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}" onclick="sendSms()"></h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
@@ -224,8 +242,8 @@
 								cols="40" maxlength="140"
 								 autoResize="true" />
 
-							<h:commandButton value="Confirm" oncomplete="donorDialogConfirm.hide()"
-								actionListener="#{searchDonorMB.confirmedDonor}"></h:commandButton>
+							<h:commandButton value="Confirm"
+								actionListener="#{searchDonorMB.confirmDonorAppointment}" onclick="confirmAppointment()"></h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
@@ -237,7 +255,19 @@
 		<p:graphicImage
 		value="/secured/image/separator.jpg"/>
 		<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" value=""></h:commandButton>
-
+		<p:graphicImage
+		value="/secured/image/separator.jpg"/>
+		
+		<h:commandLink  id="donorContacted" value=""
+			actionListener="#{searchDonorMB.markDonorAsContacted}" onclick="PF('blockUIWidget').block()">
+			<p:graphicImage
+			value="/secured/image/contacted.jpg"/>
+			<f:ajax onevent="unblockUi"/>
+		</h:commandLink>
+		
+		
+		
+		
 	</h:form>
 <ui:include src="footer.xhtml"></ui:include>
 

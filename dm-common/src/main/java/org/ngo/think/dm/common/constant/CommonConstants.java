@@ -30,12 +30,15 @@ public class CommonConstants
 	{
 		public static final String SMS = "viaSms";
 		public static final String CONFIRM_VIA_CALL = "confimrViaCall";
+		public static final String DONOR_CONTACTED = "donorContacted";
 	}
 	
 	public static class HistoryStatus
 	{
 		public static final String SMS_SENT = "SMS_SENT";
 		public static final String CONFIRMED = "CONFIRMED";
-		public static final String CANCELLED = "CANCELLED";
+		public static final String REJECTED = "REJECTED";
+		public static final String CONTACTED = "CONTACTED";
+		public static final String RESERVED = "RESERVED";
 	}
 }

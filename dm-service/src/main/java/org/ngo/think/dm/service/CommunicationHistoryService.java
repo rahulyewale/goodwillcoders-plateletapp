@@ -27,25 +27,61 @@ public class CommunicationHistoryService
 
 	public ResponseData sendSMSToDonors(DonorAppointmentDTO donorAppointmentDTO)
 	{
-		if(ApplicationConstant.SMS.toString().equals(donorAppointmentDTO.getStatus()))
+		if (ApplicationConstant.SMS.toString().equals(donorAppointmentDTO.getStatus()))
 		{
-			return sendSMSForSearchedDonors(donorAppointmentDTO);
-			
-		}else if(ApplicationConstant.CONFIRM_VIA_CALL.toString().equals(donorAppointmentDTO.getStatus()))
+
+			List<String> contanctList = maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.SMS_SENT);
+
+			return sendSMSToDonors(contanctList, donorAppointmentDTO.getInitialSMS());
+
+		}
+		else if (ApplicationConstant.CONFIRM_VIA_CALL.toString().equals(donorAppointmentDTO.getStatus()))
 		{
-			return sendSMSForConfirmedDonors(donorAppointmentDTO);
+			List<String> contanctList = maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.CONFIRMED);
+			return sendSMSToDonors(contanctList, donorAppointmentDTO.getConfirmSMS());
+		}
+		else if (ApplicationConstant.DONOR_CONTACTED.toString().equals(donorAppointmentDTO.getStatus()))
+		{
+			maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.CONTACTED);
+			return ResponseData.successResponseData;
 		}
 		return ResponseData.errorResponseData;
 	}
 	
 	@Transactional
-	public ResponseData sendSMSForSearchedDonors(DonorAppointmentDTO donorAppointmentDTO)
+	public ResponseData sendSMSToDonors(List<String> donorsContacts,String smsText)
 	{
 		ResponseData responseData = ResponseData.successResponseData;
 		try
 		{
-			List<String> donorsContacts = new ArrayList<String>();
 
+
+			if(!donorsContacts.isEmpty())
+			{
+				Way2Sms.initSMSSteps();
+				
+				String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
+				Way2Sms.sendSMS(stringArray, smsText);
+			}
+			
+		}
+		catch (Exception exception)
+		{
+			responseData = ResponseData.errorResponseData;
+			responseData.setMessage(exception.getMessage());
+		}
+		return responseData;
+
+	}
+	
+	
+	@Transactional
+	public List<String> maintainCommunicationHistory(DonorAppointmentDTO donorAppointmentDTO,String status)
+	{
+		ResponseData responseData = ResponseData.successResponseData;
+		List<String> donorsContacts = new ArrayList<String>();
+		try
+		{
 			Long locationCenterId = donorAppointmentDTO.getCenterId();
 			String uniqueRequestId = donorAppointmentDTO.getRequestTxnId();
 			Date requestedDate = donorAppointmentDTO.getRequestedDate();
@@ -70,7 +106,7 @@ public class CommunicationHistoryService
 					communicationHistory.setSmsSentDate(new Date());
 					communicationHistory.setMobileNumber(donorDTO.getDonorContactDetailsDTO().getContactNumber());
 
-					communicationHistory.setStatus("SMS_SENT");
+					communicationHistory.setStatus(status);
 					communicationHistory.setCreatedDate(new Date());
 					communicationHistory.setCreatedBy("SYSTEM");
 
@@ -80,93 +116,26 @@ public class CommunicationHistoryService
 				}
 				else
 				{
-					// STOP sms already sent
-				}
-			}
-
-			if(!donorsContacts.isEmpty())
-			{
-				Way2Sms.initSMSSteps();
-				
-				String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
-				Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getInitialSMS());
-			}
-			
-		}
-		catch (Exception exception)
-		{
-			responseData = ResponseData.errorResponseData;
-			responseData.setMessage(exception.getMessage());
-		}
-		return responseData;
-
-	}
-	
-	@Transactional
-	public ResponseData sendSMSForConfirmedDonors(DonorAppointmentDTO donorAppointmentDTO)
-	{
-		ResponseData responseData = ResponseData.successResponseData;
-		try
-		{
-			List<String> donorsContacts = new ArrayList<String>();
-
-			Long locationCenterId = donorAppointmentDTO.getCenterId();
-			String uniqueRequestId = donorAppointmentDTO.getRequestTxnId();
-			Date requestedDate = donorAppointmentDTO.getRequestedDate();
-
-			DonationCenter donationCenter = new DonationCenter();
-			donationCenter.setDonationCenterId(locationCenterId);
-
-			List<DonorDTO> donors = donorAppointmentDTO.getDonors();
-			for (Iterator<DonorDTO> iterator = donors.iterator(); iterator.hasNext();)
-			{
-				DonorDTO donorDTO = (DonorDTO) iterator.next();
-
-				List<CommunicationHistory> communicationHistories = communicationHistoryDAO.getCommunicationHistoryForGivenCriteria(donorDTO.getDonorId(), donorAppointmentDTO);
-
-				if (communicationHistories.isEmpty())
-				{
-					CommunicationHistory communicationHistory = new CommunicationHistory();
-					communicationHistory.setRequestId(uniqueRequestId);
-					communicationHistory.setDonorId(donorDTO.getDonorId());
-					communicationHistory.setDonationCenter(donationCenter);
-					communicationHistory.setRequestedDate(requestedDate);
-
-					communicationHistory.setStatus("CONFIRMED");
-					communicationHistory.setCreatedDate(new Date());
-					communicationHistory.setCreatedBy("SYSTEM");
-
-					communicationHistoryDAO.save(communicationHistory);
-
-					donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
-				}
-				else
-				{
-					//if record present
-					//assumption: only one record present
 					CommunicationHistory communicationHistory = communicationHistories.get(0);
-					if(HistoryStatus.CONFIRMED.equals(communicationHistory.getStatus()))
-					{
-						//STOP
-					}
-					else
+
+					if (HistoryStatus.CONFIRMED.equals(status) && (communicationHistory.getStatus().equals(HistoryStatus.SMS_SENT) || communicationHistory.getStatus().equals(HistoryStatus.CONTACTED) || communicationHistory.getStatus().equals(HistoryStatus.RESERVED)))
 					{
 						communicationHistory.setStatus(HistoryStatus.CONFIRMED);
 						communicationHistoryDAO.update(communicationHistory);
-						
+
 						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
-						//if extra contact available, add here.
 					}
+					else if (HistoryStatus.CONTACTED.equals(status) && (communicationHistory.getStatus().equals(HistoryStatus.SMS_SENT)))
+					{
+						communicationHistory.setStatus(HistoryStatus.CONTACTED);
+						communicationHistoryDAO.update(communicationHistory);
+
+						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
+					}
+
 				}
 			}
 
-			if(!donorsContacts.isEmpty())
-			{
-				Way2Sms.initSMSSteps();
-				
-				String[] stringArray = donorsContacts.toArray(new String[donorsContacts.size()]);
-				Way2Sms.sendSMS(stringArray, donorAppointmentDTO.getConfirmSMS());
-			}
 			
 		}
 		catch (Exception exception)
@@ -174,9 +143,9 @@ public class CommunicationHistoryService
 			responseData = ResponseData.errorResponseData;
 			responseData.setMessage(exception.getMessage());
 		}
-		return responseData;
+		return donorsContacts;
 
 	}
-		
+	
 }
 

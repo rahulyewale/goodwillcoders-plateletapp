@@ -105,6 +105,8 @@ public class RequestDetailsMB implements Serializable
 	
 	public void searchDonor()
 	{
+		//set selected donor list to empty as searchDonorMB is session scoped.
+		searchDonorMB.setSearchDonorList(new ArrayList<DonorDTO>());
 		SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 		
 		try

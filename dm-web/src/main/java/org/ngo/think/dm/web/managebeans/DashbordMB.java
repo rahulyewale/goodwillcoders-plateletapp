@@ -115,7 +115,7 @@ public class DashbordMB
 		requestListMB.getRequestListInputDTO().setDonationRequestToDate(donationRequestToDate);
 		requestListMB.getRequestListInputDTO().setStatus(status);
 		
-		requestListMB.searchRequestList();
+		requestListMB.searchRequestList(null);
 		
 		return "success";
 	}
