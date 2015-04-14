@@ -6,9 +6,9 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
-   <title>Search Donors</title>
-   
-   <script type="text/javascript">
+	<title>Search Donors</title>
+
+	<script type="text/javascript">
    	function unblockUi(data)
    	{
    		if(data.status==="success")
@@ -35,26 +35,28 @@
 	
 	function contactedDonor() 
 	{
-		PF('blockUIWidget').block();
+		donorContactedConfirm.hide();
+   		PF('blockUIWidget').block();
 	}
 			</script>
- </h:head>
+</h:head>
 <h:body>
 
-<ui:include src="header.xhtml"></ui:include>
+	<ui:include src="header.xhtml"></ui:include>
 	<h2>Search Donors</h2>
 	<h:form id="searchcriteria_frm_id">
-	 <p:messages id="messages"  autoUpdate="true" closable="true" />
-		<p:accordionPanel >
+		<p:messages id="messages" autoUpdate="true" closable="true" />
+		<p:accordionPanel>
 			<p:tab title="Search Criteria:">
-				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
+				<h:panelGrid columns="2" columnClasses="label, value"
+					cellpadding="10">
 
-					<h:outputText value="Donation Type:"/>
+					<h:outputText value="Donation Type:" />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
 					</h:selectOneMenu>
-					
+
 					<h:outputLabel value="Blood Group: " />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
@@ -69,24 +71,29 @@
 						<f:selectItem itemValue="O-" itemLabel="O-" />
 						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
 						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
-						
+
 					</h:selectOneMenu>
-					
-					
+
+
 					<h:outputText value="Donation Center:" />
 					<h:selectOneMenu
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
-						<f:selectItems value="#{searchDonorResponseMB.donationCenterDTOList}" var="donationCenterDTO"
-   							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}" itemValue="#{donationCenterDTO.donationCenterId}" />
+						<f:selectItems
+							value="#{searchDonorResponseMB.donationCenterDTOList}"
+							var="donationCenterDTO"
+							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
+							itemValue="#{donationCenterDTO.donationCenterId}" />
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
-					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button" required="true" rendered="true" requiredMessage="Request date is mandatory"
+					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+						required="true" rendered="true"
+						requiredMessage="Request date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
 				</h:panelGrid>
-				
+
 			</p:tab>
 		</p:accordionPanel>
 		<!-- <p:accordionPanel id="advancesearch_id" style="display: block">
@@ -153,32 +160,33 @@
 			 
 			</p:tab>
 		</p:accordionPanel> -->
-		<h:commandLink  id="searchDonorId" value=""
-			actionListener="#{searchDonorMB.searchDonor}" onclick="PF('blockUIWidget').block()">
-			<p:graphicImage
-			value="/secured/image/search.jpg"/>
-			<f:ajax execute="@form"  render=":searchresult_frm_id" onevent="unblockUi"/>
+		<h:commandLink id="searchDonorId" value=""
+			actionListener="#{searchDonorMB.searchDonor}"
+			onclick="PF('blockUIWidget').block()">
+			<p:graphicImage value="/secured/image/search.jpg" />
+			<f:ajax execute="@form" render=":searchresult_frm_id"
+				onevent="unblockUi" />
 		</h:commandLink>
-		
 
-	<pe:blockUI widgetVar="blockUIWidget">  
-    <h:panelGrid columns="2">  
-        <p:graphicImage
-			value="/secured/image/loader.GIF" /> 
-        <h:outputText value="Please wait..." style="white-space: nowrap;" />  
-    </h:panelGrid>  
-</pe:blockUI> 
+
+		<pe:blockUI widgetVar="blockUIWidget">
+			<h:panelGrid columns="2">
+				<p:graphicImage value="/secured/image/loader.GIF" />
+				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+			</h:panelGrid>
+		</pe:blockUI>
 
 	</h:form>
-	
+
 	<h:form id="searchresult_frm_id">
 		<p:accordionPanel>
 			<p:tab title="Search Results:">
 				<h:panelGrid>
-					<p:dataTable id="searchResultId" value="#{searchDonorResponseMB.searchDonorList}" var="donor"
-						 paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+					<p:dataTable id="searchResultId"
+						value="#{searchDonorResponseMB.searchDonorList}" var="donor"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
 						<f:facet name="header">
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
@@ -208,7 +216,7 @@
 						<p:column headerText="Distance">
 							<h:outputText value="#{donor.distanceKm}" />
 						</p:column>
-					
+
 						<p:column headerText="Rating">
 							<p:rating value="#{donor.rating}" readonly="true" stars="6" />
 						</p:column>
@@ -216,60 +224,74 @@
 
 					<p:dialog header="Send SMS" widgetVar="donorDialog"
 						resizable="false" width="400" height="200">
-						
+
 
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
 							<h:inputTextarea rows="5"
 								value="#{searchDonorResponseMB.searchDonorResponseDTO.intialSmsText}"
-								cols="40" maxlength="140"
-								 autoResize="true" />
+								cols="40" maxlength="140" autoResize="true" />
 
 							<h:commandButton value="Send"
-								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}" onclick="sendSms()"></h:commandButton>
+								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}"
+								onclick="sendSms()"></h:commandButton>
+
+						</h:panelGrid>
+					</p:dialog>
+
+					<p:dialog header="Confirm Via Call" widgetVar="donorDialogConfirm"
+						resizable="false" width="400" height="200">
+
+
+						<h:panelGrid columns="0" cellpadding="4"
+							id="contentOFDonorConfirm">
+
+							<h:inputTextarea rows="5"
+								value="#{searchDonorResponseMB.searchDonorResponseDTO.confirmSmsText}"
+								cols="40" maxlength="140" autoResize="true" />
+
+							<h:commandButton value="Confirm"
+								actionListener="#{searchDonorMB.confirmDonorAppointment}"
+								onclick="confirmAppointment()"></h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
 					
-					<p:dialog header="Confirm Via Call" widgetVar="donorDialogConfirm"
+					<p:dialog header="Donor Contacted Confirmation" widgetVar="donorContactedConfirm"
 						resizable="false" width="400" height="200">
-						
 
-						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
+
+						<h:panelGrid columns="0" cellpadding="4"
+							id="donorContactedConfirm">
 
 							<h:inputTextarea rows="5"
-								value="#{searchDonorResponseMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="40" maxlength="140"
-								 autoResize="true" />
+								value="Please confirm that you would like to mark this donor as Contacted"
+								cols="40" maxlength="140" autoResize="true" readonly="true" />
 
 							<h:commandButton value="Confirm"
-								actionListener="#{searchDonorMB.confirmDonorAppointment}" onclick="confirmAppointment()"></h:commandButton>
+								actionListener="#{searchDonorMB.markDonorAsContacted}"
+								onclick="contactedDonor()"></h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
+					
 				</h:panelGrid>
 			</p:tab>
 
 		</p:accordionPanel>
-		<h:commandButton  image="/secured/image/sendsms.jpg"  onclick="donorDialog.show();return false;" value=""> </h:commandButton>
-		<p:graphicImage
-		value="/secured/image/separator.jpg"/>
-		<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" value=""></h:commandButton>
-		<p:graphicImage
-		value="/secured/image/separator.jpg"/>
 		
-		<h:commandLink  id="donorContacted" value=""
-			actionListener="#{searchDonorMB.markDonorAsContacted}" onclick="PF('blockUIWidget').block()">
-			<p:graphicImage
-			value="/secured/image/contacted.jpg"/>
-			<f:ajax onevent="unblockUi"/>
-		</h:commandLink>
+		<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 		
+		<p:graphicImage value="/secured/image/separator.jpg" />
 		
+		<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
 		
-		
+		<p:graphicImage value="/secured/image/separator.jpg" />
+
+		<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
+
 	</h:form>
-<ui:include src="footer.xhtml"></ui:include>
+	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>
 </html>

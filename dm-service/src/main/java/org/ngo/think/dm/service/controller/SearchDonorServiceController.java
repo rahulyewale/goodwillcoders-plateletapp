@@ -8,6 +8,7 @@ import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.enums.ResponseCategory;
 import org.ngo.think.dm.common.enums.ResponseType;
+import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.service.SearchDonorService;
 import org.ngo.think.dm.service.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,9 @@ public class SearchDonorServiceController
 	
 	@RequestMapping(value="/searchdonor",method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
-	public ServiceResponse searchDonor(@RequestBody ServiceRequest serviceRequest)
+	public ServiceResponse searchDonor(@RequestBody ServiceRequest serviceRequest) throws Exception
 	{
+		System.out.println(JsonUtil.convertObjectToJson(serviceRequest));
 		SearchDonorRequestDTO donorRequestDTO = (SearchDonorRequestDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, SearchDonorRequestDTO.class);
 		
 		SearchDonorResponseDTO searchDonorResponseDTO =  searchDonorService.searchDonor(donorRequestDTO);
