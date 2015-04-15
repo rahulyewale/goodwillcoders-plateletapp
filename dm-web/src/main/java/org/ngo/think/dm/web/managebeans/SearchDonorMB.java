@@ -286,6 +286,7 @@ public class SearchDonorMB implements Serializable
 		String serviceResponseString = null;
 		ServiceResponse serviceResponse = null;
 		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
+		
 		try
 		{
 			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);

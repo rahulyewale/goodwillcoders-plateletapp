@@ -42,15 +42,12 @@ public class DonorDataFileUploadMB
 
 	public void upload()
 	{
-
 		if (file != null)
 		{
-
 			System.out.println(file.getFileName());
 			ServiceRequest serviceRequest = null;
 			try
 			{
-				
 				byte[] excelByteArray = IOUtils.toByteArray(file.getInputstream());
 				ImportDonorDataRequestDTO importDonorDataRequestDTO = new ImportDonorDataRequestDTO();
 				
