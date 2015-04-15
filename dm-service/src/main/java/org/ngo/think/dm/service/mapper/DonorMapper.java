@@ -62,6 +62,7 @@ public class DonorMapper
 		donorEntity.setBirthDate(DateUtil.stringToDate(donor.getDateOfBirth()));
 		donorEntity.setFirstName(donor.getFirstName());
 		donorEntity.setLastName(donor.getLastName());
+		donorEntity.setBloodGroup(donor.getBloodGroup());
 		donorEntity.setCreatedBy("System");
 		donorEntity.setCreatedDate(new Date());
 		

@@ -12,6 +12,8 @@ public class Donor
 	private String lastName;
 
 	private String dateOfBirth;
+	
+	private String bloodGroup;
 
 	private String residentialAddress;
 
@@ -57,6 +59,14 @@ public class Donor
 
 	public void setDateOfBirth(String dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
 	}
 
 	public String getResidentialAddress() {

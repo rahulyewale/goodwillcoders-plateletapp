@@ -50,14 +50,17 @@ public class ImportDonorDataService
 
 		try
 		{
-			if (ExcelTypes.XLS.getExtension().equals(fileExtension))
+			/*if (ExcelTypes.XLS.getExtension().equals(fileExtension))
 			{
 				hssfExcelController.readHSSFExcel(fileStream);
 				donorList = hssfExcelController.getDonors();
-			}
-			else if (ExcelTypes.XLSX.getExtension().equals(fileExtension))
+			}*/
+			//else 
+			if (ExcelTypes.XLSX.getExtension().equals(fileExtension))
 			{
-				xssfExcelController.readXSSFExcel(fileStream);
+				//xssfExcelController.readXSSFExcel(fileStream);
+				boolean ngoData = true;
+				xssfExcelController.readXSSFExcel(fileStream, ngoData);
 				donorList = xssfExcelController.getDonors();
 			}
 
