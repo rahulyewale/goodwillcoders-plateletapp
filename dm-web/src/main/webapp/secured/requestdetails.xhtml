@@ -17,12 +17,24 @@
    		}
    		
    	}
+   	
+   	function confirmAppointment()
+   	{
+		donorDialogConfirm.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}
+   	
+   	function unblockUIfreeze()
+   	{
+   		PF('blockUIWidget').unblock();
+   		
+   	}
    
    
    </script>
  </h:head>
 <h:body>
-
 <ui:include src="header.xhtml"></ui:include>
 	<h2>Request Details</h2>
 	<h:form id="request_details_frm_id">
@@ -76,10 +88,6 @@
                          rowsPerPageTemplate="5,10,15">
             	 <f:facet name="header">   <h:outputText value="Communication History" /> </f:facet>
             	 
-            	  <p:column headerText="Select">
-			            <h:selectBooleanCheckbox value="#{commnHist.historySelected}" />
-			      </p:column>
-			 
 			      <p:column headerText="Donor UUID">
 			            <h:outputText value="#{commnHist.donorUuid}" />
 			      </p:column>
@@ -96,14 +104,70 @@
 			            <h:outputText value="#{commnHist.status}" />
 			      </p:column>
 			      
+			      <p:column headerText="Confirm">
+			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogConfirm.show();">
+                             <p:graphicImage value="/secured/image/confirm.jpg" />
+                             <f:ajax execute="@form"
+							  onevent="unblockUi" />
+                        </h:commandLink>
+			      </p:column>
+			      
+			      <p:column headerText="Reject">
+			            <h:commandLink actionListener="#{requestDetailsMB.rejectDonor(commnHist)}" onclick="PF('blockUIWidget').block();">
+                             <p:graphicImage value="/secured/image/reject.jpg" />
+                             <f:ajax execute="@form"
+							  onevent="unblockUi" />
+                        </h:commandLink>
+			      </p:column>
+			      
+			      <p:column headerText="Reserve">
+			            <h:commandLink actionListener="#{requestDetailsMB.reserveDonor(commnHist)}" onclick="PF('blockUIWidget').block();">
+                             <p:graphicImage value="/secured/image/reserve.jpg" />
+                             <f:ajax execute="@form"
+							  onevent="unblockUi" />
+                        </h:commandLink>
+			      </p:column>
+			      
+			      
+			      <p:column headerText="Add Donation History">
+			            <h:commandLink actionListener="#{requestDetailsMB.confirmDonor(commnHist)}"
+                             ajax="false">
+                             <p:graphicImage value="/secured/image/addhistory.jpg" />
+                        </h:commandLink>
+			      </p:column>
+			      
                </p:dataTable>
             </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="10">
-          	            <p:commandButton value="Confirm" > </p:commandButton>
-          	            <p:commandButton value="Cancel" > </p:commandButton>
-            </h:panelGrid>
+           
             </p:tab>
             </p:accordionPanel>
+            
+            <pe:blockUI widgetVar="blockUIWidget">
+			<h:panelGrid columns="2">
+				<p:graphicImage value="/secured/image/loader.GIF" />
+				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+			</h:panelGrid>
+		</pe:blockUI>
+		
+		
+		<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
+						resizable="false" width="400" height="200">
+
+
+						<h:panelGrid columns="0" cellpadding="4"
+							id="contentOFDonorConfirm">
+
+							<h:inputTextarea rows="5"
+								value="#{requestDetailsMB.confirmSMSText}"
+								cols="40" maxlength="140" autoResize="true" />
+
+							<p:commandButton value="Confirm" actionListener="#{requestDetailsMB.confirmDonor}"
+								update="request_donors_form" onclick="confirmAppointment();" oncomplete="unblockUIfreeze();"></p:commandButton>
+
+						</h:panelGrid>
+					</p:dialog>
+		
+		
 	</h:form>	
 	
 <ui:include src="footer.xhtml"></ui:include>

@@ -1,6 +1,5 @@
 package org.ngo.think.dm.service;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,7 +17,6 @@ import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
 import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
-import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -53,42 +51,32 @@ public class SearchCommunicationHistoryService
 	@Transactional
 	public SearchCommunicationHistoryResponseDTO searchcommunicationhistory(SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequest)
 	{
+		String confirmSms = confirmSmsText;
 		Date reqDate = null;
+		String centerDetails = null;
 		List<CommunicationHistory> communicationHistories = communicationHistoryDAO.getCommunicationHistoryForScreen(searchCommunicationHistoryRequest);
 		
 		if(communicationHistories.size()>0)
 		{
-			reqDate = communicationHistories.get(0).getRequestedDate();
+			CommunicationHistory communicationHistory = communicationHistories.get(0);
+
+			reqDate = communicationHistory.getRequestedDate();
+			centerDetails = communicationHistory.getDonationCenter().getDonationCenterName() + "," + communicationHistory.getDonationCenter().getCity() + "," + communicationHistory.getDonationCenter().getPinCode();
+			String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSms).replaceAll(centerDetails);
+			String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(reqDate));
+			confirmSmsText = confirmSMSWithReqDate;
 		}
 		else
 		{
 			reqDate = searchCommunicationHistoryRequest.getDonationRequestDate();
 		}
 		
-		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(searchCommunicationHistoryRequest.getRequestTxnId());
-		DonationCenter center = null;
-		try
-		{
-			String centerDetails = null;
-			if(null!=uniqueRequestTxn)
-			{
-				center = uniqueRequestTxn.getDonationCenter();
-				centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
-			}
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
 		System.out.println("In SearchCommunicationHistoryService : searchcommunicationhistory !!!");
 		
 		
 		
-		/*String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
-		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(reqDate));
-		confirmSmsText = confirmSMSWithReqDate;
-*/
+		
+
 		SearchCommunicationHistoryResponseDTO communicationHistoryResponseDTO = new SearchCommunicationHistoryResponseDTO();
 		
 		ArrayList<SearchCommunicationHistoryResultDTO> communicationHistoryResultDTOs = new ArrayList<SearchCommunicationHistoryResultDTO>();
@@ -106,6 +94,7 @@ public class SearchCommunicationHistoryService
 			donationCenterDTO.setPinCode(donationCenter.getPinCode());
 			donationCenterDTO.setState(donationCenter.getState());
 			donationCenterDTO.setCity(donationCenter.getCity());
+			donationCenterDTO.setDonationCenterId(donationCenter.getDonationCenterId());
 			
 			Donor donor = null;
 			try
@@ -114,7 +103,6 @@ public class SearchCommunicationHistoryService
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -123,6 +111,7 @@ public class SearchCommunicationHistoryService
 			communicationHistoryResultDTO.setDonorUuid(donor.getDonorUuid());
 			communicationHistoryResultDTO.setMobileNumber(donor.getDonorContactDetails().get(0).getContactNumber());
 			communicationHistoryResultDTO.setRequestedDate(communicationHistory.getRequestedDate());
+			communicationHistoryResultDTO.setDonorId(donor.getDonorId());
 			
 			communicationHistoryResultDTO.setSmsSentDate(DateUtil.dateToString(communicationHistory.getSmsSentDate()));
 			

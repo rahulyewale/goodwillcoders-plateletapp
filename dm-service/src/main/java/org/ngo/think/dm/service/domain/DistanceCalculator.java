@@ -49,7 +49,7 @@ public class DistanceCalculator
 					{
 						DistanceDurationHolder distanceDurationHolder = rowsHolder.getElements().get(0);
 						String distanceInKm = distanceDurationHolder.getDistance().getText();
-						Integer distanceInMeter = Integer.valueOf(distanceDurationHolder.getDistance().getValue());
+						Double distanceInMeter = Double.valueOf(distanceDurationHolder.getDistance().getValue());
 						donor.setDistanceInMeter(distanceInMeter);
 						donor.setDistanceInKm(distanceInKm);
 					}

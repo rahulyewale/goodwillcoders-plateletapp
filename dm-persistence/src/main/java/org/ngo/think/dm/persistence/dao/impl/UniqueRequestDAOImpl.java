@@ -72,7 +72,7 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 
 		}
 		
-		if (null != getRequestListInputDTO.getDonationCenterId())
+		if (null != getRequestListInputDTO.getDonationCenterId() && getRequestListInputDTO.getDonationCenterId() != -1)
 		{
 			baseQuery = baseQuery + whereClause + " u.donationCenter.donationCenterId =:donationCenterId";
 			whereClause = " AND";
@@ -96,7 +96,7 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 			query.setParameter("fromDate", getRequestListInputDTO.getDonationRequestFromDate(), TemporalType.DATE);
 			query.setParameter("toDate", getRequestListInputDTO.getDonationRequestToDate(), TemporalType.DATE);
 		}
-		if (null != getRequestListInputDTO.getDonationCenterId())
+		if (null != getRequestListInputDTO.getDonationCenterId() && getRequestListInputDTO.getDonationCenterId() != -1)
 		{
 			query.setParameter("donationCenterId", getRequestListInputDTO.getDonationCenterId());
 

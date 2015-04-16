@@ -186,7 +186,7 @@
 						value="#{searchDonorResponseMB.searchDonorList}" var="donor"
 						paginator="true"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom">
+						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rows="5">
 						<f:facet name="header">
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
@@ -199,7 +199,7 @@
 
 						<p:column headerText="Contact No">
 							<h:outputText
-								value="#{donor.donorContactDetailsDTO.contactNumber},#{donor.donorContactDetailsDTO.contactNumberAlternate}" />
+								value="#{donor.donorContactDetailsDTO.contactNumber}" />
 						</p:column>
 						<p:column headerText="Email">
 							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
@@ -213,7 +213,7 @@
 						<p:column headerText="Next available date">
 							<h:outputText value="#{donor.nextAvailableDate}" />
 						</p:column>
-						<p:column headerText="Distance">
+						<p:column headerText="Distance(Km)">
 							<h:outputText value="#{donor.distanceKm}" />
 						</p:column>
 
@@ -239,7 +239,7 @@
 						</h:panelGrid>
 					</p:dialog>
 
-					<p:dialog header="Confirm Via Call" widgetVar="donorDialogConfirm"
+					<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
 						resizable="false" width="400" height="200">
 
 
@@ -266,7 +266,7 @@
 
 							<h:inputTextarea rows="5"
 								value="Please confirm that you would like to mark this donor as Contacted"
-								cols="40" maxlength="140" autoResize="true" readonly="true" />
+								cols="40" maxlength="140" autoResize="false" readonly="true" disabled="true" />
 
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorMB.markDonorAsContacted}"

@@ -31,8 +31,6 @@ public class RequestListMB implements Serializable
 	
 	private List<UniqueRequestDTO> requestDTOList = new ArrayList<UniqueRequestDTO>();
 	
-	@ManagedProperty(value="#{requestDetailsMB}")
-	private RequestDetailsMB requestDetailsMB = new RequestDetailsMB();
 	
 	@ManagedProperty(value = "#{searchDonorMB}")
 	private SearchDonorMB searchDonorMB = new SearchDonorMB();
@@ -49,13 +47,6 @@ public class RequestListMB implements Serializable
 		this.requestDTOList = requestDTOList;
 	}
 	
-	public void openRequest(UniqueRequestDTO requestDTO)
-	{
-		requestDetailsMB.getCommunicationHistory(requestDTO);
-		
-		System.out.println(requestDTO.getRequestNumber());
-	}
-
 
 	public void searchRequestList(String calledFromPage)
 	{
@@ -99,18 +90,6 @@ public class RequestListMB implements Serializable
 	}
 
 
-	public RequestDetailsMB getRequestDetailsMB()
-	{
-		return requestDetailsMB;
-	}
-
-
-	public void setRequestDetailsMB(RequestDetailsMB requestDetailsMB)
-	{
-		this.requestDetailsMB = requestDetailsMB;
-	}
-
-
 	public SearchDonorMB getSearchDonorMB() {
 		return searchDonorMB;
 	}
@@ -119,54 +98,6 @@ public class RequestListMB implements Serializable
 	public void setSearchDonorMB(SearchDonorMB searchDonorMB) {
 		this.searchDonorMB = searchDonorMB;
 	}
-	
-	/*public void confirmCommunications()
-	{
-		
-		ArrayList<SearchCommunicationHistoryResultDTO> filteredSearch = filteredSrchCommnHistResultList(this.srchCommnHistResultList);
-		
-		SearchCommunicationHistoryResponseDTO confirmSearchCommunicationHistoryResponseDTO  = new SearchCommunicationHistoryResponseDTO();
-		confirmSearchCommunicationHistoryResponseDTO.setSearchCommunicationHistoryResponseList(filteredSearch);
-		
-		try
-		{
-			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.CONFIRM_COMMUNICATION_HISTORY_REQUEST,confirmSearchCommunicationHistoryResponseDTO);
-			ServiceResponse serviceResponse = null;
-			
-			serviceResponse =  RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
-			String jsonResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.CONFIRM_COMMUNICATION_HISTORY_RESPONSE));
-			
-			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
-			
-			this.getSrchCommnHistResultList().clear();
-			this.setSrchCommnHistResultList(searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList());
-			
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-		
-	}*/
-	
-	/*private ArrayList<SearchCommunicationHistoryResultDTO> filteredSrchCommnHistResultList (List<SearchCommunicationHistoryResultDTO> allSrchCommnHistResultList)
-	{
-		ArrayList<SearchCommunicationHistoryResultDTO> filteredSrchCommnHistResultList = new ArrayList<SearchCommunicationHistoryResultDTO>();
-		for(SearchCommunicationHistoryResultDTO srchHist : allSrchCommnHistResultList)
-		{
-			if(srchHist.isHistorySelected())
-			{
-				filteredSrchCommnHistResultList.add(srchHist);
-			}
-		}
-		
-		return filteredSrchCommnHistResultList;
-	}
-	*/
-	/*public void cancelCommunications()
-	{
-		
-	}*/
 	
 	
 }
