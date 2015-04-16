@@ -19,6 +19,10 @@ import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
 
+/**
+ * @author rahulsy
+ *
+ */
 @ManagedBean(name = "requestListMB")
 @SessionScoped
 public class RequestListMB implements Serializable
