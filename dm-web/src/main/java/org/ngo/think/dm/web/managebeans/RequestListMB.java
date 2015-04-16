@@ -21,7 +21,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 /**
  * @author rahulsy
- *
+ *MB for RequestList Page
  */
 @ManagedBean(name = "requestListMB")
 @SessionScoped
