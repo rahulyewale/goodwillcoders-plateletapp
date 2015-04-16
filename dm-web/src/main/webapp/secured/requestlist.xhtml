@@ -58,10 +58,10 @@
 
 					<h:outputText value="Donation Center:" />
 					<h:selectOneMenu
-						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
+						value="#{requestListMB.requestListInputDTO.donationCenterId}">
 						<f:selectItem itemValue="-1" itemLabel="--Select--" />
 						<f:selectItems
-							value="#{searchDonorResponseMB.donationCenterDTOList}"
+							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
 							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
 							itemValue="#{donationCenterDTO.donationCenterId}" />
@@ -117,7 +117,7 @@
 						<p:column headerText="Request Number">
 							
 							<h:commandLink actionListener="#{requestDetailsMB.openRequest(requestDTO)}"
-                             ajax="false" action="/secured/requestdetails.xhtml" target="_self"
+                             ajax="true" action="/secured/requestdetails.xhtml" target="_self"
                              value="#{requestDTO.requestNumber}"/>
 						</p:column>
 

@@ -5,19 +5,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
-import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
-import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.util.JsonUtil;
@@ -26,13 +23,14 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
-@SessionScoped
+@ViewScoped
 public class SearchDonorMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
 	private List<DonorDTO> selectedDonorList = new ArrayList<DonorDTO>();
-
+	private SearchDonorResponseDTO searchDonorResponseDTO = new SearchDonorResponseDTO();
+	
 	private String smsMsg;
 	private String uniqueRequestId;
 	private String confirmMsg;
@@ -41,19 +39,9 @@ public class SearchDonorMB implements Serializable
 
 	private String theme;
 
-	@ManagedProperty(value = "#{searchDonorResponseMB}")
-	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
-
-	public SearchDonorMB()
-	{
-	}
-
-	@PostConstruct
-	public void init()
-	{
-		populateDonationCenters();
-	}
-
+	@ManagedProperty(value = "#{cachedDataMB}")
+	private CachedDataMB cachedDataMB = new CachedDataMB();
+	
 	public void searchDonor()
 	{
 		this.selectedDonorList = new ArrayList<DonorDTO>();
@@ -75,7 +63,6 @@ public class SearchDonorMB implements Serializable
 		}
 
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, donorRequestDTO);
-
 		ServiceResponse serviceResponse = null;
 		try
 		{
@@ -83,12 +70,10 @@ public class SearchDonorMB implements Serializable
 		}
 		catch (Exception e)
 		{
-
 			e.printStackTrace();
 		}
 
 		SearchDonorResponseDTO responseDTO = null;
-
 		String responseString;
 		try
 		{
@@ -102,14 +87,14 @@ public class SearchDonorMB implements Serializable
 
 		searchDonorList = responseDTO.getDonorDTOList();
 
-		searchDonorResponseMB.setSearchDonorResponseDTO(responseDTO);
-		searchDonorResponseMB.setSearchDonorList(searchDonorList);
-		searchDonorResponseMB.setDonorRequestDTO(donorRequestDTO);
-
 		smsMsg = responseDTO.getIntialSmsText();
 		confirmMsg = responseDTO.getConfirmSmsText();
 		uniqueRequestId = responseDTO.getUniqueRequestId();
 
+		searchDonorResponseDTO.setIntialSmsText(smsMsg);
+		searchDonorResponseDTO.setConfirmSmsText(confirmMsg);
+		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestId);
+		
 		System.out.println("Search submitted");
 	}
 
@@ -136,7 +121,7 @@ public class SearchDonorMB implements Serializable
 
 	private void manageDonorCommunication(String communicationStatus)
 	{
-		this.selectedDonorList.clear();
+		//this.selectedDonorList.clear();
 		
 		DonorAppointmentDTO donorAppointment = getSelectedDonorList();
 		donorAppointment.setStatus(communicationStatus);
@@ -162,13 +147,13 @@ public class SearchDonorMB implements Serializable
 	private DonorAppointmentDTO getSelectedDonorList()
 	{
 		DonorAppointmentDTO donorAppointment = new DonorAppointmentDTO();
-		donorAppointment.setDonors(selectedDonorList);
-		donorAppointment.setCenterId(searchDonorResponseMB.getDonorRequestDTO().getDonationCentre());
-		donorAppointment.setConfirmSMS(searchDonorResponseMB.getSearchDonorResponseDTO().getConfirmSmsText());
-		donorAppointment.setInitialSMS(searchDonorResponseMB.getSearchDonorResponseDTO().getIntialSmsText());
-		donorAppointment.setRequestedDate(searchDonorResponseMB.getDonorRequestDTO().getRequestDate());
-		donorAppointment.setRequestTxnId(searchDonorResponseMB.getSearchDonorResponseDTO().getUniqueRequestId());
-		for (DonorDTO donorDTO : searchDonorResponseMB.getSearchDonorList())
+		donorAppointment.setCenterId(this.getDonorRequestDTO().getDonationCentre());
+		donorAppointment.setConfirmSMS(this.getSearchDonorResponseDTO().getConfirmSmsText());
+		donorAppointment.setInitialSMS(this.getSearchDonorResponseDTO().getIntialSmsText());
+		donorAppointment.setRequestedDate(this.getDonorRequestDTO().getRequestDate());
+		donorAppointment.setRequestTxnId(this.getSearchDonorResponseDTO().getUniqueRequestId());
+		
+		for (DonorDTO donorDTO : this.getSearchDonorList())
 		{
 			if (donorDTO.isSelectedDonor())
 			{
@@ -176,8 +161,31 @@ public class SearchDonorMB implements Serializable
 			}
 		}
 		donorAppointment.setDonors(selectedDonorList);
-
 		return donorAppointment;
+	}
+
+	public SearchDonorResponseDTO getSearchDonorResponseDTO() 
+	{
+		return searchDonorResponseDTO;
+	}
+
+	public void setSearchDonorResponseDTO(
+			SearchDonorResponseDTO searchDonorResponseDTO) 
+	{
+		this.searchDonorResponseDTO = searchDonorResponseDTO;
+	}
+
+	public CachedDataMB getCachedDataMB() {
+		return cachedDataMB;
+	}
+
+	public void setCachedDataMB(CachedDataMB cachedDataMB) {
+		this.cachedDataMB = cachedDataMB;
+	}
+
+	public void setSelectedDonorList(List<DonorDTO> selectedDonorList) 
+	{
+		this.selectedDonorList = selectedDonorList;
 	}
 
 	public List<DonorDTO> getSearchDonorList()
@@ -241,7 +249,7 @@ public class SearchDonorMB implements Serializable
 		this.theme = theme;
 	}
 
-	public SearchDonorResponseMB getSearchDonorResponseMB()
+	/*public SearchDonorResponseMB getSearchDonorResponseMB()
 	{
 		return searchDonorResponseMB;
 	}
@@ -249,7 +257,7 @@ public class SearchDonorMB implements Serializable
 	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
 	{
 		this.searchDonorResponseMB = searchDonorResponseMB;
-	}
+	}*/
 
 	public String getBloodGroup()
 	{
@@ -261,7 +269,7 @@ public class SearchDonorMB implements Serializable
 		this.bloodGroup = bloodGroup;
 	}
 
-	private void populateDonationCenters()
+	/*private void populateDonationCenters()
 	{
 		if (!searchDonorResponseMB.isDonationCentersSet())
 		{
@@ -278,30 +286,7 @@ public class SearchDonorMB implements Serializable
 				searchDonorResponseMB.setDonationCentersSet(true);
 			}
 		}
-	}
-
-	private GetDonationCenterResponseDTO fetchDonationCenters()
-	{
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
-		String serviceResponseString = null;
-		ServiceResponse serviceResponse = null;
-		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
-		
-		try
-		{
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);
-
-			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DOATION_CENTER_RESPONSE));
-			donationCenterResponseDTO = (GetDonationCenterResponseDTO) JsonUtil.convertJsonToObject(serviceResponseString, GetDonationCenterResponseDTO.class);
-
-		}
-		catch (Exception e)
-		{
-
-			e.printStackTrace();
-		}
-		return donationCenterResponseDTO;
-	}
+	}*/
 
 	public List<DonorDTO> getSelectedDonors()
 	{

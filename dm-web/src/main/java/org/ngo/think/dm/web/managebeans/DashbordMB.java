@@ -94,31 +94,6 @@ public class DashbordMB
 		this.searchDonorResponseMB = searchDonorResponseMB;
 	}
 
-	public String navigateToRequestList()
-	{
-		this.searchDonorMB.setDonorRequestDTO(new SearchDonorRequestDTO());
-		
-		System.out.println("navigating to request list");
-		
-		requestListMB.setRequestListInputDTO(new GetRequestListInputDTO());
-		requestListMB.setRequestDTOList(new ArrayList<UniqueRequestDTO>());
-		
-		populateDonationCenters();
-
-		Date donationRequestFromDate = new Date();
-
-		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 91);
-
-		String status = "OPEN";
-
-		requestListMB.getRequestListInputDTO().setDonationRequestFromDate(donationRequestFromDate);
-		requestListMB.getRequestListInputDTO().setDonationRequestToDate(donationRequestToDate);
-		requestListMB.getRequestListInputDTO().setStatus(status);
-		
-		requestListMB.searchRequestList(null);
-		
-		return "success";
-	}
 
 	private void populateDonationCenters()
 	{

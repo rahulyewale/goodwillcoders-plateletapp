@@ -2,11 +2,12 @@ package org.ngo.think.dm.web.managebeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -15,6 +16,7 @@ import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
 import org.ngo.think.dm.common.dto.GetRequestListResponse;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
+import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
@@ -24,7 +26,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
  *MB for RequestList Page.
  */
 @ManagedBean(name = "requestListMB")
-@SessionScoped
+@ViewScoped
 public class RequestListMB implements Serializable
 {
 
@@ -35,10 +37,45 @@ public class RequestListMB implements Serializable
 	
 	private List<UniqueRequestDTO> requestDTOList = new ArrayList<UniqueRequestDTO>();
 	
+	@ManagedProperty(value = "#{cachedDataMB}")
+	private CachedDataMB cachedDataMB = new CachedDataMB();
 	
-	@ManagedProperty(value = "#{searchDonorMB}")
-	private SearchDonorMB searchDonorMB = new SearchDonorMB();
+	
+	public CachedDataMB getCachedDataMB()
+	{
+		return cachedDataMB;
+	}
 
+
+	public void setCachedDataMB(CachedDataMB cachedDataMB)
+	{
+		this.cachedDataMB = cachedDataMB;
+	}
+
+
+	public String navigateToRequestList()
+	{
+		System.out.println("navigating to request list");
+		
+		setRequestListInputDTO(new GetRequestListInputDTO());
+		setRequestDTOList(new ArrayList<UniqueRequestDTO>());
+		
+
+		Date donationRequestFromDate = new Date();
+
+		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 91);
+
+		String status = "OPEN";
+
+		getRequestListInputDTO().setDonationRequestFromDate(donationRequestFromDate);
+		getRequestListInputDTO().setDonationRequestToDate(donationRequestToDate);
+		getRequestListInputDTO().setStatus(status);
+		
+		searchRequestList(null);
+		
+		return "success";
+	}
+	
 	
 	public List<UniqueRequestDTO> getRequestDTOList()
 	{
@@ -57,7 +94,7 @@ public class RequestListMB implements Serializable
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
 		if (null != calledFromPage)
 		{
-			getRequestListInputDTO().setDonationCenterId(this.searchDonorMB.getDonorRequestDTO().getDonationCentre());
+			getRequestListInputDTO().setDonationCenterId(getRequestListInputDTO().getDonationCenterId());
 		}
 		
 		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO());
@@ -93,15 +130,5 @@ public class RequestListMB implements Serializable
 		this.requestListInputDTO = getRequestListInputDTO;
 	}
 
-
-	public SearchDonorMB getSearchDonorMB() {
-		return searchDonorMB;
-	}
-
-
-	public void setSearchDonorMB(SearchDonorMB searchDonorMB) {
-		this.searchDonorMB = searchDonorMB;
-	}
-	
 	
 }
