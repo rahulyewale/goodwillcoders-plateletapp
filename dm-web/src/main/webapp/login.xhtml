@@ -12,12 +12,12 @@
     </h:head>
     <h:body>
     <h:form>
-   
 		<p:graphicImage value="/image/logo.gif" height="50px"
 			width="150px"  />
 	</h:form>
             <h3>Login Here </h3>
         <h:form id="login-form">
+       <p:messages id="messages"  autoUpdate="true" closable="true" />
         <p:accordionPanel>
         <p:tab title="Login Form">
        <h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
@@ -31,7 +31,7 @@
            </p:tab>
          </p:accordionPanel>
            <br/>
-           <p:messages id="messages"  autoUpdate="true" closable="true" />
+           
            <br/>
         </h:form>
     </h:body>
