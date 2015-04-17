@@ -77,19 +77,20 @@ public class SearchDonorService
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
 
 		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
-
-		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSmsText).replaceAll(centerDetails);
+		String initialSMS = initialSmsText;
+		String intialSMSWithCenter = DONATION_CENTRE.matcher(initialSMS).replaceAll(centerDetails);
 		String intialSMSWithReqNumber = REQ_UID.matcher(intialSMSWithCenter).replaceAll(uniqueRequestNumber);
 		String intialSMSWithReqDate = REQ_DATE.matcher(intialSMSWithReqNumber).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
-		initialSmsText = intialSMSWithReqDate;
+		initialSMS = intialSMSWithReqDate;
 
-		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSmsText).replaceAll(centerDetails);
+		String confirmSMS = confirmSmsText;
+		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSMS).replaceAll(centerDetails);
 		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
-		confirmSmsText = confirmSMSWithReqDate;
+		confirmSMS = confirmSMSWithReqDate;
 
 		SearchDonorResponseDTO searchDonorResponseDTO = new SearchDonorResponseDTO();
-		searchDonorResponseDTO.setConfirmSmsText(confirmSmsText);
-		searchDonorResponseDTO.setIntialSmsText(initialSmsText);
+		searchDonorResponseDTO.setConfirmSmsText(confirmSMS);
+		searchDonorResponseDTO.setIntialSmsText(initialSMS);
 		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestNumber);
 		searchDonorResponseDTO.setDonorDTOList(donorDTOList);
 
