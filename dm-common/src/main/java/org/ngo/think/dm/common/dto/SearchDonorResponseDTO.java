@@ -19,6 +19,8 @@ public class SearchDonorResponseDTO implements Serializable
 	private String confirmSmsText;
 
 	private String uniqueRequestId;
+	
+	private DonationCenterDTO donationCenterDTO;
 
 	public List<DonorDTO> getDonorDTOList()
 	{
@@ -60,4 +62,15 @@ public class SearchDonorResponseDTO implements Serializable
 		this.uniqueRequestId = uniqueRequestId;
 	}
 
+	public DonationCenterDTO getDonationCenterDTO()
+	{
+		return donationCenterDTO;
+	}
+
+	public void setDonationCenterDTO(DonationCenterDTO donationCenterDTO)
+	{
+		this.donationCenterDTO = donationCenterDTO;
+	}
+
+	
 }

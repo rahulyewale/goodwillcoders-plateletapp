@@ -67,6 +67,11 @@ public class DistanceCalculator
 
 			if (null != donorPostalCodeMaster && null != centerPostalCodeMaster)
 			{
+				center.setLattitude(centerPostalCodeMaster.getLattitude());
+				center.setLongitude(centerPostalCodeMaster.getLongitude());
+				donor.getDonorAddressDetails().get(0).setLongitude(donorPostalCodeMaster.getLongitude());
+				donor.getDonorAddressDetails().get(0).setLattitude(donorPostalCodeMaster.getLattitude());
+				
 				double distanceInKM = calculateDistanceByLongitudeLattitude(donorPostalCodeMaster.getLattitude(), donorPostalCodeMaster.getLongitude(), centerPostalCodeMaster.getLattitude(), centerPostalCodeMaster.getLongitude());
 				donor.setDistanceInKm(String.valueOf(roundTo2Decimals(distanceInKM)));
 				donor.setDistanceInMeter(distanceInKM);

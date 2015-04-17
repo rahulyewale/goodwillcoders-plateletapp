@@ -61,6 +61,12 @@ public class DonationCenter implements Serializable
 	
 	@Transient
 	private String centerAddress;
+	
+	@Transient
+	private double longitude;
+	
+	@Transient
+	private double lattitude;
 
 	// bi-directional many-to-one association to CommunicationHistory
 	@OneToMany(mappedBy = "donationCenter")
@@ -205,6 +211,28 @@ public class DonationCenter implements Serializable
 	{
 		this.centerAddress = centerAddress;
 	}
+
+	public double getLongitude()
+	{
+		return longitude;
+	}
+
+	public void setLongitude(double longitude)
+	{
+		this.longitude = longitude;
+	}
+
+	public double getLattitude()
+	{
+		return lattitude;
+	}
+
+	public void setLattitude(double lattitude)
+	{
+		this.lattitude = lattitude;
+	}
+
+	
 	
 	
 

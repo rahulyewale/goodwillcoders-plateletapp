@@ -22,6 +22,9 @@ public class DonationCenterDTO implements Serializable
 	private Date createdDate;
 	private String modifiedBy;
 	private Date modifiedDate;
+	
+	private double longitude;
+	private double lattitude;
 
 	public Long getDonationCenterId()
 	{
@@ -131,6 +134,26 @@ public class DonationCenterDTO implements Serializable
 	public void setModifiedDate(Date modifiedDate)
 	{
 		this.modifiedDate = modifiedDate;
+	}
+
+	public double getLongitude()
+	{
+		return longitude;
+	}
+
+	public void setLongitude(double longitude)
+	{
+		this.longitude = longitude;
+	}
+
+	public double getLattitude()
+	{
+		return lattitude;
+	}
+
+	public void setLattitude(double lattitude)
+	{
+		this.lattitude = lattitude;
 	}
 
 }

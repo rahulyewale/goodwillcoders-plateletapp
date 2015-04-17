@@ -23,6 +23,9 @@ public class DonorAddressDetailsDTO implements Serializable
 	private Date createdDate;
 	private String modifiedBy;
 	private Date modifiedDate;
+	
+	private double longitude;
+	private double lattitude;
 
 	public Long getDonorAddressId()
 	{
@@ -133,5 +136,27 @@ public class DonorAddressDetailsDTO implements Serializable
 	{
 		this.modifiedDate = modifiedDate;
 	}
+
+	public double getLongitude()
+	{
+		return longitude;
+	}
+
+	public void setLongitude(double longitude)
+	{
+		this.longitude = longitude;
+	}
+
+	public double getLattitude()
+	{
+		return lattitude;
+	}
+
+	public void setLattitude(double lattitude)
+	{
+		this.lattitude = lattitude;
+	}
+
+	
 
 }

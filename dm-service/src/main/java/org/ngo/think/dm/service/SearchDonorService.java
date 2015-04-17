@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
@@ -15,6 +16,7 @@ import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.service.domain.DistanceComparator;
 import org.ngo.think.dm.service.domain.DonorFilter;
+import org.ngo.think.dm.service.mapper.DonationCenterMapper;
 import org.ngo.think.dm.service.mapper.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -75,6 +77,8 @@ public class SearchDonorService
 		Collections.sort(donorList, new DistanceComparator());
 
 		List<DonorDTO> donorDTOList = DonorMapper.toDTOList(donorList);
+		
+		DonationCenterDTO centerDTO = DonationCenterMapper.toDTO(center);
 
 		String centerDetails = center.getDonationCenterName() + "," + center.getCity() + "," + center.getPinCode();
 		String initialSMS = initialSmsText;
@@ -93,6 +97,7 @@ public class SearchDonorService
 		searchDonorResponseDTO.setIntialSmsText(initialSMS);
 		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestNumber);
 		searchDonorResponseDTO.setDonorDTOList(donorDTOList);
+		searchDonorResponseDTO.setDonationCenterDTO(centerDTO);
 
 		return searchDonorResponseDTO;
 

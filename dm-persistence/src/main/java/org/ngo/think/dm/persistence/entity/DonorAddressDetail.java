@@ -1,7 +1,9 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
 import java.util.Date;
 
 /**
@@ -46,6 +48,12 @@ public class DonorAddressDetail implements Serializable
 	private String pinCode;
 
 	private String state;
+	
+	@Transient
+	private double longitude;
+	
+	@Transient
+	private double lattitude;
 
 	// bi-directional many-to-one association to Donor
 	@ManyToOne
@@ -165,5 +173,26 @@ public class DonorAddressDetail implements Serializable
 	{
 		this.donor = donor;
 	}
+
+	public double getLongitude()
+	{
+		return longitude;
+	}
+
+	public void setLongitude(double longitude)
+	{
+		this.longitude = longitude;
+	}
+
+	public double getLattitude()
+	{
+		return lattitude;
+	}
+
+	public void setLattitude(double lattitude)
+	{
+		this.lattitude = lattitude;
+	}
+
 
 }

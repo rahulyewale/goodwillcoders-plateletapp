@@ -20,6 +20,8 @@ public class DonorAddressMapper
 		addressDetailsDTO.setDonorId(donorAddressDetail.getDonor().getDonorId());
 		addressDetailsDTO.setPinCode(donorAddressDetail.getPinCode());
 		addressDetailsDTO.setState(donorAddressDetail.getState());
+		addressDetailsDTO.setLongitude(donorAddressDetail.getLongitude());
+		addressDetailsDTO.setLattitude(donorAddressDetail.getLattitude());
 		return addressDetailsDTO;
 	}
 	
