@@ -58,12 +58,12 @@
 						
 
 				</h:panelGrid>
-				
+					
 			</p:tab>
 		</p:accordionPanel>
 
-		<h:commandLink actionListener="#{requestDetailsMB.searchDonor}"
-                             ajax="false" action="/secured/searchdonor.xhtml">
+		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}"
+                             ajax="true" action="/secured/searchdonor.xhtml">
                              	<p:graphicImage value="/secured/image/search.jpg"/>
         </h:commandLink>
 

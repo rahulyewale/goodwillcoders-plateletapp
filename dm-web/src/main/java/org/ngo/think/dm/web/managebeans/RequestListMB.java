@@ -2,12 +2,12 @@ package org.ngo.think.dm.web.managebeans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -16,79 +16,66 @@ import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
 import org.ngo.think.dm.common.dto.GetRequestListResponse;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
-import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
 
 /**
- * @author rahulsy
- *MB for RequestList Page.
+ * @author rahulsy MB for RequestList Page.
  */
 @ManagedBean(name = "requestListMB")
-@SessionScoped
+@ViewScoped
 public class RequestListMB implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 
-	private UniqueRequestDTO selectedRequestDTO;
-
 	private GetRequestListInputDTO requestListInputDTO = new GetRequestListInputDTO();
-	
+
 	private List<UniqueRequestDTO> requestDTOList = new ArrayList<UniqueRequestDTO>();
-	
+
 	@ManagedProperty(value = "#{cachedDataMB}")
 	private CachedDataMB cachedDataMB = new CachedDataMB();
-	
-	
+
+	@ManagedProperty(value = "#{dashbord}")
+	private DashbordMB dashbordMB = new DashbordMB();
+
+	public DashbordMB getDashbordMB()
+	{
+		return dashbordMB;
+	}
+
+	public void setDashbordMB(DashbordMB dashbordMB)
+	{
+		this.dashbordMB = dashbordMB;
+	}
+
 	public CachedDataMB getCachedDataMB()
 	{
 		return cachedDataMB;
 	}
 
-
 	public void setCachedDataMB(CachedDataMB cachedDataMB)
 	{
 		this.cachedDataMB = cachedDataMB;
 	}
-
-
-	public String navigateToRequestList()
+	
+	@PostConstruct
+	public void getRequestList()
 	{
-		System.out.println("navigating to request list");
-		
-		setRequestListInputDTO(new GetRequestListInputDTO());
-		setRequestDTOList(new ArrayList<UniqueRequestDTO>());
-		
-
-		Date donationRequestFromDate = new Date();
-
-		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 91);
-
-		String status = "OPEN";
-
-		getRequestListInputDTO().setDonationRequestFromDate(donationRequestFromDate);
-		getRequestListInputDTO().setDonationRequestToDate(donationRequestToDate);
-		getRequestListInputDTO().setStatus(status);
-		
+		setRequestListInputDTO(dashbordMB.getGetRequestListInputDTO());
 		searchRequestList(null);
-		
-		return "success";
 	}
-	
-	
+
 	public List<UniqueRequestDTO> getRequestDTOList()
 	{
 		return requestDTOList;
 	}
 
-
 	public void setRequestDTOList(List<UniqueRequestDTO> requestDTOList)
 	{
 		this.requestDTOList = requestDTOList;
 	}
-	
 
 	public void searchRequestList(String calledFromPage)
 	{
@@ -97,7 +84,7 @@ public class RequestListMB implements Serializable
 		{
 			getRequestListInputDTO().setDonationCenterId(getRequestListInputDTO().getDonationCenterId());
 		}
-		
+
 		serviceRequest.add(CommonConstants.RequestKey.GET_REQUEST_LIST_REQUEST, getRequestListInputDTO());
 		String serviceResponseString = null;
 		ServiceResponse serviceResponse = null;
@@ -116,32 +103,20 @@ public class RequestListMB implements Serializable
 			e.printStackTrace();
 		}
 
-		setRequestDTOList(getRequestListResponse.getRequestListOutputList());
+		if(null!=getRequestListResponse)
+		{
+			setRequestDTOList(getRequestListResponse.getRequestListOutputList());	
+		}
 	}
-
 
 	public GetRequestListInputDTO getRequestListInputDTO()
 	{
 		return requestListInputDTO;
 	}
 
-
 	public void setRequestListInputDTO(GetRequestListInputDTO getRequestListInputDTO)
 	{
 		this.requestListInputDTO = getRequestListInputDTO;
 	}
 
-
-	public UniqueRequestDTO getSelectedRequestDTO()
-	{
-		return selectedRequestDTO;
-	}
-
-
-	public void setSelectedRequestDTO(UniqueRequestDTO selectedRequestDTO)
-	{
-		this.selectedRequestDTO = selectedRequestDTO;
-	}
-
-	
 }

@@ -3,9 +3,7 @@ package org.ngo.think.dm.web.managebeans;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -44,34 +42,24 @@ public class RequestDetailsMB implements Serializable
 
 	private List<SearchCommunicationHistoryResultDTO> communicationHistoryResult = new ArrayList<SearchCommunicationHistoryResultDTO>();
 	
-	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
-	
-	/*@ManagedProperty(value="#{searchDonorResponseMB}")
-	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
-	*/
-	/*@ManagedProperty(value="#{searchDonorMB}")
-	private SearchDonorMB searchDonorMB = new SearchDonorMB();
-	*/
-	
-	@ManagedProperty(value="#{requestListMB}")
-	private RequestListMB requestListMB = new RequestListMB();
-	
-	public RequestListMB getRequestListMB()
+	@ManagedProperty(value = "#{dashbord}")
+	private DashbordMB dashbordMB = new DashbordMB();
+
+
+	public DashbordMB getDashbordMB()
 	{
-		return requestListMB;
+		return dashbordMB;
 	}
 
-	public void setRequestListMB(RequestListMB requestListMB)
+	public void setDashbordMB(DashbordMB dashbordMB)
 	{
-		this.requestListMB = requestListMB;
+		this.dashbordMB = dashbordMB;
 	}
 
 	private String confirmSMSText;
 	
 	private SearchCommunicationHistoryResultDTO communicationHistoryResultDTO = new SearchCommunicationHistoryResultDTO();
 	
-	private Map<String, SearchCommunicationHistoryResponseDTO> requestDetailsMap = new HashMap<String,SearchCommunicationHistoryResponseDTO>();
-
 	
 	public UniqueRequestDTO getRequestDTO()
 	{
@@ -106,7 +94,7 @@ public class RequestDetailsMB implements Serializable
 	@PostConstruct
 	public void openRequest()
 	{
-		setRequestDTO(requestListMB.getSelectedRequestDTO());
+		setRequestDTO(dashbordMB.getSelectedRequestDTO());
 		getCommunicationHistory();
 		
 		System.out.println(requestDTO.getRequestNumber());
@@ -133,9 +121,6 @@ public class RequestDetailsMB implements Serializable
 			
 			this.confirmSMSText = searchCommunicationHistoryResponse.getConfirmSMSText();
 			
-			//getRequestDetailsMap().put(inputRequestDTO.getRequestNumber(), searchCommunicationHistoryResponse);
-			
-			
 			
 		}
 		catch (Exception e)
@@ -145,86 +130,6 @@ public class RequestDetailsMB implements Serializable
 		
 		
 	}
-	
-	public void searchDonor()
-	{/*
-		//set selected donor list to empty as searchDonorMB is session scoped.
-		searchDonorMB.setSearchDonorList(new ArrayList<DonorDTO>());
-		SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
-		
-		try
-		{
-			donorRequestDTO.setRequestDate(DateUtil.stringToDate(requestDTO.getRequestedDate(),"dd-MMM-yyyy"));
-		}
-		catch (ParseException e1)
-		{
-			e1.printStackTrace();
-		}
-		
-		donorRequestDTO.setBloodGroup(requestDTO.getBloodGroup());
-		donorRequestDTO.setDonationCentre(requestDTO.getDonationCenterDTO().getDonationCenterId());
-		donorRequestDTO.setNotDonatedInLastMonthsCount(0);
-		donorRequestDTO.setNumberOfDonationsLessThanCount(24);
-		
-		searchDonorMB.getDonorRequestDTO().setBloodGroup(requestDTO.getBloodGroup());
-		searchDonorMB.getDonorRequestDTO().setRequestDate(donorRequestDTO.getRequestDate());
-		searchDonorMB.getDonorRequestDTO().setDonationCentre(requestDTO.getDonationCenterDTO().getDonationCenterId());
-		
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_DONOR_REQUEST, donorRequestDTO);
-
-		ServiceResponse serviceResponse = null;
-		try
-		{
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.SEARCH_DONOR_SERVICE_URL, serviceRequest);
-		}
-		catch (Exception e)
-		{
-
-			e.printStackTrace();
-		}
-
-		SearchDonorResponseDTO responseDTO = null;
-
-		String responseString;
-		try
-		{
-			responseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DONOR_RESPONSE));
-			responseDTO = (SearchDonorResponseDTO) JsonUtil.convertJsonToObject(responseString, SearchDonorResponseDTO.class);
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		searchDonorList = responseDTO.getDonorDTOList();
-		
-		searchDonorResponseMB.setSearchDonorResponseDTO(responseDTO);
-		searchDonorResponseMB.setSearchDonorList(searchDonorList);
-		searchDonorResponseMB.setDonorRequestDTO(donorRequestDTO);
-
-		System.out.println("Search submitted");
-		
-	*/}
-
-	/*public SearchDonorResponseMB getSearchDonorResponseMB()
-	{
-		return searchDonorResponseMB;
-	}
-
-	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
-	{
-		this.searchDonorResponseMB = searchDonorResponseMB;
-	}*/
-
-	/*public SearchDonorMB getSearchDonorMB()
-	{
-		return searchDonorMB;
-	}
-
-	public void setSearchDonorMB(SearchDonorMB searchDonorMB)
-	{
-		this.searchDonorMB = searchDonorMB;
-	}*/
 	
 	public void confirmDonor()
 	{
@@ -261,7 +166,6 @@ public class RequestDetailsMB implements Serializable
 			}
 			catch (ParseException e1)
 			{
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			donorAppointment.setRequestTxnId(communicationHistoryResultDTO.getRequestId());
@@ -300,6 +204,7 @@ public class RequestDetailsMB implements Serializable
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
 	}
+	
 
 	public void rejectDonor(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
 	{
@@ -310,7 +215,6 @@ public class RequestDetailsMB implements Serializable
 		}
 		catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -324,7 +228,6 @@ public class RequestDetailsMB implements Serializable
 		}
 		catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -338,7 +241,6 @@ public class RequestDetailsMB implements Serializable
 		}
 		catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -361,21 +263,6 @@ public class RequestDetailsMB implements Serializable
 	public void setCommunicationHistoryResultDTO(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
-	}
-
-	public Map<String, SearchCommunicationHistoryResponseDTO> getRequestDetailsMap()
-	{
-		return requestDetailsMap;
-	}
-
-	public void setRequestDetailsMap(Map<String, SearchCommunicationHistoryResponseDTO> requestDetailsMap)
-	{
-		this.requestDetailsMap = requestDetailsMap;
-	}
-	
-	public List<SearchCommunicationHistoryResultDTO> getCommunicationHistoryListByRequestNumber()
-	{
-		return getRequestDetailsMap().get(requestDTO.getRequestNumber()).getSearchCommunicationHistoryResponseList();
 	}
 
 

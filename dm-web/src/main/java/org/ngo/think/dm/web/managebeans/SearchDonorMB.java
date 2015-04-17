@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -41,6 +42,21 @@ public class SearchDonorMB implements Serializable
 
 	@ManagedProperty(value = "#{cachedDataMB}")
 	private CachedDataMB cachedDataMB = new CachedDataMB();
+	
+	@ManagedProperty(value = "#{dashbord}")
+	private DashbordMB dashbordMB = new DashbordMB();
+
+	
+	@PostConstruct
+	public void searchDonnorPostConstruct()
+	{
+		if (null != dashbordMB.getSearchDonorRequestDTO())
+		{
+			setDonorRequestDTO(dashbordMB.getSearchDonorRequestDTO());
+			searchDonor();
+			dashbordMB.setSearchDonorRequestDTO(null);
+		}
+	}
 	
 	public void searchDonor()
 	{
@@ -296,6 +312,16 @@ public class SearchDonorMB implements Serializable
 	public void setSelectedDonors(List<DonorDTO> donorDTOList)
 	{
 		this.selectedDonorList = donorDTOList;
+	}
+
+	public DashbordMB getDashbordMB()
+	{
+		return dashbordMB;
+	}
+
+	public void setDashbordMB(DashbordMB dashbordMB)
+	{
+		this.dashbordMB = dashbordMB;
 	}
 
 }

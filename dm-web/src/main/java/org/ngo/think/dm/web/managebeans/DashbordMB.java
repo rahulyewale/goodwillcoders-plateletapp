@@ -1,74 +1,72 @@
 package org.ngo.think.dm.web.managebeans;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
-import org.ngo.think.dm.common.Context.ContextInfo;
-import org.ngo.think.dm.common.communication.dto.ServiceRequest;
-import org.ngo.think.dm.common.communication.dto.ServiceResponse;
-import org.ngo.think.dm.common.constant.CommonConstants;
-import org.ngo.think.dm.common.dto.DonationCenterDTO;
-import org.ngo.think.dm.common.dto.DonorDTO;
-import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
-import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
-import org.ngo.think.dm.common.util.JsonUtil;
-import org.ngo.think.dm.web.client.RestSeviceInvoker;
-import org.ngo.think.dm.web.constant.WebConstant;
 
 @ManagedBean(name = "dashbord")
-@RequestScoped
-public class DashbordMB
+@SessionScoped
+public class DashbordMB implements Serializable
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
-	@ManagedProperty(value = "#{searchDonorResponseMB}")
-	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
-	
-	@ManagedProperty(value = "#{requestListMB}")
-	private RequestListMB requestListMB = new RequestListMB();
-	
-	@ManagedProperty(value = "#{searchDonorMB}")
-	private SearchDonorMB searchDonorMB = new SearchDonorMB();
+	private GetRequestListInputDTO getRequestListInputDTO;
+
+	private UniqueRequestDTO selectedRequestDTO;
+
+	private SearchDonorRequestDTO searchDonorRequestDTO;
 
 
-
-	public SearchDonorMB getSearchDonorMB()
+	public GetRequestListInputDTO getGetRequestListInputDTO()
 	{
-		return searchDonorMB;
+		return getRequestListInputDTO;
 	}
 
-
-	public void setSearchDonorMB(SearchDonorMB searchDonorMB)
+	public void setGetRequestListInputDTO(GetRequestListInputDTO getRequestListInputDTO)
 	{
-		this.searchDonorMB = searchDonorMB;
+		this.getRequestListInputDTO = getRequestListInputDTO;
+	}
+
+	public UniqueRequestDTO getSelectedRequestDTO()
+	{
+		return selectedRequestDTO;
+	}
+
+	public void setSelectedRequestDTO(UniqueRequestDTO selectedRequestDTO)
+	{
+		this.selectedRequestDTO = selectedRequestDTO;
+	}
+
+	public SearchDonorRequestDTO getSearchDonorRequestDTO()
+	{
+		return searchDonorRequestDTO;
+	}
+
+	public void setSearchDonorRequestDTO(SearchDonorRequestDTO searchDonorRequestDTO)
+	{
+		this.searchDonorRequestDTO = searchDonorRequestDTO;
 	}
 
 
 	public String navigateToSearchDonor()
 	{
-		this.searchDonorMB.setDonorRequestDTO(new SearchDonorRequestDTO());
-		
-		populateDonationCenters();
-
-		searchDonorResponseMB.setSearchDonorList(new ArrayList<DonorDTO>());
-		searchDonorResponseMB.setDonorRequestDTO(new SearchDonorRequestDTO());
-		searchDonorResponseMB.setSearchDonorResponseDTO(new SearchDonorResponseDTO());
-
 		System.out.println("navigating to search donor");
 		return "success";
 	}
 
-
 	public String navigateToDashbord()
 	{
-		// fetching the center list
 		System.out.println("navigating to dashbord");
 		return "success";
 	}
@@ -84,63 +82,43 @@ public class DashbordMB
 		return "success";
 	}
 
-	public SearchDonorResponseMB getSearchDonorResponseMB()
+	public String navigateToRequestList()
 	{
-		return searchDonorResponseMB;
+		System.out.println("navigating to request list");
+
+		Date donationRequestFromDate = new Date();
+
+		Date donationRequestToDate = DateUtil.addDaysToDate(donationRequestFromDate, 91);
+
+		String status = "OPEN";
+
+		this.getRequestListInputDTO = new GetRequestListInputDTO();
+		
+		
+		this.getRequestListInputDTO.setDonationRequestFromDate(donationRequestFromDate);
+		this.getRequestListInputDTO.setDonationRequestToDate(donationRequestToDate);
+		this.getRequestListInputDTO.setStatus(status);
+
+		return "success";
 	}
 
-	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
+	public void setSearchDonorCriteria(UniqueRequestDTO requestDTO)
 	{
-		this.searchDonorResponseMB = searchDonorResponseMB;
-	}
-
-
-	private void populateDonationCenters()
-	{
-		if (!searchDonorResponseMB.isDonationCentersSet())
-		{
-			GetDonationCenterResponseDTO donationCenterResponseDTO = fetchDonationCenters();
-
-			DonationCenterDTO[] centerDTOs = new DonationCenterDTO[donationCenterResponseDTO.getDonationCenterDTOList().size()];
-			for (int i = 0; i < donationCenterResponseDTO.getDonationCenterDTOList().size(); i++)
-			{
-				centerDTOs[i] = donationCenterResponseDTO.getDonationCenterDTOList().get(i);
-			}
-			searchDonorResponseMB.setDonationCenterDTOList(centerDTOs);
-			searchDonorResponseMB.setDonationCentersSet(true);
-		}
-	}
-	
-	private GetDonationCenterResponseDTO fetchDonationCenters()
-	{
-		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
-		String serviceResponseString = null;
-		ServiceResponse serviceResponse = null;
-		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
 		try
 		{
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_DONATION_CENTERS_URL, serviceRequest);
-
-			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_DOATION_CENTER_RESPONSE));
-			donationCenterResponseDTO = (GetDonationCenterResponseDTO) JsonUtil.convertJsonToObject(serviceResponseString, GetDonationCenterResponseDTO.class);
-
+			this.searchDonorRequestDTO= new SearchDonorRequestDTO();   
+			getSearchDonorRequestDTO().setRequestDate(DateUtil.stringToDate(requestDTO.getRequestedDate(), "dd-MMM-yyyy"));
 		}
-		catch (Exception e)
+		catch (ParseException e1)
 		{
-
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
-		return donationCenterResponseDTO;
+
+		getSearchDonorRequestDTO().setBloodGroup(requestDTO.getBloodGroup());
+		getSearchDonorRequestDTO().setDonationCentre(requestDTO.getDonationCenterDTO().getDonationCenterId());
+		getSearchDonorRequestDTO().setNotDonatedInLastMonthsCount(0);
+		getSearchDonorRequestDTO().setNumberOfDonationsLessThanCount(24);
+
 	}
 
-	public RequestListMB getRequestListMB()
-	{
-		return requestListMB;
-	}
-
-	public void setRequestListMB(RequestListMB requestListMB)
-	{
-		this.requestListMB = requestListMB;
-	}
-	
 }

@@ -30,7 +30,7 @@
 		</navigation-case>
 		
 		<navigation-case>
-		 <from-action>#{requestListMB.navigateToRequestList}</from-action>
+		 <from-action>#{dashbord.navigateToRequestList}</from-action>
 		 <from-outcome></from-outcome>
 		 <to-view-id>secured/requestlist.xhtml</to-view-id>
 		</navigation-case>
