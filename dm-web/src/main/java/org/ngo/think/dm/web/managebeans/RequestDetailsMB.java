@@ -7,10 +7,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
@@ -24,8 +25,6 @@ import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResponseDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResultDTO;
-import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
-import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.common.util.JsonUtil;
@@ -33,7 +32,7 @@ import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
 
 @ManagedBean(name = "requestDetailsMB")
-@SessionScoped
+@ViewScoped
 public class RequestDetailsMB implements Serializable
 {
 
@@ -47,12 +46,26 @@ public class RequestDetailsMB implements Serializable
 	
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();
 	
-	@ManagedProperty(value="#{searchDonorResponseMB}")
+	/*@ManagedProperty(value="#{searchDonorResponseMB}")
 	private SearchDonorResponseMB searchDonorResponseMB = new SearchDonorResponseMB();
-	
-	@ManagedProperty(value="#{searchDonorMB}")
+	*/
+	/*@ManagedProperty(value="#{searchDonorMB}")
 	private SearchDonorMB searchDonorMB = new SearchDonorMB();
+	*/
 	
+	@ManagedProperty(value="#{requestListMB}")
+	private RequestListMB requestListMB = new RequestListMB();
+	
+	public RequestListMB getRequestListMB()
+	{
+		return requestListMB;
+	}
+
+	public void setRequestListMB(RequestListMB requestListMB)
+	{
+		this.requestListMB = requestListMB;
+	}
+
 	private String confirmSMSText;
 	
 	private SearchCommunicationHistoryResultDTO communicationHistoryResultDTO = new SearchCommunicationHistoryResultDTO();
@@ -90,18 +103,19 @@ public class RequestDetailsMB implements Serializable
 		this.communicationHistoryResult = communicationHistoryResult;
 	}
 
-	
-	public void openRequest(UniqueRequestDTO requestDTO)
+	@PostConstruct
+	public void openRequest()
 	{
-		getCommunicationHistory(requestDTO);
+		setRequestDTO(requestListMB.getSelectedRequestDTO());
+		getCommunicationHistory();
 		
 		System.out.println(requestDTO.getRequestNumber());
 	}
 	
 	
-	public void getCommunicationHistory(UniqueRequestDTO inputRequestDTO)
+	public void getCommunicationHistory()
 	{
-		setRequestDTO(inputRequestDTO);
+		setRequestDTO(getRequestDTO());
 		getSearchCommunicationHistoryReqDTO().setRequestTxnId(getRequestDTO().getRequestNumber());
 		
 		
@@ -133,7 +147,7 @@ public class RequestDetailsMB implements Serializable
 	}
 	
 	public void searchDonor()
-	{
+	{/*
 		//set selected donor list to empty as searchDonorMB is session scoped.
 		searchDonorMB.setSearchDonorList(new ArrayList<DonorDTO>());
 		SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
@@ -190,9 +204,9 @@ public class RequestDetailsMB implements Serializable
 
 		System.out.println("Search submitted");
 		
-	}
+	*/}
 
-	public SearchDonorResponseMB getSearchDonorResponseMB()
+	/*public SearchDonorResponseMB getSearchDonorResponseMB()
 	{
 		return searchDonorResponseMB;
 	}
@@ -200,9 +214,9 @@ public class RequestDetailsMB implements Serializable
 	public void setSearchDonorResponseMB(SearchDonorResponseMB searchDonorResponseMB)
 	{
 		this.searchDonorResponseMB = searchDonorResponseMB;
-	}
+	}*/
 
-	public SearchDonorMB getSearchDonorMB()
+	/*public SearchDonorMB getSearchDonorMB()
 	{
 		return searchDonorMB;
 	}
@@ -210,7 +224,7 @@ public class RequestDetailsMB implements Serializable
 	public void setSearchDonorMB(SearchDonorMB searchDonorMB)
 	{
 		this.searchDonorMB = searchDonorMB;
-	}
+	}*/
 	
 	public void confirmDonor()
 	{

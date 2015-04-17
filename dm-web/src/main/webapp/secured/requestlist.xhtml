@@ -116,8 +116,8 @@
 
 						<p:column headerText="Request Number">
 							
-							<h:commandLink actionListener="#{requestDetailsMB.openRequest(requestDTO)}"
-                             ajax="true" action="/secured/requestdetails.xhtml" target="_self"
+							<h:commandLink actionListener="#{requestListMB.setSelectedRequestDTO(requestDTO)}"
+                             ajax="true" action="/secured/requestdetails.xhtml" target="_blank"
                              value="#{requestDTO.requestNumber}"/>
 						</p:column>
 

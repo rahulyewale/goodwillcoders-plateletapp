@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
+import javax.faces.bean.SessionScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -26,12 +26,13 @@ import org.ngo.think.dm.web.constant.WebConstant;
  *MB for RequestList Page.
  */
 @ManagedBean(name = "requestListMB")
-@ViewScoped
+@SessionScoped
 public class RequestListMB implements Serializable
 {
 
 	private static final long serialVersionUID = 1L;
 
+	private UniqueRequestDTO selectedRequestDTO;
 
 	private GetRequestListInputDTO requestListInputDTO = new GetRequestListInputDTO();
 	
@@ -128,6 +129,18 @@ public class RequestListMB implements Serializable
 	public void setRequestListInputDTO(GetRequestListInputDTO getRequestListInputDTO)
 	{
 		this.requestListInputDTO = getRequestListInputDTO;
+	}
+
+
+	public UniqueRequestDTO getSelectedRequestDTO()
+	{
+		return selectedRequestDTO;
+	}
+
+
+	public void setSelectedRequestDTO(UniqueRequestDTO selectedRequestDTO)
+	{
+		this.selectedRequestDTO = selectedRequestDTO;
 	}
 
 	
