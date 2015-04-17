@@ -88,6 +88,15 @@ org.ngo.think.dm.persistence.generic.dao.impl">
 		</property>
 	</bean>
 	
+	
+	<!-- OAUTH 2 configuration -->
+	<bean id="tokenStore" class="org.springframework.security.oauth2.provider.token.InMemoryTokenStore"/>
+	<bean id="tokenServices" class="org.springframework.security.oauth2.provider.token.DefaultTokenServices">  
+    	<property name="tokenStore" ref="tokenStore"/>  
+    	<property name="supportRefreshToken" value="true"/>  
+    	<property name="clientDetailsService" ref="client-details-service"/>  
+	</bean>
+	
 	<tx:annotation-driven transaction-manager="transactionManager" />
 	<context:spring-configured />
 	<context:annotation-config />
