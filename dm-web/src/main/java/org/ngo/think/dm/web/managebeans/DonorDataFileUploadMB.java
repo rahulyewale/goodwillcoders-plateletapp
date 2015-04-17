@@ -86,7 +86,7 @@ public class DonorDataFileUploadMB
 				e.printStackTrace();
 			}
 
-			FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+			FacesMessage message = new FacesMessage("Successful", file.getFileName() + " is uploaded.");
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}

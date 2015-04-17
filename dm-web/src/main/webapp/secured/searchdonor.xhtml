@@ -92,7 +92,7 @@
 					</h:selectOneMenu>
 
 					<h:outputText value="Request Date:" />
-					<p:calendar locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
 						requiredMessage="Request date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
@@ -240,7 +240,10 @@
 
 							<h:commandButton value="Send"
 								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}"
-								onclick="sendSms()"></h:commandButton>
+								onclick="sendSms()">
+								<f:ajax execute="@form"
+							 	 onevent="unblockUi" />
+								</h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
@@ -258,7 +261,10 @@
 
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorMB.confirmDonorAppointment}"
-								onclick="confirmAppointment()"></h:commandButton>
+								onclick="confirmAppointment()">
+								<f:ajax execute="@form"
+							 	 onevent="unblockUi" />
+								</h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>
@@ -276,7 +282,10 @@
 
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorMB.markDonorAsContacted}"
-								onclick="contactedDonor()"></h:commandButton>
+								onclick="contactedDonor()">
+								<f:ajax execute="@form"
+							 	 onevent="unblockUi" />
+								</h:commandButton>
 
 						</h:panelGrid>
 					</p:dialog>

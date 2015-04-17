@@ -6,9 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
+import javax.naming.CommunicationException;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -117,22 +120,22 @@ public class SearchDonorMB implements Serializable
 	public void sendSmsToSelectedDonors()
 	{
 		System.out.println("Send SMS to selected Donors....");
-		manageDonorCommunication(CommonConstants.ApplicationConstant.SMS);
-		// return "/secured/searchdonor.xhtml?faces-redirect=true";
+		manageDonorCommunication(CommonConstants.HistoryStatus.SMS_SENT);
+		
+		//FacesMessage facesMessage = new FacesMessage("Success : SMS sent.");
+		//FacesContext.getCurrentInstance().addMessage("searchresult_frm_id:actionMessage", facesMessage);
 	}
 
 	public void confirmDonorAppointment()
 	{
 		System.out.println("Confirming Donor Appointment....");
-		manageDonorCommunication(CommonConstants.ApplicationConstant.CONFIRM_VIA_CALL);
-		// return "/secured/searchdonor.xhtml?faces-redirect=true";
+		manageDonorCommunication(CommonConstants.HistoryStatus.CONFIRMED);
 	}
 
 	public void markDonorAsContacted()
 	{
 		System.out.println("Marking Donor as Contacted....");
-		manageDonorCommunication(CommonConstants.ApplicationConstant.DONOR_CONTACTED);
-		// return "/secured/searchdonor.xhtml?faces-redirect=true";
+		manageDonorCommunication(CommonConstants.HistoryStatus.CONTACTED);
 	}
 
 	private void manageDonorCommunication(String communicationStatus)
@@ -162,6 +165,7 @@ public class SearchDonorMB implements Serializable
 
 	private DonorAppointmentDTO getSelectedDonorList()
 	{
+		selectedDonorList.clear();
 		DonorAppointmentDTO donorAppointment = new DonorAppointmentDTO();
 		donorAppointment.setCenterId(this.getDonorRequestDTO().getDonationCentre());
 		donorAppointment.setConfirmSMS(this.getSearchDonorResponseDTO().getConfirmSmsText());

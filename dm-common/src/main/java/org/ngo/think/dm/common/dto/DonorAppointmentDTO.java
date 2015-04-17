@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DonorAppointmentDTO implements Serializable
@@ -95,6 +96,20 @@ public class DonorAppointmentDTO implements Serializable
 		this.status = status;
 	}
 
+	
+	public String getSMSText(String status)
+	{
+		String smsText = null;
+		if (HistoryStatus.SMS_SENT.equals(status))
+		{
+			smsText = getInitialSMS();
+		}
+		else if (HistoryStatus.CONFIRMED.equals(status))
+		{
+			smsText = getConfirmSMS();
+		}
+		return smsText;
+	}
 	
 	/*
 	 * private Long donorId; private String status; private String contactNumber;

@@ -38,7 +38,7 @@
 <ui:include src="header.xhtml"></ui:include>
 	<h2>Request Details</h2>
 	<h:form id="request_details_frm_id">
-	 <p:messages id="messages"  autoUpdate="true" closable="true" />
+	 
 		<p:accordionPanel >
 			<p:tab title="Request Details:">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
@@ -78,10 +78,13 @@
 	</h:form>
 
 <h:form id="request_donors_form">
+
+		<p:growl id="messages" showDetail="true" />
+			
 		<p:accordionPanel>
         	<p:tab title="Communication History Result">
             <h:panelGrid  cellpadding="10" >
-                
+               
                <p:dataTable rows="10"  value="#{requestDetailsMB.communicationHistoryResult}" var="commnHist"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -113,7 +116,7 @@
 			      </p:column>
 			      
 			      <p:column headerText="Reject">
-			            <h:commandLink actionListener="#{requestDetailsMB.rejectDonor(commnHist)}" onclick="PF('blockUIWidget').block();">
+			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogReject.show();">
                              <p:graphicImage value="/secured/image/reject.jpg" />
                              <f:ajax execute="@form"
 							  onevent="unblockUi" />
@@ -121,7 +124,7 @@
 			      </p:column>
 			      
 			      <p:column headerText="Reserve">
-			            <h:commandLink actionListener="#{requestDetailsMB.reserveDonor(commnHist)}" onclick="PF('blockUIWidget').block();">
+			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogReserve.show();">
                              <p:graphicImage value="/secured/image/reserve.jpg" />
                              <f:ajax execute="@form"
 							  onevent="unblockUi" />
@@ -148,26 +151,61 @@
 				<h:outputText value="Please wait..." style="white-space: nowrap;" />
 			</h:panelGrid>
 		</pe:blockUI>
-		
-		
+
+
 		<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
-						resizable="false" width="400" height="200">
+			resizable="false" width="400" height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4"
-							id="contentOFDonorConfirm">
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
 
-							<h:inputTextarea rows="5"
-								value="#{requestDetailsMB.confirmSMSText}"
-								cols="40" maxlength="140" autoResize="true" />
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}"
+					cols="40" maxlength="140" autoResize="true" />
 
-							<p:commandButton value="Confirm" actionListener="#{requestDetailsMB.confirmDonor}"
-								update="request_donors_form" onclick="confirmAppointment();" oncomplete="unblockUIfreeze();"></p:commandButton>
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.confirmDonor}"
+					update="request_donors_form" onclick="confirmAppointment();"
+					oncomplete="unblockUIfreeze();"></p:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
+			</h:panelGrid>
+		</p:dialog>
+
+
+	<p:dialog header="Reject Donor" widgetVar="donorDialogReject"
+			resizable="false" width="400" height="200">
+
+
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReject">
+
+				<h:inputTextarea rows="5" value="You are about to Reject donor.Please confirm this action."
+					cols="40" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
+
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.rejectDonor}"
+					update="request_donors_form" onclick="confirmAppointment();"
+					oncomplete="unblockUIfreeze();"></p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
 		
 		
+		<p:dialog header="Reserve Donor" widgetVar="donorDialogReserve"
+			resizable="false" width="400" height="200">
+
+
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReserve">
+
+				<h:inputTextarea rows="5" value="You are about to Reserve this donor.Please confirm this action."
+					cols="40" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
+
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.reserveDonor}"
+					update="request_donors_form" onclick="confirmAppointment();"
+					oncomplete="unblockUIfreeze();"></p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
+
 	</h:form>	
 	
 <ui:include src="footer.xhtml"></ui:include>

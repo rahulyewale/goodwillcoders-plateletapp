@@ -13,6 +13,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
+import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
@@ -41,10 +42,9 @@ public class RequestDetailsMB implements Serializable
 	private SearchCommunicationHistoryRequestDTO searchCommunicationHistoryReqDTO = new SearchCommunicationHistoryRequestDTO();
 
 	private List<SearchCommunicationHistoryResultDTO> communicationHistoryResult = new ArrayList<SearchCommunicationHistoryResultDTO>();
-	
+
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
-
 
 	public DashbordMB getDashbordMB()
 	{
@@ -57,10 +57,9 @@ public class RequestDetailsMB implements Serializable
 	}
 
 	private String confirmSMSText;
-	
+
 	private SearchCommunicationHistoryResultDTO communicationHistoryResultDTO = new SearchCommunicationHistoryResultDTO();
-	
-	
+
 	public UniqueRequestDTO getRequestDTO()
 	{
 		return requestDTO;
@@ -96,51 +95,62 @@ public class RequestDetailsMB implements Serializable
 	{
 		setRequestDTO(dashbordMB.getSelectedRequestDTO());
 		getCommunicationHistory();
-		
+
 		System.out.println(requestDTO.getRequestNumber());
 	}
-	
-	
+
 	public void getCommunicationHistory()
 	{
 		setRequestDTO(getRequestDTO());
 		getSearchCommunicationHistoryReqDTO().setRequestTxnId(getRequestDTO().getRequestNumber());
-		
-		
+
 		try
 		{
-			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST,getSearchCommunicationHistoryReqDTO());
+			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST, getSearchCommunicationHistoryReqDTO());
 			ServiceResponse serviceResponse = null;
-			
-			serviceResponse =  RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
+
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
 			String jsonResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_COMMUNICATION_HISTORY_RESPONSE));
-			
+
 			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
-			
+
 			this.communicationHistoryResult = searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList();
-			
+
 			this.confirmSMSText = searchCommunicationHistoryResponse.getConfirmSMSText();
-			
-			
+
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
-		
-		
+
 	}
-	
+
 	public void confirmDonor()
 	{
 
+		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.CONFIRMED);
+	}
+
+	public void rejectDonor()
+	{
+		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.REJECTED);
+	}
+
+	public void reserveDonor()
+	{
+		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.RESERVED);
+	}
+	
+	private void maintainCommunicationStatus(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO, String communicationStatus)
+	{
 		FacesMessage facesMessage = null;
 
-		System.out.println("Confirming Donor : " + communicationHistoryResultDTO.getDonorName());
+		System.out.println("Action on Donor : " + communicationHistoryResultDTO.getDonorName() + " "+communicationStatus);
 
-		if (communicationHistoryResultDTO.getStatus().equals(HistoryStatus.CONFIRMED))
+		if (communicationHistoryResultDTO.getStatus().equals(communicationStatus))
 		{
-			facesMessage = new FacesMessage("Already Confirmed", communicationHistoryResultDTO.getDonorName() + " is Already CONFIRMED.");
+			facesMessage = new FacesMessage("Already "+communicationStatus, communicationHistoryResultDTO.getDonorName() + " is already "+communicationStatus);
 		}
 		else
 		{
@@ -169,7 +179,7 @@ public class RequestDetailsMB implements Serializable
 				e1.printStackTrace();
 			}
 			donorAppointment.setRequestTxnId(communicationHistoryResultDTO.getRequestId());
-			donorAppointment.setStatus(CommonConstants.ApplicationConstant.CONFIRM_VIA_CALL);
+			donorAppointment.setStatus(communicationStatus);
 
 			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEND_SMS_REQUEST, donorAppointment);
 
@@ -184,57 +194,32 @@ public class RequestDetailsMB implements Serializable
 				e.printStackTrace();
 			}
 
-			for (SearchCommunicationHistoryResultDTO communicationHistoryResultDTO : this.communicationHistoryResult)
+			if (ResponseData.successResponseData.equals(serviceResponse.getResponseData()))
 			{
-				if (communicationHistoryResultDTO.getCommunicationHistoryId().equals(this.communicationHistoryResultDTO.getCommunicationHistoryId()))
+
+				for (SearchCommunicationHistoryResultDTO communicationHistoryResultDTO2 : this.communicationHistoryResult)
 				{
-					communicationHistoryResultDTO.setStatus(HistoryStatus.CONFIRMED);
+					if (communicationHistoryResultDTO2.getCommunicationHistoryId().equals(this.communicationHistoryResultDTO.getCommunicationHistoryId()))
+					{
+						communicationHistoryResultDTO2.setStatus(communicationStatus);
+					}
 				}
 			}
 
-			facesMessage = new FacesMessage("Succesful", communicationHistoryResultDTO.getDonorName() + " is CONFIRMED.");
+			facesMessage = new FacesMessage("Successful", communicationHistoryResultDTO.getDonorName() + " " + communicationStatus.toLowerCase());
 		}
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
-
 	}
-	
-	
-	
+
 	public void setSelectedRow(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
 	}
-	
 
-	public void rejectDonor(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
-	{
-		System.out.println("Rejecting Donor : "+ communicationHistoryResultDTO.getDonorName());
-		try
-		{
-			Thread.sleep(2000);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
-	public void reserveDonor(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
-	{
-		System.out.println("Rejerving Donor : "+ communicationHistoryResultDTO.getDonorName());
-		try
-		{
-			Thread.sleep(2000);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-	}
-	
+
 	public void addDonationHistory(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
 	{
-		System.out.println("Adding Donation History For : "+ communicationHistoryResultDTO.getDonorName());
+		System.out.println("Adding Donation History For : " + communicationHistoryResultDTO.getDonorName());
 		try
 		{
 			Thread.sleep(2000);
@@ -264,6 +249,5 @@ public class RequestDetailsMB implements Serializable
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
 	}
-
 
 }

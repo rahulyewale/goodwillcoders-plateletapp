@@ -107,7 +107,7 @@ public class SearchCommunicationHistoryService
 			}
 			
 			communicationHistoryResultDTO.setDonationCenterDTO(donationCenterDTO);
-			communicationHistoryResultDTO.setDonorName(donor.getFirstName()+" "+donor.getLastName());
+			communicationHistoryResultDTO.setDonorName(donor.getFirstName());
 			communicationHistoryResultDTO.setDonorUuid(donor.getDonorUuid());
 			communicationHistoryResultDTO.setMobileNumber(donor.getDonorContactDetails().get(0).getContactNumber());
 			communicationHistoryResultDTO.setRequestedDate(communicationHistory.getRequestedDate());

@@ -1,13 +1,17 @@
 package org.ngo.think.dm.service;
 
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.CONFIRMED;
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.CONTACTED;
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.REJECTED;
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.RESERVED;
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.SMS_SENT;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.ngo.think.dm.common.communication.dto.ResponseData;
-import org.ngo.think.dm.common.constant.CommonConstants.ApplicationConstant;
-import org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
@@ -25,30 +29,29 @@ public class CommunicationHistoryService
 	@Autowired
 	private CommunicationHistoryDAO communicationHistoryDAO;
 
+	@Transactional
 	public ResponseData sendSMSToDonors(DonorAppointmentDTO donorAppointmentDTO)
 	{
-		if (ApplicationConstant.SMS.toString().equals(donorAppointmentDTO.getStatus()))
-		{
+		List<String> contactList = new ArrayList<String>();
+		boolean isStatusChanged = maintainCommunicationHistory(donorAppointmentDTO, donorAppointmentDTO.getStatus(), contactList);
 
-			List<String> contanctList = maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.SMS_SENT);
-
-			return sendSMSToDonors(contanctList, donorAppointmentDTO.getInitialSMS());
-
-		}
-		else if (ApplicationConstant.CONFIRM_VIA_CALL.toString().equals(donorAppointmentDTO.getStatus()))
+		ResponseData responseData = ResponseData.successResponseData;
+		if (isStatusChanged)
 		{
-			List<String> contanctList = maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.CONFIRMED);
-			return sendSMSToDonors(contanctList, donorAppointmentDTO.getConfirmSMS());
+			String appointmentStatus = donorAppointmentDTO.getStatus();
+			if (SMS_SENT.equals(appointmentStatus) || CONFIRMED.equals(appointmentStatus))
+			{
+				responseData = sendSMSToDonors(contactList, donorAppointmentDTO.getSMSText(donorAppointmentDTO.getStatus()));
+			}
 		}
-		else if (ApplicationConstant.DONOR_CONTACTED.toString().equals(donorAppointmentDTO.getStatus()))
+		else
 		{
-			maintainCommunicationHistory(donorAppointmentDTO, HistoryStatus.CONTACTED);
-			return ResponseData.successResponseData;
+			responseData = ResponseData.errorResponseData;
 		}
-		return ResponseData.errorResponseData;
+		return responseData;
 	}
 	
-	@Transactional
+	
 	public ResponseData sendSMSToDonors(List<String> donorsContacts,String smsText)
 	{
 		ResponseData responseData = ResponseData.successResponseData;
@@ -67,7 +70,7 @@ public class CommunicationHistoryService
 		}
 		catch (Exception exception)
 		{
-			responseData = ResponseData.errorResponseData;
+			responseData = ResponseData.successResponseData;
 			responseData.setMessage(exception.getMessage());
 		}
 		return responseData;
@@ -76,10 +79,11 @@ public class CommunicationHistoryService
 	
 	
 	@Transactional
-	public List<String> maintainCommunicationHistory(DonorAppointmentDTO donorAppointmentDTO,String status)
+	public boolean maintainCommunicationHistory(DonorAppointmentDTO donorAppointmentDTO,String status, List<String> donorsContacts)
 	{
+		boolean isStatusChanged = true;
+		
 		ResponseData responseData = ResponseData.successResponseData;
-		List<String> donorsContacts = new ArrayList<String>();
 		try
 		{
 			Long locationCenterId = donorAppointmentDTO.getCenterId();
@@ -98,6 +102,8 @@ public class CommunicationHistoryService
 
 				if (communicationHistories.isEmpty())
 				{
+					//New History (SMS SENT,CONFIRMED,CONTACTED)
+					
 					CommunicationHistory communicationHistory = new CommunicationHistory();
 					communicationHistory.setRequestId(uniqueRequestId);
 					communicationHistory.setDonorId(donorDTO.getDonorId());
@@ -117,20 +123,40 @@ public class CommunicationHistoryService
 				else
 				{
 					CommunicationHistory communicationHistory = communicationHistories.get(0);
+					
+					String statusFromDB = communicationHistory.getStatus();
 
-					if (HistoryStatus.CONFIRMED.equals(status) && (communicationHistory.getStatus().equals(HistoryStatus.SMS_SENT) || communicationHistory.getStatus().equals(HistoryStatus.CONTACTED) || communicationHistory.getStatus().equals(HistoryStatus.RESERVED)))
+					if (CONFIRMED.equals(status) && (SMS_SENT.equals(statusFromDB) || CONTACTED.equals(statusFromDB) || RESERVED.equals(statusFromDB)||REJECTED.equals(statusFromDB)))
 					{
-						communicationHistory.setStatus(HistoryStatus.CONFIRMED);
+						communicationHistory.setStatus(CONFIRMED);
 						communicationHistoryDAO.update(communicationHistory);
 
 						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
 					}
-					else if (HistoryStatus.CONTACTED.equals(status) && (communicationHistory.getStatus().equals(HistoryStatus.SMS_SENT)))
+					else if (CONTACTED.equals(status) && (statusFromDB.equals(SMS_SENT)||statusFromDB.equals(REJECTED)))
 					{
-						communicationHistory.setStatus(HistoryStatus.CONTACTED);
+						communicationHistory.setStatus(CONTACTED);
 						communicationHistoryDAO.update(communicationHistory);
 
 						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
+					}
+					else if (REJECTED.equals(status) && (SMS_SENT.equals(statusFromDB) || CONTACTED.equals(statusFromDB) || RESERVED.equals(statusFromDB)||CONFIRMED.equals(statusFromDB)))
+					{
+						communicationHistory.setStatus(REJECTED);
+						communicationHistoryDAO.update(communicationHistory);
+
+						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
+					}
+					else if (RESERVED.equals(status) && (SMS_SENT.equals(statusFromDB) || CONTACTED.equals(statusFromDB) || REJECTED.equals(statusFromDB)||CONFIRMED.equals(statusFromDB)))
+					{
+						communicationHistory.setStatus(RESERVED);
+						communicationHistoryDAO.update(communicationHistory);
+
+						donorsContacts.add(donorDTO.getDonorContactDetailsDTO().getContactNumber());
+					}
+					else
+					{
+						isStatusChanged = false;
 					}
 
 				}
@@ -143,7 +169,7 @@ public class CommunicationHistoryService
 			responseData = ResponseData.errorResponseData;
 			responseData.setMessage(exception.getMessage());
 		}
-		return donorsContacts;
+		return isStatusChanged;
 
 	}
 	
