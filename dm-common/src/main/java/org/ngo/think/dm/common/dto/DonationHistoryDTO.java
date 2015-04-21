@@ -12,7 +12,7 @@ public class DonationHistoryDTO implements Serializable
 	private static final long serialVersionUID = 1L;
 
 	private Integer donorHistoryId;
-	private Integer donorId;
+	private Long donorId;
 	private Date donationDate;
 	private String donationComponentType;
 	private boolean rejected;
@@ -33,12 +33,12 @@ public class DonationHistoryDTO implements Serializable
 		this.donorHistoryId = donorHistoryId;
 	}
 
-	public Integer getDonorId()
+	public Long getDonorId()
 	{
 		return donorId;
 	}
 
-	public void setDonorId(Integer donorId)
+	public void setDonorId(Long donorId)
 	{
 		this.donorId = donorId;
 	}

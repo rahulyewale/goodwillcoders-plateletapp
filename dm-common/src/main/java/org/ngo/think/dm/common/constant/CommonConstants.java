@@ -14,6 +14,8 @@ public class CommonConstants
 		
 		public static final String IMPORT_DONOR_EXCEL_REQUEST = "importDonorExcel";
 		public static final String GET_REQUEST_LIST_REQUEST = "getRequestListRequest";
+		
+		public static final String ADD_DONATION_HISTORY = "addDonationHistory";
 	}
 	
 	public static class ResponseKey

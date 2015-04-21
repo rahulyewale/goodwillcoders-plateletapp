@@ -18,6 +18,7 @@ import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus;
+import org.ngo.think.dm.common.dto.DonationHistoryDTO;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorContactDetailsDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
@@ -42,6 +43,8 @@ public class RequestDetailsMB implements Serializable
 	private SearchCommunicationHistoryRequestDTO searchCommunicationHistoryReqDTO = new SearchCommunicationHistoryRequestDTO();
 
 	private List<SearchCommunicationHistoryResultDTO> communicationHistoryResult = new ArrayList<SearchCommunicationHistoryResultDTO>();
+	
+	private String donationRemarks;
 
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
@@ -94,6 +97,14 @@ public class RequestDetailsMB implements Serializable
 	public void openRequest()
 	{
 		setRequestDTO(dashbordMB.getSelectedRequestDTO());
+		try
+		{
+			getRequestDTO().setDonationDate(DateUtil.stringToDate(getRequestDTO().getRequestedDate(),"dd-MMM-yyyy"));
+		}
+		catch (ParseException e)
+		{
+			e.printStackTrace();
+		}
 		getCommunicationHistory();
 
 		System.out.println(requestDTO.getRequestNumber());
@@ -140,6 +151,31 @@ public class RequestDetailsMB implements Serializable
 	public void reserveDonor()
 	{
 		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.RESERVED);
+	}
+	
+	public void addDonationHistory()
+	{
+		DonationHistoryDTO donationHistoryDTO = new DonationHistoryDTO();
+		donationHistoryDTO.setDonationDate(getRequestDTO().getDonationDate());
+		donationHistoryDTO.setDonationComponentType("Platelets");
+		donationHistoryDTO.setDonorId(getCommunicationHistoryResultDTO().getDonorId());
+		donationHistoryDTO.setRemarks(getDonationRemarks());
+
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.ADD_DONATION_HISTORY, donationHistoryDTO);
+
+		ServiceResponse serviceResponse = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.ADD_DONATION_HISTORY_SERVICE_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		FacesMessage facesMessage = new FacesMessage("Successful", "Added communication history for");
+		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+		
 	}
 	
 	private void maintainCommunicationStatus(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO, String communicationStatus)
@@ -217,19 +253,6 @@ public class RequestDetailsMB implements Serializable
 	}
 
 
-	public void addDonationHistory(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
-	{
-		System.out.println("Adding Donation History For : " + communicationHistoryResultDTO.getDonorName());
-		try
-		{
-			Thread.sleep(2000);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
-	}
-
 	public String getConfirmSMSText()
 	{
 		return confirmSMSText;
@@ -249,5 +272,16 @@ public class RequestDetailsMB implements Serializable
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
 	}
+
+	public String getDonationRemarks()
+	{
+		return donationRemarks;
+	}
+
+	public void setDonationRemarks(String donationRemarks)
+	{
+		this.donationRemarks = donationRemarks;
+	}
+
 
 }
