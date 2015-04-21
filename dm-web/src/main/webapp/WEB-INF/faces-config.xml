@@ -13,6 +13,11 @@
 		 <to-view-id>secured/searchdonor.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+		 <from-action>#{dashbord.navigateToSearchDonorOnMap}</from-action>
+		 <from-outcome>success</from-outcome>
+		 <to-view-id>secured/searchdonorwithmap.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 		 <from-action>#{dashbord.navigateToDashbord}</from-action>
 		 <from-outcome>success</from-outcome>
 		 <to-view-id>secured/dashboard.xhtml</to-view-id>

@@ -65,6 +65,12 @@ public class DashbordMB implements Serializable
 		return "success";
 	}
 
+	public String navigateToSearchDonorOnMap()
+	{
+		System.out.println("navigating to search donor using map");
+		return "success";
+	}
+	
 	public String navigateToDashbord()
 	{
 		System.out.println("navigating to dashbord");

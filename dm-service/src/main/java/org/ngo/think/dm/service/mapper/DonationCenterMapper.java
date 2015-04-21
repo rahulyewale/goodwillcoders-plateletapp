@@ -16,7 +16,7 @@ public class DonationCenterMapper
 		donationCenterDTO.setDonationCenterName(donationCenterEntity.getDonationCenterName());
 		donationCenterDTO.setCity(donationCenterEntity.getCity());
 		donationCenterDTO.setDonationCenterId(donationCenterEntity.getDonationCenterId());
-		donationCenterDTO.setLongitude(donationCenterEntity.getLongitude());
+		donationCenterDTO.setLattitude(donationCenterEntity.getLattitude());
 		donationCenterDTO.setLongitude(donationCenterEntity.getLongitude());
 		donationCenterDTO.setDonationCenterId(donationCenterEntity.getDonationCenterId());
 

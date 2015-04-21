@@ -23,9 +23,9 @@ import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
-@ManagedBean(name = "searchDonorMB")
+@ManagedBean(name = "searchDonorOnMapMB")
 @ViewScoped
-public class SearchDonorMB implements Serializable
+public class SearchDonorOnMapMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
 	private List<DonorDTO> searchDonorList = new ArrayList<DonorDTO>();

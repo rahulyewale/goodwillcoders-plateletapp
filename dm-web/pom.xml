@@ -14,6 +14,11 @@
 			<name>Prime Repo</name>
 			<url>http://repository.primefaces.org</url>
 		</repository>
+	<repository>
+		<id>googlecode.com</id>
+		<url>http://gmaps4jsf.googlecode.com/svn/trunk/gmaps4jsf-repo</url>
+	</repository>
+		
 	</repositories>
 
 	<dependencies>
@@ -88,6 +93,13 @@
 			<artifactId>primefaces-extensions</artifactId>
 			<version>2.1.0</version>
 		</dependency>
+		
+		        <dependency>
+            <groupId>com.googlecode.gmaps4jsf</groupId>
+            <artifactId>gmaps4jsf-core</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        
 	</dependencies>
 	<build>
 		<finalName>dm-web</finalName>
