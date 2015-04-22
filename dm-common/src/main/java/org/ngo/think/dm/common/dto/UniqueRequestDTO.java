@@ -1,6 +1,7 @@
 package org.ngo.think.dm.common.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -15,6 +16,7 @@ public class UniqueRequestDTO implements Serializable
 	private String status;
 	private Long uniqueRequestTxnId;
 	private DonationCenterDTO donationCenterDTO;
+	private Date donationDate;
 
 	public String getRequestNumber()
 	{
@@ -77,6 +79,16 @@ public class UniqueRequestDTO implements Serializable
 	public void setBloodGroup(String bloodGroup)
 	{
 		this.bloodGroup = bloodGroup;
+	}
+
+	public Date getDonationDate()
+	{
+		return donationDate;
+	}
+
+	public void setDonationDate(Date donationDate)
+	{
+		this.donationDate = donationDate;
 	}
 
 	

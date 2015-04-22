@@ -25,6 +25,13 @@
    		
    	}
    	
+   	function addDonationHistory()
+   	{
+   		addDonationHistoryDialog.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}
+   	
    	function unblockUIfreeze()
    	{
    		PF('blockUIWidget').unblock();
@@ -132,10 +139,11 @@
 			      </p:column>
 			      
 			      
-			      <p:column headerText="Add Donation History">
-			            <h:commandLink actionListener="#{requestDetailsMB.confirmDonor(commnHist)}"
-                             ajax="false">
+			      <p:column headerText="Add donation history">
+			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="addDonationHistoryDialog.show();">
                              <p:graphicImage value="/secured/image/addhistory.jpg" />
+                             <f:ajax execute="@form"
+							  onevent="unblockUi" />
                         </h:commandLink>
 			      </p:column>
 			      
@@ -179,6 +187,7 @@
 
 				<h:inputTextarea rows="5" value="You are about to Reject donor.Please confirm this action."
 					cols="40" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
+					
 
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.rejectDonor}"
@@ -206,6 +215,32 @@
 			</h:panelGrid>
 		</p:dialog>
 
+
+	<p:dialog header="Add Donation History" widgetVar="addDonationHistoryDialog"
+			resizable="false" width="500" height="250">
+
+
+			<h:panelGrid columns="2" cellpadding="4" id="addDonationHistoryDialogId">
+
+			<h:outputText value="Donation Date:" />
+			<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+						required="true" rendered="true"
+						requiredMessage="Donation date is mandatory"
+						value="#{requestDetailsMB.requestDTO.donationDate}"
+						yearRange="-5:+1" />
+						
+				<h:outputText value="Remarks:" />		
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.donationRemarks}"
+					cols="40" maxlength="140" autoResize="true" />
+
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.addDonationHistory}"
+					onclick="addDonationHistory();"
+					oncomplete="unblockUIfreeze();"></p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
+		
 	</h:form>	
 	
 <ui:include src="footer.xhtml"></ui:include>
