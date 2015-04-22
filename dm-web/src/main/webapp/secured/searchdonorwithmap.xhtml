@@ -20,6 +20,16 @@
    		
    	}
    	
+   	function markerAction(element)
+   	{
+   		
+   		console.log("markeraction"+element);
+   		var selCheck = document.getElementById(element);
+   		console.log(selCheck);
+   		selCheck.value = 'true';
+   	}
+   	
+   	
    	function sendSms()
    	{
    		donorDialog.hide();
@@ -133,12 +143,12 @@
 	</h:form>
 
 	<h:form id="searchresult_frm_id">
-		<p:accordionPanel> 
-			 <p:tab title="Search Map">
-				<h:panelGrid>
+		<p:accordionPanel id="accPanel"> 
+			 <p:tab title="Search Map" id="mapTab">
+				<h:panelGrid id="panelGrid">
 					<m:map width="900px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
-						<m:mapControl name="GMapTypeControl"/>
-						<m:marker  latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
+						<m:mapControl id="mapcontrol" name="GMapTypeControl"/>
+						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
                     	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}">
                     	    <m:htmlInformationWindow  htmlText="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName} "/>
                     	 	<m:icon imageURL="../secured/image/donationcentre5.png"/>
@@ -147,60 +157,18 @@
 						<ui:repeat var="donorMarker" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="donorLoopVar">
                     	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
                     	     		longitude="${donorMarker.donorAddressDetailsDTO.longitude}" draggable="false"  >
-                    	     		<m:htmlInformationWindow  htmlText="#{donorMarker.firstName}: &lt;input id='mapperTestInput_#{donorLoopVar.index}' type='checkbox' &gt;" />
-                    	     		
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck=document.getElementById('searchresult_frm_id:j_idt96:#{donorLoopVar.index}:_');selCheck.value = 'true'; styleIcon.set('color','#00ff00');styleIcon.set('text','Go')/*markerCheck=document.getElementById('mapperTestInput_#{donorLoopVar.index}');markerCheck.checked = true;*/}"/>
+                    	     		<m:htmlInformationWindow eventName="mouseover" htmlText="#{donorMarker.firstName}"/>
+                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:#{donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked.png');};}"/>
+                    	     		<m:icon imageURL="../secured/image/Marker_man.png"/>
                     	     	</m:marker>
-                    	     	
                     	</ui:repeat> 
 					</m:map>
+					<ui:repeat id="hiddenVarLoop" var="donor" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="loopvar">
+    					<h:inputHidden id="donor_" value="#{donor.selectedDonor}"/>
+    				</ui:repeat>
     				
-				</h:panelGrid>
-			</p:tab>
-			<p:tab title="Search Results:">
-				<h:panelGrid>
-					
-					<p:dataTable id="searchResultId"
-						value="#{searchDonorOnMapMB.searchDonorList}" var="donor"
-						paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rows="5">
-						<f:facet name="header">
-							<h:outputText value="Filtered Donors List" />
-						</f:facet>
-						<p:column headerText="Select">
-							<h:selectBooleanCheckbox value="#{donor.selectedDonor}" />
-						</p:column>
-						<p:column headerText="Name">
-							<h:outputText value="#{donor.firstName} #{donor.lastName}" />
-						</p:column>
-
-						<p:column headerText="Contact No">
-							<h:outputText
-								value="#{donor.donorContactDetailsDTO.contactNumber}" />
-						</p:column>
-						<p:column headerText="Email">
-							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
-						</p:column>
-						<p:column headerText="Blood Group">
-							<h:outputText value="#{donor.bloodGroup}" />
-						</p:column>
-						<p:column headerText="Last Donation date">
-							<h:outputText value="#{donor.lastDonationDate}" />
-						</p:column>
-						<p:column headerText="Next available date">
-							<h:outputText value="#{donor.nextAvailableDate}" />
-						</p:column>
-						<p:column headerText="Distance(Km)">
-							<h:outputText value="#{donor.distanceKm}" />
-						</p:column>
-
-						<p:column headerText="Rating">
-							<p:rating value="#{donor.rating}" readonly="true" stars="6" />
-						</p:column>
-					</p:dataTable>
-
-					<p:dialog header="Send SMS" widgetVar="donorDialog"
+    				
+    				<p:dialog header="Send SMS" widgetVar="donorDialog"
 						resizable="false" width="400" height="200">
 
 
@@ -261,14 +229,11 @@
 
 						</h:panelGrid>
 					</p:dialog>
-					
 				</h:panelGrid>
 			</p:tab>
-
+			
 		</p:accordionPanel>
-		<ui:repeat  var="donorMarker" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="donorLoopVar">
-				<h:inputHidden id="_#{donorLoopVar.index}" value="#{donorMarker.selectedDonor}" ></h:inputHidden>
-				</ui:repeat> 
+		 
 		<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 		
 		<p:graphicImage value="/secured/image/separator.jpg" />
