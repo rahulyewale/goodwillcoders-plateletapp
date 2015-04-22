@@ -8,7 +8,22 @@
 
 <h:head>
 	<title>Search Donors</title>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true">
+	<style>
+		#map {
+		    width:600px;
+		    height:420px;
+		}
+		#marker-tooltip {
+		    display: none;
+		    position:absolute;
+		    width: 300px;
+		    height: 200px;
+		    background-color: #ccc;
+		    margin: 15px;
+		}
+	</style>
+	
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true">
     </script> 
 	<script type="text/javascript">
    	function unblockUi(data)
@@ -17,16 +32,20 @@
    		{
    			PF('blockUIWidget').unblock();
    		}
-   		
+   	}
+
+   	function markerInfoOpen(event, name)
+   	{
+		event.info = new google.maps.InfoWindow({
+	   		  content: '<b>'+name+'</b>'
+   		});
+   		event.info.open(event.parentMap, event);
    	}
    	
-   	function markerAction(element)
+   	function markerInfoClose(event)
    	{
-   		
-   		console.log("markeraction"+element);
-   		var selCheck = document.getElementById(element);
-   		console.log(selCheck);
-   		selCheck.value = 'true';
+   		event.info.close();
+   		event.info = null;
    	}
    	
    	
@@ -44,7 +63,6 @@
    		
    	}
 	
-	
 	function contactedDonor() 
 	{
 		donorContactedConfirm.hide();
@@ -55,16 +73,7 @@
    	{
    		donorDialog.show();
    	}
-	
-	/* var iconBase = 'http://maps.google.com/mapfiles/kml/pal3/icon46.png';
-	var marker = new google.maps.Marker({
-	  //position: myLatLng,
-	 // map: map,
-	  icon: iconBase
-	}); */
-	
 	</script>
-	
 
 </h:head>
 <h:body>
@@ -146,19 +155,26 @@
 		<p:accordionPanel id="accPanel"> 
 			 <p:tab title="Search Map" id="mapTab">
 				<h:panelGrid id="panelGrid">
+					<div id="marker-tooltip"></div>
 					<m:map width="900px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
 						<m:mapControl id="mapcontrol" name="GMapTypeControl"/>
 						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
-                    	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}">
-                    	    <m:htmlInformationWindow  htmlText="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName} "/>
+                    	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}" showInformationEvent="mouseover">
+                    	    
+                    	    <m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}"/>
+                    	    <m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
+
                     	 	<m:icon imageURL="../secured/image/donationcentre5.png"/>
                     	 	
                     	 </m:marker>
 						<ui:repeat var="donorMarker" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="donorLoopVar">
                     	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
-                    	     		longitude="${donorMarker.donorAddressDetailsDTO.longitude}" draggable="false"  >
-                    	     		<m:htmlInformationWindow eventName="mouseover" htmlText="#{donorMarker.firstName}"/>
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:#{donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked.png');};}"/>
+                    	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
+                    	     		
+                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber}');}"/>
+                    	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
+                    	     		                    	     			
+                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked.png');};}"/>
                     	     		<m:icon imageURL="../secured/image/Marker_man.png"/>
                     	     	</m:marker>
                     	</ui:repeat> 
