@@ -7,7 +7,7 @@
 
 <h:head>
 	<title>Search Donors</title>
-
+	
 	<script type="text/javascript">
    	function unblockUi(data)
    	{
@@ -102,70 +102,7 @@
 
 			</p:tab>
 		</p:accordionPanel>
-		<!-- <p:accordionPanel id="advancesearch_id" style="display: block">
-			<p:tab title="Advanced Search Criteria:" >
-			
-			<h:panelGrid columns="3" columnClasses="label, value,label">
-				<h:outputLabel value="Not donated in last " />
-					<h:selectOneMenu
-						value="#{searchDonorMB.donorRequestDTO.notDonatedInLastMonthsCount}">
-						<f:selectItem itemValue="0" itemLabel="0" />
-						<f:selectItem itemValue="1" itemLabel="1" />
-						<f:selectItem itemValue="2" itemLabel="2" />
-						<f:selectItem itemValue="3" itemLabel="3" />
-						<f:selectItem itemValue="4" itemLabel="4" />
-						<f:selectItem itemValue="5" itemLabel="5" />
-						<f:selectItem itemValue="6" itemLabel="6" />
-						<f:selectItem itemValue="7" itemLabel="7" />
-						<f:selectItem itemValue="8" itemLabel="8" />
-						<f:selectItem itemValue="9" itemLabel="9" />
-						<f:selectItem itemValue="10" itemLabel="10" />
-						<f:selectItem itemValue="11" itemLabel="11" />
-						<f:selectItem itemValue="12" itemLabel="12" />
-						
-					</h:selectOneMenu>
-					<h:outputLabel value=" months." />
-					<h:outputLabel value="Donation Count less than " />
-					<h:selectOneMenu
-						value="#{searchDonorMB.donorRequestDTO.numberOfDonationsLessThanCount}">
-						<f:selectItem itemValue="24" itemLabel="24" />
-						<f:selectItem itemValue="23" itemLabel="23" />
-						<f:selectItem itemValue="22" itemLabel="22" />
-						<f:selectItem itemValue="21" itemLabel="21" />
-						<f:selectItem itemValue="20" itemLabel="20" />
-						<f:selectItem itemValue="19" itemLabel="19" />
-						<f:selectItem itemValue="18" itemLabel="18" />
-						<f:selectItem itemValue="17" itemLabel="17" />
-						<f:selectItem itemValue="16" itemLabel="16" />
-						<f:selectItem itemValue="15" itemLabel="15" />
-						<f:selectItem itemValue="14" itemLabel="14" />
-						<f:selectItem itemValue="13" itemLabel="13" />
-						<f:selectItem itemValue="12" itemLabel="12" />
-						<f:selectItem itemValue="11" itemLabel="11" />
-						<f:selectItem itemValue="10" itemLabel="10" />
-						<f:selectItem itemValue="09" itemLabel="09" />
-						<f:selectItem itemValue="08" itemLabel="08" />
-						<f:selectItem itemValue="07" itemLabel="07" />
-						<f:selectItem itemValue="06" itemLabel="06" />
-						<f:selectItem itemValue="05" itemLabel="05" />
-						<f:selectItem itemValue="04" itemLabel="04" />
-						<f:selectItem itemValue="03" itemLabel="03" />
-						<f:selectItem itemValue="02" itemLabel="02" />
-						<f:selectItem itemValue="01" itemLabel="01" />
-						
-					</h:selectOneMenu>
-					<h:outputLabel value=" in last 12 months" />
-					
-			 </h:panelGrid>
-			 
-			 <h:panelGrid columns="2" columnClasses="label, value">
-				<h:outputText value="Search immediately available donors " />
-					<p:selectBooleanCheckbox
-						value="#{searchDonorMB.donorRequestDTO.searchAvailableDonorsOnly}" />
-			 </h:panelGrid>
-			 
-			</p:tab>
-		</p:accordionPanel> -->
+		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorMB.searchDonor}"
 			onclick="PF('blockUIWidget').block()">
@@ -196,16 +133,28 @@
 						<f:facet name="header">
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
-						<p:column headerText="Select">
+						<p:column headerText="">
 							<h:selectBooleanCheckbox value="#{donor.selectedDonor}" />
 						</p:column>
 						<p:column headerText="Name">
-							<h:outputText value="#{donor.firstName} #{donor.lastName}" />
+							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
+							<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
+				               <p:panelGrid columns="2">  
+				                  <f:facet name="header">Address</f:facet>  
+				
+				                  <h:outputLabel value="#{donor.donorAddressDetailsDTO.addressLine1}" />  
+								  <h:outputLabel value="Pincode: #{donor.donorAddressDetailsDTO.pinCode}" />
+				               </p:panelGrid>  
+				          </p:overlayPanel> -->
 						</p:column>
 
 						<p:column headerText="Contact No">
 							<h:outputText
 								value="#{donor.donorContactDetailsDTO.contactNumber}" />
+						</p:column>
+						<p:column headerText="Address">
+							<h:outputText
+								value="#{donor.donorAddressDetailsDTO.addressLine1}, #{donor.donorAddressDetailsDTO.pinCode}" />
 						</p:column>
 						<p:column headerText="Email">
 							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
@@ -219,7 +168,7 @@
 						<p:column headerText="Next available date">
 							<h:outputText value="#{donor.nextAvailableDate}" />
 						</p:column>
-						<p:column headerText="Distance(Km)">
+						<p:column headerText="Distance (Km)">
 							<h:outputText value="#{donor.distanceKm}" />
 						</p:column>
 

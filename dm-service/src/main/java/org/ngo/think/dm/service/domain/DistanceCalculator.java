@@ -1,6 +1,7 @@
 package org.ngo.think.dm.service.domain;
 
 import java.text.DecimalFormat;
+import java.util.Set;
 
 import org.ngo.think.dm.persistence.dao.PostalCodeMasterDAO;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
@@ -20,7 +21,7 @@ public class DistanceCalculator
 	@Autowired
 	private PostalCodeMasterDAO postalCodeMasterDAO;
 
-	public void populateDistance(Donor donor, DonationCenter center, boolean useDistanceMatrixApi)
+	public void populateDistance(Donor donor, DonationCenter center, boolean useDistanceMatrixApi, Set<PostalCodeMaster> uniquePostalCodeMasters)
 	{
 		donor.setDistanceInMeter(8000);
 		donor.setDistanceInKm("NA");
@@ -67,6 +68,19 @@ public class DistanceCalculator
 
 			if (null != donorPostalCodeMaster && null != centerPostalCodeMaster)
 			{
+				//add in hashset
+				boolean successfullyAdded = uniquePostalCodeMasters.add(donorPostalCodeMaster);
+				if(!successfullyAdded)
+				{
+					//if false => duplicate
+					//then add offset, update postalcodemaster 
+					addOffsetToCoordinates(donorPostalCodeMaster);
+	            
+					//add in hashset
+	            uniquePostalCodeMasters.add(donorPostalCodeMaster);
+				}
+				
+				
 				center.setLattitude(centerPostalCodeMaster.getLattitude());
 				center.setLongitude(centerPostalCodeMaster.getLongitude());
 				donor.getDonorAddressDetails().get(0).setLongitude(donorPostalCodeMaster.getLongitude());
@@ -83,6 +97,14 @@ public class DistanceCalculator
 			}
 
 		}
+	}
+
+	private void addOffsetToCoordinates(PostalCodeMaster donorPostalCodeMaster)
+	{
+		double newLattitude = donorPostalCodeMaster.getLattitude() + (Math.random() -.5) / 1500;
+		double newLongitude = donorPostalCodeMaster.getLongitude() + (Math.random() -.5) / 1500;
+		donorPostalCodeMaster.setLattitude(newLattitude);
+		donorPostalCodeMaster.setLongitude(newLongitude);
 	}
 
 	private double calculateDistanceByLongitudeLattitude(double lat1, double lon1, double lat2, double lon2)

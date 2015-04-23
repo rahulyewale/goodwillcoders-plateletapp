@@ -1,14 +1,17 @@
 package org.ngo.think.dm.service.domain;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
+import org.ngo.think.dm.persistence.entity.PostalCodeMaster;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -35,6 +38,8 @@ public class DonorFilter
 	public void filterDonorsBasedOnSearchCriteria(SearchDonorRequestDTO searchDonorRequestDTO, List<Donor> donorList, DonationCenter center, DonorAppointmentDTO appointmentDTO)
 	{
 		Iterator<Donor> donorIterator = donorList.iterator();
+		
+		Set<PostalCodeMaster> uniquePostalCodeMasters = new HashSet<PostalCodeMaster>();
 		
 		while(donorIterator.hasNext())
 		{
@@ -81,7 +86,8 @@ public class DonorFilter
 
 			}
 			
-			distanceCalculator.populateDistance(donor,center,false);
+			boolean useDistanceMatrixApi = false;
+			distanceCalculator.populateDistance(donor, center, useDistanceMatrixApi, uniquePostalCodeMasters);
 			
 			populateRating(donor,donationInfo);
 			donor.setLastDonationDate(donationInfo.getLastDonationDate());
