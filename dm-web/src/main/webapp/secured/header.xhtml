@@ -4,98 +4,95 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-   <style type="text/css">
-        body {
-            margin: 0;
-            padding: 0;
-        }
+	<h:outputStylesheet library="css" name="style.css" />
+	<style type="text/css">
+body {
+	margin: 0;
+	padding: 0;
+}
 
-        #left {
-            position: relative;
-            margin-right: 250px;
-            background-color: white;
-        }
+#left {
+	position: relative;
+	margin-right: 250px;
+	background-color: white;
+}
 
-        #right {
-            float: right;
-            position: relative;
-            text-align: left;
-            width: 250px;
-            background-color: white;
-        }
-    </style>
- </h:head>
+#right {
+	float: right;
+	position: relative;
+	text-align: left;
+	width: 250px;
+	background-color: white;
+}
+</style>
+</h:head>
 <h:body>
 
 
-<h:form>
+	<h:form>
 
-<div id="left">
+		<div class="header-wrap">
+			<div class="container">
 
-<h:commandLink value="" style="color:black;"
-		action="#{dashbord.navigateToDashbord}">
-		<p:graphicImage value="/secured/image/logo.gif" height="50px"
-			width="150px"  />
-</h:commandLink>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<h:commandLink action="#{dashbord.navigateToSearchDonor}">
-	<p:graphicImage
-	value="/secured/image/searchdonor.jpg"/>
-</h:commandLink>
+				<div class="ui-grid ui-grid-responsive">
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-6">
 
-<p:graphicImage
-	value="/secured/image/separator.jpg"/>
+							<h:commandLink value="" style="color:black;"
+								action="#{dashbord.navigateToDashbord}">
+								<p:graphicImage value="/secured/image/logo.gif" height="50px"
+									width="150px" />
+							</h:commandLink>
+						</div>
+						<div class="ui-grid-col-6">
+							<h:commandLink value="" style="color:black;float:right"
+								action="#{loginBean.doLogout}">
+								<p:graphicImage id="logOutLink"
+									value="/secured/image/logoutNew.jpg" height="35px" width="40px"
+									title="Click here to Logout" />
+								<p:tooltip for="logOutLink" showEffect="blind"
+									hideEffect="explode" value="Click here to Logout" />
+							</h:commandLink>
+						</div>
+					</div>
 
-<h:commandLink action="#{dashbord.navigateToSearchDonorOnMap}">
-	<p:graphicImage
-	value="/secured/image/searchdonorsonmap.jpg"/>
-</h:commandLink>
+					<div class="ui-grid-row">
+						<div class="ui-grid-col-12">
+<div class="nav-wrap">
+		<h:panelGrid columns="4">
+							<h:commandLink action="#{dashbord.navigateToSearchDonor}">
+								<p:graphicImage value="/secured/image/searchdonor.jpg" />
+							</h:commandLink>
 
-<p:graphicImage
-	value="/secured/image/separator.jpg"/>
+	
+
+							<h:commandLink action="#{dashbord.navigateToSearchDonorOnMap}">
+								<p:graphicImage value="/secured/image/searchdonorsonmap.jpg" />
+							</h:commandLink>
+
+				
+
+							<h:commandLink action="#{dashbord.navigateToExcelUpload}">
+								<p:graphicImage value="/secured/image/uploaddonors.jpg" />
+							</h:commandLink>
+
 		
-<h:commandLink
-			action="#{dashbord.navigateToExcelUpload}">
-			<p:graphicImage
-	value="/secured/image/uploaddonors.jpg"/>
-</h:commandLink> 
-
-<p:graphicImage
-	value="/secured/image/separator.jpg"/>
-
-<h:commandLink
-			action="#{dashbord.navigateToRequestList}">
-			<p:graphicImage
-	value="/secured/image/requestlist.jpg"/>
-</h:commandLink>
+							<h:commandLink action="#{dashbord.navigateToRequestList}">
+								<p:graphicImage value="/secured/image/requestlist.jpg" />
+							</h:commandLink>
 
 
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-<p:graphicImage value="/secured/image/separator.jpg"/>
-
-
-
-<h:commandLink value="" style="color:black;"
-		action="#{loginBean.doLogout}">
-		<p:graphicImage id="logOutLink" value="/secured/image/logoutNew.jpg" height="35px"
-			width="40px"  title="Click here to Logout"/>
-			<p:tooltip for="logOutLink" showEffect="blind" hideEffect="explode" value="Click here to Logout"/> 
-</h:commandLink> 
-
+</h:panelGrid>
 </div>
 
-<div id="right">
 
-</div>
+						</div>
+					</div>
 
-</h:form>
+				</div>
+			</div>
+			</div>
+	</h:form>
 
 </h:body>
 </html>

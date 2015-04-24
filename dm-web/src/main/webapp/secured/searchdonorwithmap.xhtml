@@ -79,6 +79,7 @@
 <h:body>
 
 	<ui:include src="header.xhtml"></ui:include>
+	<div class="container">
 	<h2>Search Donors on Map</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
@@ -156,7 +157,7 @@
 			 <p:tab title="Search Map" id="mapTab">
 				<h:panelGrid id="panelGrid">
 					<div id="marker-tooltip"></div>
-					<m:map width="900px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
+					<m:map width="1000px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
 						<m:mapControl id="mapcontrol" name="GMapTypeControl"/>
 						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
                     	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}" showInformationEvent="mouseover">
@@ -171,7 +172,7 @@
                     	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
                     	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
                     	     		
-                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber}');}"/>
+                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1}&lt;br%2F&gt;');}"/>
                     	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
                     	     		                    	     			
                     	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked3.png');};}"/>
@@ -261,6 +262,7 @@
 		<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
 
 	</h:form>
+	</div>
 	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>

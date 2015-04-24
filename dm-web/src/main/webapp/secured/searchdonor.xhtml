@@ -49,6 +49,7 @@
 <h:body>
 
 	<ui:include src="header.xhtml"></ui:include>
+	<div class="container">
 	<h2>Search Donors</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
@@ -101,8 +102,8 @@
 				</h:panelGrid>
 
 			</p:tab>
+
 		</p:accordionPanel>
-		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorMB.searchDonor}"
 			onclick="PF('blockUIWidget').block()">
@@ -110,6 +111,7 @@
 			<f:ajax execute="@form" render=":searchresult_frm_id"
 				onevent="unblockUi" />
 		</h:commandLink>
+		
 
 
 		<pe:blockUI widgetVar="blockUIWidget">
@@ -173,7 +175,7 @@
 						</p:column>
 
 						<p:column headerText="Rating">
-							<p:rating value="#{donor.rating}" readonly="true" stars="6" />
+							<p:rating value="#{donor.rating}" cssStyle="white-space:no-wrap" readonly="true" stars="6" />
 						</p:column>
 					</p:dataTable>
 
@@ -255,6 +257,7 @@
 		<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
 
 	</h:form>
+	</div>
 	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>
