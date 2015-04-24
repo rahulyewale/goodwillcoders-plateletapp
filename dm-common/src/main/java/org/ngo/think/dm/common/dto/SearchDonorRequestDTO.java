@@ -14,7 +14,7 @@ public class SearchDonorRequestDTO implements Serializable
 
 	private String bloodGroup;
 
-	private Date requestDate;
+	private Date requestDate = new Date();
 
 	private Long donationCentre;
 
