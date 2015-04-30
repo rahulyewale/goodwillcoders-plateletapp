@@ -9,9 +9,11 @@ import java.util.Set;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
+import org.ngo.think.dm.persistence.dao.PostalCodeMasterDAO;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.persistence.entity.PostalCodeMaster;
+import org.ngo.think.dm.service.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,9 @@ public class DonorFilter
 	
 	@Autowired
 	private DistanceCalculator distanceCalculator;
+	
+	@Autowired
+	private PostalCodeMasterDAO postalCodeMasterDAO;
 	
 	@Value("${max.donation.limit.for.last.12.months}")
 	private String maxDonationLimitForLast12Months;
@@ -86,6 +91,14 @@ public class DonorFilter
 
 			}
 			
+			PostalCodeMaster centerPostalCodeMaster = postalCodeMasterDAO.getPostalCodeMasterByPostCode(center.getPinCode());
+			if (null != centerPostalCodeMaster)
+			{
+				center.setLattitude(centerPostalCodeMaster.getLattitude());
+				center.setLongitude(centerPostalCodeMaster.getLongitude());
+			
+				ServiceUtil.handleUniquePostalCodes(uniquePostalCodeMasters, centerPostalCodeMaster);
+			}
 			boolean useDistanceMatrixApi = false;
 			distanceCalculator.populateDistance(donor, center, useDistanceMatrixApi, uniquePostalCodeMasters);
 			
