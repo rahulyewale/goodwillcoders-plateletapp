@@ -1,11 +1,12 @@
 package org.ngo.think.dm.service.controller;
 
+import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.ADD_DONATION_HISTORY;
+
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonationHistoryDTO;
-import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.service.DonationHistoryService;
 import org.ngo.think.dm.service.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class DonationHistoryServiceController
 	@Autowired
 	private DonationHistoryService donationHistoryService;
 
-	@RequestMapping(value="/addDonationHistory",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value=ADD_DONATION_HISTORY,method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse addDonationHistory(@RequestBody ServiceRequest serviceRequest)
 	{

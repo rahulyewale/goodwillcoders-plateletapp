@@ -41,6 +41,9 @@ public class UniqueRequestTxn implements Serializable
 	@Column(name = "request_status")
 	private String requestStatus;
 	
+	@Column(name = "remarks")
+	private String remarks;
+	
 	@Column(name = "blood_group")
 	private String bloodGroup;
 
@@ -97,6 +100,16 @@ public class UniqueRequestTxn implements Serializable
 	public void setRequestStatus(String requestStatus)
 	{
 		this.requestStatus = requestStatus;
+	}
+
+	public String getRemarks()
+	{
+		return remarks;
+	}
+
+	public void setRemarks(String remarks)
+	{
+		this.remarks = remarks;
 	}
 
 	public String getBloodGroup()

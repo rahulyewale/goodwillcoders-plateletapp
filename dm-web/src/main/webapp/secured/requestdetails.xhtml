@@ -17,7 +17,22 @@
    		}
    		
    	}
-   	
+
+	function closeRequest()
+   	{
+		closeRequestConfirm.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}  
+ 
+	function withdrawRequest()
+   	{
+		withdrawRequestConfirm.hide();
+   		PF('blockUIWidget').block();
+   		
+   	}  
+	
+
    	function confirmAppointment()
    	{
 		donorDialogConfirm.hide();
@@ -64,17 +79,31 @@
 					<h:outputText value="Blood Group:"/>
 					<h:outputText value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
 						
+					<h:outputText value="Status:"/>
+					<h:outputText value="#{requestDetailsMB.requestDTO.status}"/>
 
 				</h:panelGrid>
 					
 			</p:tab>
 		</p:accordionPanel>
 
-		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}"
-                             ajax="true" action="/secured/searchdonor.xhtml">
-                             	<p:graphicImage value="/secured/image/search.jpg"/>
+		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}">
+			<f:ajax execute="@form" onevent="unblockUi" />
+			<p:graphicImage value="/secured/image/search.jpg"/>
         </h:commandLink>
-
+		
+		<p:graphicImage value="/secured/image/separator.jpg" />
+		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="closeRequest.show();">
+			<f:ajax execute="@form" onevent="unblockUi" />            
+			<p:graphicImage value="/secured/image/closeRequest.jpg"/>
+        </h:commandLink>
+		
+		<p:graphicImage value="/secured/image/separator.jpg" />    	
+		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="withdrawRequest.show();">
+            <f:ajax execute="@form" onevent="unblockUi" />         
+			<p:graphicImage value="/secured/image/withdrawRequest.jpg"/>
+        </h:commandLink>  
+		
 	<pe:blockUI widgetVar="blockUIWidget">  
     <h:panelGrid columns="2">  
         <p:graphicImage
@@ -83,6 +112,37 @@
     </h:panelGrid>  
 </pe:blockUI> 
 
+
+		<p:dialog header="Please provide a reason for Request closure" widgetVar="closeRequest"
+			resizable="false" width="400" height="200">
+
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFCloseRequest">
+
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.remarks}" cols="35" maxlength="140" autoResize="true"/>
+
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.closeRequest}"
+					update="request_details_frm_id" onclick="closeRequest();"
+					oncomplete="unblockUIfreeze();">
+				</p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
+		<p:dialog header="Please provide a reason for Request withdrawl" widgetVar="withdrawRequest"
+			resizable="false" width="400" height="200">
+
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFWithdrawRequest">
+
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.remarks}" cols="35" maxlength="140" autoResize="true"/>
+
+				<p:commandButton value="Confirm"
+					actionListener="#{requestDetailsMB.withdrawRequest}"
+					update="request_details_frm_id" onclick="withdrawRequest();"
+					oncomplete="unblockUIfreeze();">
+				</p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
 	</h:form>
 
 <h:form id="request_donors_form">
@@ -161,7 +221,6 @@
 			</h:panelGrid>
 		</pe:blockUI>
 
-
 		<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
 			resizable="false" width="400" height="200">
 
@@ -180,7 +239,7 @@
 		</p:dialog>
 
 
-	<p:dialog header="Reject Donor" widgetVar="donorDialogReject"
+		<p:dialog header="Reject Donor" widgetVar="donorDialogReject"
 			resizable="false" width="400" height="200">
 
 
@@ -198,7 +257,6 @@
 			</h:panelGrid>
 		</p:dialog>
 		
-		
 		<p:dialog header="Reserve Donor" widgetVar="donorDialogReserve"
 			resizable="false" width="400" height="200">
 
@@ -215,9 +273,8 @@
 
 			</h:panelGrid>
 		</p:dialog>
-
-
-	<p:dialog header="Add Donation History" widgetVar="addDonationHistoryDialog"
+		
+		<p:dialog header="Add Donation History" widgetVar="addDonationHistoryDialog"
 			resizable="false" width="500" height="250">
 
 

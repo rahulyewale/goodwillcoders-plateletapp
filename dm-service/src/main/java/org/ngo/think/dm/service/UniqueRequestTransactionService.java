@@ -46,7 +46,6 @@ public class UniqueRequestTransactionService
 			}
 			catch (Exception e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -54,7 +53,6 @@ public class UniqueRequestTransactionService
 		{
 			uniqueRequestNumber = uniqueRequestTxn.getRequestId();
 		}
-		
 		return uniqueRequestNumber;
 	}
 	
@@ -70,4 +68,41 @@ public class UniqueRequestTransactionService
 		return requestDTOList;
 	}
 
+	public void closeRequest(UniqueRequestDTO uniqueRequestDTO)
+	{
+		try
+		{
+			
+			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
+			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
+			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getRemarks());
+
+			//TODO - act on donors
+			
+			requestDAO.update(uniqueRequestTxn);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	public void withdrawRequest(UniqueRequestDTO uniqueRequestDTO)
+	{
+		try
+		{
+			
+			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
+			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
+			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getRemarks());
+
+			//TODO - act on donors
+			
+			requestDAO.update(uniqueRequestTxn);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
 }

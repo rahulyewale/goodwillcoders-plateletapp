@@ -203,3 +203,9 @@ WITH (
 ALTER TABLE postal_code_master
   OWNER TO postgres;
   
+
+  
+ --ALTER SCRIPTS
+ALTER TABLE  unique_request_txn
+ADD COLUMN remarks character varying;
+

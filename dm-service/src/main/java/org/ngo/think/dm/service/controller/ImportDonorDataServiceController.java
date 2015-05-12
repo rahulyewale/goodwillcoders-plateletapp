@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.*;
 
 @Controller
 public class ImportDonorDataServiceController
@@ -23,7 +24,7 @@ public class ImportDonorDataServiceController
 	@Autowired
 	ImportDonorDataService importDonorDataService;
 	
-	@RequestMapping(value="/importdonordata",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value=IMPORT_DONOR_DATA,method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse importDonorData(@RequestBody ServiceRequest serviceRequest) throws Exception
 	{

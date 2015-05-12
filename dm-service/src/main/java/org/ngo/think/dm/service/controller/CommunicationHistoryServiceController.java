@@ -1,5 +1,7 @@
 package org.ngo.think.dm.service.controller;
 
+import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.SEND_SMS_TO_DONORS;
+
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
@@ -20,7 +22,7 @@ public class CommunicationHistoryServiceController
 	@Autowired
 	private CommunicationHistoryService communicationHistoryService;
 
-	@RequestMapping(value="/sendSMSToDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value=SEND_SMS_TO_DONORS,method=RequestMethod.POST,consumes="application/json",produces="application/json")
 	@ResponseBody
 	public ServiceResponse sendSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
 	{

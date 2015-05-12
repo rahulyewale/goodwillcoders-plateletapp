@@ -18,6 +18,7 @@ import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus;
+import org.ngo.think.dm.common.constant.RequestStatus;
 import org.ngo.think.dm.common.dto.DonationHistoryDTO;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorContactDetailsDTO;
@@ -247,6 +248,47 @@ public class RequestDetailsMB implements Serializable
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
 
+	public void closeRequest()
+	{
+		System.out.println("request details mb: close request");
+		getRequestDTO().setStatus(RequestStatus.CLOSED.toString());
+		
+		
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.UNIQUE_REQUEST_DTO, getRequestDTO());
+		ServiceResponse serviceResponse = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.CLOSE_REQUEST_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		FacesMessage facesMessage = new FacesMessage("Successful", "Request closed");
+		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+	}
+	
+	public void withdrawRequest()
+	{
+		System.out.println("request details mb: withdraw request");
+		getRequestDTO().setStatus(RequestStatus.WITHDRAWN.toString());
+		
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.UNIQUE_REQUEST_DTO, getRequestDTO());
+		ServiceResponse serviceResponse = null;
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.WITHDRAW_REQUEST_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		FacesMessage facesMessage = new FacesMessage("Successful", "Request Withdrawn");
+		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
+	}
+	
 	public void setSelectedRow(SearchCommunicationHistoryResultDTO communicationHistoryResultDTO)
 	{
 		this.communicationHistoryResultDTO = communicationHistoryResultDTO;
