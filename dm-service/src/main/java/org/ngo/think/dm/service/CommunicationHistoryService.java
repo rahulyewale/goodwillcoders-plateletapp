@@ -12,7 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.ngo.think.dm.common.communication.dto.ResponseData;
-import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.enums.Feature;

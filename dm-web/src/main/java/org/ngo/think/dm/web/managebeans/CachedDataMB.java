@@ -15,7 +15,6 @@ import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.GetDonationCenterResponseDTO;
-import org.ngo.think.dm.common.enums.Feature;
 import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
 import org.ngo.think.dm.web.constant.WebConstant;
@@ -29,7 +28,7 @@ public class CachedDataMB implements Serializable
 	
 	public DonationCenterDTO[] donationCenterDTOs = new DonationCenterDTO[50];
 	
-	private boolean areDonationCentersFetched = false;
+	private boolean areDonationCentersFetched;
 	
 	private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
 	
@@ -68,7 +67,6 @@ public class CachedDataMB implements Serializable
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
 		String serviceResponseString = null;
 		ServiceResponse serviceResponse = null;
-		GetDonationCenterResponseDTO donationCenterResponseDTO = null;
 		
 		try
 		{

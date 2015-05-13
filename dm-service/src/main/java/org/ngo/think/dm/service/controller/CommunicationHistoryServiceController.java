@@ -50,7 +50,7 @@ public class CommunicationHistoryServiceController
 	public ServiceResponse searchcommunicationhistory(@RequestBody ServiceRequest serviceRequest)
 	{
 		Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
-		Map<String, org.ff4j.core.Feature> fetchedFeatureMap = featureProvider.getFF4j().getFeatures();
+		Map<String, Feature> fetchedFeatureMap = featureProvider.getFF4j().getFeatures();
 		
 		Collection<Feature> values = fetchedFeatureMap.values();
 

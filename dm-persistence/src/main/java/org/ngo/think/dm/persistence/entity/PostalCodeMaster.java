@@ -28,10 +28,6 @@ public class PostalCodeMaster implements Serializable
 
 	private String postalcode;
 
-	public PostalCodeMaster()
-	{
-	}
-
 	public Long getPostalCodeMstId()
 	{
 		return this.postalCodeMstId;

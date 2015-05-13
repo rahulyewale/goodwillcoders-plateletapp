@@ -96,14 +96,22 @@ public class ResponseData implements Serializable
 	public boolean equals(Object obj)
 	{
 		if (this == obj)
+		{
 			return true;
+		}
 		if (obj == null)
+		{
 			return false;
+		}
 		if (getClass() != obj.getClass())
+		{
 			return false;
+		}
 		ResponseData otherData = (ResponseData) obj;
 		if (responseType != otherData.responseType)
+		{
 			return false;
+		}
 		return true;
 	}
 }

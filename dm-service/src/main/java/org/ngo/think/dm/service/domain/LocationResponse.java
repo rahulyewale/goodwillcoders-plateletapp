@@ -8,8 +8,8 @@ import org.ngo.think.dm.common.util.JsonUtil;
 public class LocationResponse
 {
 	String status;
-	List<String> origin_addresses;
-	List<String> destination_addresses;
+	List<String> originAddresses;
+	List<String> destinationAddresses;
 	List<RowsHolder> rows;
 
 	public String getStatus()
@@ -22,24 +22,24 @@ public class LocationResponse
 		this.status = status;
 	}
 
-	public List<String> getOrigin_addresses()
+	public List<String> getOriginAddresses()
 	{
-		return origin_addresses;
+		return originAddresses;
 	}
 
-	public void setOrigin_addresses(List<String> origin_addresses)
+	public void setOriginAddresses(List<String> originAddresses)
 	{
-		this.origin_addresses = origin_addresses;
+		this.originAddresses = originAddresses;
 	}
 
-	public List<String> getDestination_addresses()
+	public List<String> getDestinationAddresses()
 	{
-		return destination_addresses;
+		return destinationAddresses;
 	}
 
-	public void setDestination_addresses(List<String> destination_addresses)
+	public void setDestinationAddresses(List<String> destinationAddresses)
 	{
-		this.destination_addresses = destination_addresses;
+		this.destinationAddresses = destinationAddresses;
 	}
 
 	public List<RowsHolder> getRows()
@@ -87,8 +87,8 @@ public class LocationResponse
 		destinationAddrr.add("sampkleORG");
 
 		LocationResponse locationResposne = new LocationResponse();
-		locationResposne.setDestination_addresses(destinationAddrr);
-		locationResposne.setOrigin_addresses(originAddresses);
+		locationResposne.setDestinationAddresses(destinationAddrr);
+		locationResposne.setOriginAddresses(originAddresses);
 		locationResposne.setRows(rows);
 		locationResposne.setStatus("rttt");
 

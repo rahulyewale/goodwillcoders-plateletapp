@@ -7,9 +7,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
-import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
-import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
 import org.ngo.think.dm.persistence.generic.dao.impl.BaseDAOImpl;
 import org.springframework.stereotype.Repository;

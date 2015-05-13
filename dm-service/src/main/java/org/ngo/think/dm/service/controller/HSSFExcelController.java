@@ -16,10 +16,6 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFCell;
-import org.apache.poi.xssf.usermodel.XSSFRow;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.ngo.think.dm.service.domain.Donor;
 import org.springframework.stereotype.Controller;
 
@@ -70,7 +66,7 @@ public class HSSFExcelController
 						case "ID":
 						//case 0:
 							Double donorId = cell.getNumericCellValue();
-							donor.setDonorId(new Long(donorId.longValue()));
+							donor.setDonorId(Long.valueOf(donorId.longValue()));
 							break;
 						case "FIRST NAME":
 						//case 1:
@@ -93,7 +89,7 @@ public class HSSFExcelController
 						case "PINCODE":
 						//case 5:
 							Double doubleValue = cell.getNumericCellValue();
-							Long longValue = new Long(doubleValue.longValue());
+							Long longValue = Long.valueOf(doubleValue.longValue());
 							donor.setPincode(longValue.toString());
 							break;
 
