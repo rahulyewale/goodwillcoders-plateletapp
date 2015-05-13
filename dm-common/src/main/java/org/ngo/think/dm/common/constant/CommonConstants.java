@@ -25,7 +25,7 @@ public class CommonConstants
 		public static final String CONFIRM_COMMUNICATION_HISTORY_RESPONSE = "confirmCommunicationHistoryResponse";
 		public static final String SEARCH_DOATION_CENTER_RESPONSE = "donationCenterResponse";
 		public static final String GET_REQUEST_LIST_RESPONSE = "getRequestListResponse";
-		
+		public static final String SYSTEM_FEATURES = "systemFeatures";
 	}
 	
 	
@@ -37,4 +37,5 @@ public class CommonConstants
 		public static final String CONTACTED = "CONTACTED";
 		public static final String RESERVED = "RESERVED";
 	}
+	
 }

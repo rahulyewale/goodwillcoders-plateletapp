@@ -97,7 +97,7 @@
 					<h:outputLabel value="Blood Group: " />
 					<h:selectOneMenu
 						value="#{searchDonorOnMapMB.donorRequestDTO.bloodGroup}">
-						<f:selectItem itemValue="" itemLabel="Select" />
+						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
 						<f:selectItem itemValue="A-" itemLabel="A-" />
 						<f:selectItem itemValue="B+" itemLabel="B+" />
@@ -211,9 +211,12 @@
 						<h:panelGrid columns="0" cellpadding="4"
 							id="contentOFDonorConfirm">
 
-							<h:inputTextarea rows="5"
+							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
 								cols="40" maxlength="140" autoResize="true" />
+							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
+								cols="40" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
 
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorOnMapMB.confirmDonorAppointment}"
@@ -249,17 +252,16 @@
 			</p:tab>
 			
 		</p:accordionPanel>
-		 
-		<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 		
-		<p:graphicImage value="/secured/image/separator.jpg" />
-		
-		<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
-		
-		<p:graphicImage value="/secured/image/separator.jpg" />
-
-		<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
-
+		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block"> 
+			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
+			<p:graphicImage value="/secured/image/separator.jpg" />
+		</h:panelGroup>
+		<h:panelGroup style="display: inline-block">
+			<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
+			<p:graphicImage value="/secured/image/separator.jpg" />
+			<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
+		</h:panelGroup>
 	</h:form>
 	</div>
 	<ui:include src="footer.xhtml"></ui:include>

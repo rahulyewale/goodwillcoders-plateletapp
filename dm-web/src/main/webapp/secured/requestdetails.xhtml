@@ -54,17 +54,16 @@
 					<h:outputText value="Request Number:"/>
 					<h:outputText value="#{requestDetailsMB.requestDTO.requestNumber}"/>
 					
-					<h:outputText value="Request Date:"/>
-					<h:outputText value="#{requestDetailsMB.requestDTO.requestedDate}"/>
+					<h:outputText value="Blood Group:"/>
+					<h:outputText rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
+					<h:outputText rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
 					
 					<h:outputText value="Donation Center:"/>
 					<h:outputText value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
 					
-						
-					<h:outputText value="Blood Group:"/>
-					<h:outputText value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
-						
-
+					<h:outputText value="Request Date:"/>
+					<h:outputText value="#{requestDetailsMB.requestDTO.requestedDate}"/>
+					
 				</h:panelGrid>
 					
 			</p:tab>
@@ -168,9 +167,11 @@
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}"
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 					cols="40" maxlength="140" autoResize="true" />
-
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+					cols="40" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+				
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.confirmDonor}"
 					update="request_donors_form" onclick="confirmAppointment();"

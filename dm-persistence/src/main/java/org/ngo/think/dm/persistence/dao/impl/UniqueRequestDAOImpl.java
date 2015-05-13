@@ -19,12 +19,13 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 {
 
 	@Override
-	public UniqueRequestTxn getUniqueRequestTxnByDateAndCenter(Date requestDate, Long donationCenterId)
+	public UniqueRequestTxn getUniqueRequestTxnByDateAndCenter(Date requestDate, Long donationCenterId, String bloodGroup)
 	{
 
-		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", UniqueRequestTxn.class);
+		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDateCentreAndBloodGroup", UniqueRequestTxn.class);
 		query.setParameter("requestDate", requestDate, TemporalType.DATE);
 		query.setParameter("donationCentreId", donationCenterId);
+		query.setParameter("bloodGroup", bloodGroup);
 
 		UniqueRequestTxn resultUniqueRequestTxn = null;
 		List<UniqueRequestTxn> uniqueRequestTxns = query.getResultList();

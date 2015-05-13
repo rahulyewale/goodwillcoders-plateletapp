@@ -20,7 +20,7 @@ public class WebConstant
 		private static final String GET_DONATION_CENTERS = "getdonationcenters";
 		private static final String GET_REQUEST_LIST = "getrequestlist";
 		private static final String ADD_DONATION_HISTORY = "addDonationHistory";
-
+		private static final String GET_FEATURES = "getFeatures";
 	}
 	
 	public static class ServiceURL
@@ -38,6 +38,7 @@ public class WebConstant
 		public static final String CONFIRM_COMMUNICATION_HISTORY_URL = BASE_URL + ServiceName.CONFIRM_COMMUNICATION_HISTORY;
 		public static final String GET_REQUEST_LIST_URL = BASE_URL + ServiceName.GET_REQUEST_LIST;
 		public static final String ADD_DONATION_HISTORY_SERVICE_URL = BASE_URL + ServiceName.ADD_DONATION_HISTORY;
+		public static final String GET_FEATURES_SERVICE_URL = BASE_URL + ServiceName.GET_FEATURES;
 	}
 	
 }

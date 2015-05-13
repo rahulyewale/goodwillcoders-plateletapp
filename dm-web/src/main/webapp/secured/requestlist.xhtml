@@ -121,6 +121,11 @@
                              value="#{requestDTO.requestNumber}"/>
 						</p:column>
 
+						<p:column headerText="Blood Group">
+							<h:outputText rendered="#{empty requestDTO.bloodGroup}" value="Any" />
+							<h:outputText rendered="#{not empty requestDTO.bloodGroup}" value="#{requestDTO.bloodGroup}" />
+						</p:column>
+
 						<p:column headerText="Requested Date">
 							<h:outputText value="#{requestDTO.requestedDate}" />
 						</p:column>

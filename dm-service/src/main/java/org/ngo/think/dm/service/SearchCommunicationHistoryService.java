@@ -9,6 +9,7 @@ import org.ngo.think.dm.common.dto.DonationCenterDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResponseDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResultDTO;
+import org.ngo.think.dm.common.enums.Feature;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.dao.DonationCenterDAO;
@@ -17,6 +18,7 @@ import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
 import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
+import org.ngo.think.dm.service.ff4j.FeatureProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -32,6 +34,12 @@ public class SearchCommunicationHistoryService
 	
 	@Value("${confirm.sms.text}")
 	private String confirmSmsText;
+	
+	@Value("${confirm.appointment.text}")
+	private String confirmAppointmentText;
+	
+	@Autowired
+	private FeatureProvider featureProvider;
 	
 	@Autowired
 	DonationCenterDAO centerDAO;
@@ -51,7 +59,13 @@ public class SearchCommunicationHistoryService
 	@Transactional
 	public SearchCommunicationHistoryResponseDTO searchcommunicationhistory(SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequest)
 	{
-		String confirmSms = confirmSmsText;
+		String confirmSms = confirmAppointmentText;
+		
+		if(featureProvider.getFF4j().check(Feature.SEND_SMS_FEATURE.getFeatureName()))
+		{
+			confirmSms = confirmSmsText;
+		}
+		
 		Date reqDate = null;
 		String centerDetails = null;
 		List<CommunicationHistory> communicationHistories = communicationHistoryDAO.getCommunicationHistoryForScreen(searchCommunicationHistoryRequest);

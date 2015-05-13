@@ -25,4 +25,18 @@
         <servlet-name>spring</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    
+     <servlet>
+		<servlet-name>ff4j-console</servlet-name>
+		<servlet-class>org.ff4j.web.embedded.ConsoleServlet</servlet-class>
+		<init-param>
+			<param-name>ff4jProvider</param-name>
+			<param-value>org.ngo.think.dm.service.ff4j.FeatureProvider</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ff4j-console</servlet-name>
+		<url-pattern>/feature-console</url-pattern>
+	</servlet-mapping>
 </web-app>
