@@ -51,18 +51,18 @@
 			<p:tab title="Request Details:">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
-					<h:outputText value="Request Number:"/>
-					<h:outputText value="#{requestDetailsMB.requestDTO.requestNumber}"/>
+					<p:outputLabel value="Request Number:"/>
+					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
 					
-					<h:outputText value="Blood Group:"/>
-					<h:outputText rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
-					<h:outputText rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
+					<p:outputLabel value="Blood Group:"/>
+					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
+					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
 					
-					<h:outputText value="Donation Center:"/>
-					<h:outputText value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
+					<p:outputLabel value="Donation Center:"/>
+					<p:outputLabel value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
 					
-					<h:outputText value="Request Date:"/>
-					<h:outputText value="#{requestDetailsMB.requestDTO.requestedDate}"/>
+					<p:outputLabel value="Requirement Date:"/>
+					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestedDate}"/>
 					
 				</h:panelGrid>
 					
@@ -78,7 +78,7 @@
     <h:panelGrid columns="2">  
         <p:graphicImage
 			value="/secured/image/loader.GIF" /> 
-        <h:outputText value="Please wait..." style="white-space: nowrap;" />  
+        <p:outputLabel value="Please wait..." style="white-space: nowrap;" />  
     </h:panelGrid>  
 </pe:blockUI> 
 

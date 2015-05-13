@@ -37,27 +37,27 @@
 			<p:tab title="Search Request List Criteria">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
-					<h:outputText value="Request Number :" />
+					<p:outputLabel value="Request Number:" for="requestNumber"/>
 					<p:inputText id="requestNumber"
 						value="#{requestListMB.requestListInputDTO.requestNumber}"
 						label="requestNumber" />
 
 
 					<p:outputLabel for="donationRequestFromDate"
-						value="Donation Request From Date :" />
+						value="Requirement From Date:" />
 					<p:calendar id="donationRequestFromDate"
 						value="#{requestListMB.requestListInputDTO.donationRequestFromDate}"
 						showOn="button" pattern="dd-MMM-yyyy" />
 
 					<p:outputLabel for="donationRequestToDate"
-						value="Donation Request To Date :" />
+						value="Requirement To Date:" />
 					<p:calendar id="donationRequestToDate"
 						value="#{requestListMB.requestListInputDTO.donationRequestToDate}"
 						showOn="button" pattern="dd-MMM-yyyy" />
 
 
-					<h:outputText value="Donation Center:" />
-					<h:selectOneMenu
+					<p:outputLabel for="donationCenter" value="Donation Center:" />
+					<p:selectOneMenu id="donationCenter" appendTo="@this"
 						value="#{requestListMB.requestListInputDTO.donationCenterId}">
 						<f:selectItem itemValue="-1" itemLabel="--Select--" />
 						<f:selectItems
@@ -65,10 +65,10 @@
 							var="donationCenterDTO"
 							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
 							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
-					<p:outputLabel for="status" value="Status :" />
-					<p:selectOneMenu id="status"
+					<p:outputLabel for="status" value="Status:" />
+					<p:selectOneMenu id="status" appendTo="@this"
 						value="#{requestListMB.requestListInputDTO.status}" label="status">
 						<f:selectItem itemLabel="--Select--" itemValue="-1" />
 						<f:selectItem itemLabel="Open" itemValue="OPEN" />
@@ -117,7 +117,7 @@
 						<p:column headerText="Request Number">
 							
 							<h:commandLink actionListener="#{dashbord.setSelectedRequestDTO(requestDTO)}"
-                             ajax="true" action="/secured/requestdetails.xhtml" target="_blank"
+                             ajax="true" action="/secured/requestdetails.xhtml" target="_parent"
                              value="#{requestDTO.requestNumber}"/>
 						</p:column>
 
@@ -126,7 +126,7 @@
 							<h:outputText rendered="#{not empty requestDTO.bloodGroup}" value="#{requestDTO.bloodGroup}" />
 						</p:column>
 
-						<p:column headerText="Requested Date">
+						<p:column headerText="Requirement Date">
 							<h:outputText value="#{requestDTO.requestedDate}" />
 						</p:column>
 

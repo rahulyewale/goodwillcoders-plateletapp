@@ -63,14 +63,14 @@
 				<h:panelGrid columns="2" columnClasses="label, value"
 					cellpadding="10">
 
-					<h:outputText value="Donation Type:" />
-					<h:selectOneMenu
+					<p:outputLabel for="donationType" value="Donation Type:" />
+					<p:selectOneMenu id="donationType"
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
-					<h:outputLabel value="Blood Group: " />
-					<h:selectOneMenu
+					<p:outputLabel for="bloodGroup" value="Blood Group: " />
+					<p:selectOneMenu id="bloodGroup"
 						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
 						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
@@ -84,23 +84,23 @@
 						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
 						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
 
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
 
-					<h:outputText value="Donation Center:" />
-					<h:selectOneMenu
+					<p:outputLabel for="donationCenter" value="Donation Center:" />
+					<p:selectOneMenu id="donationCenter"
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
 						<f:selectItems
 							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
 							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
 							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
-					<h:outputText value="Request Date:" />
+					<p:outputLabel for="requestDate" value="Requirement Date:" />
 					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
-						requiredMessage="Request date is mandatory"
+						requiredMessage="Requirement date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
