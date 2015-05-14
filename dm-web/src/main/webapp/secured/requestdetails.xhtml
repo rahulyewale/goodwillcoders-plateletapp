@@ -59,41 +59,40 @@
 <h:body>
 <div class="container">
 <ui:include src="header.xhtml"></ui:include>
-	<h2>Request Details</h2>
+	<h2>#{label['pageheader.requestDetails']}</h2>
 	<h:form id="request_details_frm_id">
 	 
 		<p:accordionPanel id="acc_panel">
-			<p:tab title="Request Details:">
+			<p:tab title="#{label['tab.requestDetails']}">
 				<h:panelGrid id="panel" columns="2" columnClasses="label, value" cellpadding="10">
 
-					<p:outputLabel value="Request Number:"/>
+					<p:outputLabel value="#{label['requestNumber']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
 					
-					<p:outputLabel value="Blood Group:"/>
+					<p:outputLabel value="#{label['bloodGroup']}"/>
 					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
 					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
 					
-					<p:outputLabel value="Donation Center:"/>
+					<p:outputLabel value="#{label['donationCenter']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
 					
-					<p:outputLabel value="Requirement Date:"/>
+					<p:outputLabel value="#{label['requirementDate']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestedDate}"/>
 					
-					<h:outputText value="Status:"/>
-					<h:outputText id="status_id" value="#{requestDetailsMB.requestDTO.status}"/>
+					<p:outputLabel value="#{label['status']}"/>
+					<p:outputLabel id="status_id" value="#{requestDetailsMB.requestDTO.status}"/>
 
 				</h:panelGrid>
 					
 			</p:tab>
 		</p:accordionPanel>
 
-		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}">
-			<f:ajax execute="@form" onevent="unblockUi" />
-			<p:graphicImage value="/secured/image/search.jpg"/>
-        </h:commandLink>
-		
+		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}" ajax="true" action="/secured/searchdonor.xhtml">
+				<p:graphicImage value="/secured/image/search.jpg"/>
+		</h:commandLink>
+
 		<p:graphicImage value="/secured/image/separator.jpg" />
-		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" ajax="false" onclick="closeRequest.show();">
+		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="closeRequest.show();">
 			<f:ajax execute="@form" onevent="unblockUi" />            
 			<p:graphicImage value="/secured/image/closeRequest.jpg"/>
         </h:commandLink>
@@ -105,21 +104,21 @@
         </h:commandLink>  
 		
 	<pe:blockUI widgetVar="blockUIWidget">  
-    <h:panelGrid columns="2">  
-        <p:graphicImage
-			value="/secured/image/loader.GIF" /> 
-        <p:outputLabel value="Please wait..." style="white-space: nowrap;" />  
-    </h:panelGrid>  
-</pe:blockUI> 
+	    <h:panelGrid columns="2">  
+	        <p:graphicImage
+				value="/secured/image/loader.GIF" /> 
+	        <p:outputLabel value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />  
+	    </h:panelGrid>  
+	</pe:blockUI> 
 
-		<p:dialog header="Please provide a reason for Request closure" widgetVar="closeRequest"
+		<p:dialog header="#{label['popupHeader.closeRequest']}" widgetVar="closeRequest"
 			resizable="false" width="400" height="200">
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFCloseRequest">
 
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.closeRemarks}" cols="35" maxlength="140" autoResize="true"/>
 
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.closeRequest}"
 					update="request_details_frm_id" onclick="closeRequest();"
 					oncomplete="unblockUIfreeze();">
@@ -127,16 +126,16 @@
 
 			</h:panelGrid>
 		</p:dialog>
-		<p:dialog header="Please provide a reason for Request withdrawl" widgetVar="withdrawRequest"
+		<p:dialog header="#{label['popupHeader.withdrawRequest']}" widgetVar="withdrawRequest"
 			resizable="false" width="400" height="200">
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFWithdrawRequest">
 
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.withdrawRemarks}" cols="35" maxlength="140" autoResize="true"/>
 
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.withdrawRequest}" 
-					update="request_details_frm_id:acc_panel:status_id" onclick="withdrawRequest();"
+					update="request_details_frm_id" onclick="withdrawRequest();"
 					oncomplete="unblockUIfreeze();">
 				</p:commandButton>
 
@@ -216,11 +215,11 @@
             <pe:blockUI widgetVar="blockUIWidget">
 			<h:panelGrid columns="2">
 				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
 			</h:panelGrid>
 		</pe:blockUI>
 
-		<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
+		<p:dialog header="#{label['popupHeader.confirmAppointment']}" widgetVar="donorDialogConfirm"
 			resizable="false" width="400" height="200">
 
 
@@ -231,7 +230,7 @@
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 					cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
 				
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.confirmDonor}"
 					update="request_donors_form" onclick="confirmAppointment();"
 					oncomplete="unblockUIfreeze();"></p:commandButton>
@@ -240,17 +239,17 @@
 		</p:dialog>
 
 
-		<p:dialog header="Reject Donor" widgetVar="donorDialogReject"
+		<p:dialog header="#{label['popupHeader.rejectDonor']}" widgetVar="donorDialogReject"
 			resizable="false" width="400" height="200">
 
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReject">
 
-				<h:inputTextarea rows="5" value="You are about to Reject donor.Please confirm this action."
+				<h:inputTextarea rows="5" value="#{label['info.rejectDonor']}"
 					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
 					
 
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.rejectDonor}"
 					update="request_donors_form" onclick="confirmAppointment();"
 					oncomplete="unblockUIfreeze();"></p:commandButton>
@@ -258,16 +257,16 @@
 			</h:panelGrid>
 		</p:dialog>
 		
-		<p:dialog header="Reserve Donor" widgetVar="donorDialogReserve"
+		<p:dialog header="#{label['popupHeader.reserverDonor']}" widgetVar="donorDialogReserve"
 			resizable="false" width="400" height="200">
 
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReserve">
 
-				<h:inputTextarea rows="5" value="You are about to Reserve this donor.Please confirm this action."
+				<h:inputTextarea rows="5" value="#{label['info.reserveDonor']}"
 					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
 
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.reserveDonor}"
 					update="request_donors_form" onclick="confirmAppointment();"
 					oncomplete="unblockUIfreeze();"></p:commandButton>
@@ -275,24 +274,24 @@
 			</h:panelGrid>
 		</p:dialog>
 		
-		<p:dialog header="Add Donation History" widgetVar="addDonationHistoryDialog"
+		<p:dialog header="#{label['popupHeader.addDonationHistory']}" widgetVar="addDonationHistoryDialog"
 			resizable="false" width="500" height="250">
 
 
 			<h:panelGrid columns="2" cellpadding="4" id="addDonationHistoryDialogId">
 
-			<h:outputText value="Donation Date:" />
+			<h:outputText value="#{label['donationDate']}" />
 			<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
 						requiredMessage="Donation date is mandatory"
 						value="#{requestDetailsMB.requestDTO.donationDate}"
 						yearRange="-5:+1" />
 						
-				<h:outputText value="Remarks:" />		
+				<h:outputText value="#{label['remarks']}" />		
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.donationRemarks}"
 					cols="35" maxlength="140" autoResize="true" />
 
-				<p:commandButton value="Confirm"
+				<p:commandButton value="#{label['button.confirm']}"
 					actionListener="#{requestDetailsMB.addDonationHistory}"
 					onclick="addDonationHistory();"
 					oncomplete="unblockUIfreeze();"></p:commandButton>

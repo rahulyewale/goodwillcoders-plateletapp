@@ -31,32 +31,32 @@
 <div class="container">
 	<ui:include src="header.xhtml"></ui:include>
 
-	<h2>Request List</h2>
+	<h2>#{label['pageheader.requestList']}</h2>
 	<h:form id="requestListForm">
 		<p:accordionPanel>
-			<p:tab title="Search Request List Criteria">
+			<p:tab title="#{label['tab.searchRequestListCriteria']}">
 				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
-					<p:outputLabel value="Request Number:" for="requestNumber"/>
+					<p:outputLabel value="#{label['requestNumber']}" for="requestNumber"/>
 					<p:inputText id="requestNumber"
 						value="#{requestListMB.requestListInputDTO.requestNumber}"
 						label="requestNumber" />
 
 
 					<p:outputLabel for="donationRequestFromDate"
-						value="Requirement From Date:" />
+						value="#{label['requirementFromDate']}" />
 					<p:calendar id="donationRequestFromDate"
 						value="#{requestListMB.requestListInputDTO.donationRequestFromDate}"
 						showOn="button" pattern="dd-MMM-yyyy" />
 
 					<p:outputLabel for="donationRequestToDate"
-						value="Requirement To Date:" />
+						value="#{label['requirementToDate']}" />
 					<p:calendar id="donationRequestToDate"
 						value="#{requestListMB.requestListInputDTO.donationRequestToDate}"
 						showOn="button" pattern="dd-MMM-yyyy" />
 
 
-					<p:outputLabel for="donationCenter" value="Donation Center:" />
+					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter" appendTo="@this"
 						value="#{requestListMB.requestListInputDTO.donationCenterId}">
 						<f:selectItem itemValue="-1" itemLabel="--Select--" />
@@ -67,7 +67,7 @@
 							itemValue="#{donationCenterDTO.donationCenterId}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="status" value="Status:" />
+					<p:outputLabel for="status" value="#{label['status']}" />
 					<p:selectOneMenu id="status" appendTo="@this"
 						value="#{requestListMB.requestListInputDTO.status}" label="status">
 						<f:selectItem itemLabel="--Select--" itemValue="-1" />
@@ -93,7 +93,7 @@
 		<pe:blockUI widgetVar="blockUIWidget">
 			<h:panelGrid columns="2">
 				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
 			</h:panelGrid>
 		</pe:blockUI>
 
@@ -103,7 +103,7 @@
 
 	<h:form id="requestListResultForm">
 		<p:accordionPanel>
-			<p:tab title="Request List Result">
+			<p:tab title="#{label['tab.searchRequestListCriteria']}">
 				<h:panelGrid cellpadding="10">
 
 					<p:dataTable rows="10"

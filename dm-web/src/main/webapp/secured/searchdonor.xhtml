@@ -55,21 +55,21 @@
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2>Search Donors</h2>
+	<h2>#{label['pageheader.searchDonors']}</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:accordionPanel>
-			<p:tab title="Search Criteria:">
+			<p:tab title="#{label['tab.searchCriteria']}">
 				<h:panelGrid columns="2" columnClasses="label, value"
 					cellpadding="10">
 
-					<p:outputLabel for="donationType" value="Donation Type:" />
+					<p:outputLabel for="donationType" value="#{label['donationType']}" />
 					<p:selectOneMenu id="donationType"
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="bloodGroup" value="Blood Group: " />
+					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
 					<p:selectOneMenu id="bloodGroup"
 						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
 						<f:selectItem itemValue="" itemLabel="Any" />
@@ -87,7 +87,7 @@
 					</p:selectOneMenu>
 
 
-					<p:outputLabel for="donationCenter" value="Donation Center:" />
+					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter"
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
 						<f:selectItems
@@ -97,10 +97,10 @@
 							itemValue="#{donationCenterDTO.donationCenterId}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="requestDate" value="Requirement Date:" />
-					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
+					<p:outputLabel for="requirementDate" value="#{label['requirementDate']}" />
+					<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
-						requiredMessage="Requirement date is mandatory"
+						requiredMessage="#{label['validation.mandatory.requirementDate']}"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
@@ -122,7 +122,7 @@
 		<pe:blockUI widgetVar="blockUIWidget">
 			<h:panelGrid columns="2">
 				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="Please wait..." style="white-space: nowrap;" />
+				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
 			</h:panelGrid>
 		</pe:blockUI>
 
@@ -130,7 +130,7 @@
 
 	<h:form id="searchresult_frm_id">
 		<p:accordionPanel>
-			<p:tab title="Search Results:">
+			<p:tab title="#{label['tab.searchedResults']}">
 				<h:panelGrid>
 					<p:dataTable id="searchResultId"
 						value="#{searchDonorMB.searchDonorList}" var="donor"
@@ -184,7 +184,7 @@
 						</p:column>
 					</p:dataTable>
 
-					<p:dialog header="Send SMS" widgetVar="donorDialog"
+					<p:dialog header="#{label['popupHeader.sendSMS']}" widgetVar="donorDialog"
 						resizable="false" width="400" height="200">
 
 
@@ -204,7 +204,7 @@
 						</h:panelGrid>
 					</p:dialog>
 
-					<p:dialog header="Confirm Appointment" widgetVar="donorDialogConfirm"
+					<p:dialog header="#{label['popupHeader.confirmAppointment']}" widgetVar="donorDialogConfirm"
 						resizable="false" width="400" height="200">
 
 
@@ -218,7 +218,7 @@
 								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
 								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
 								
-							<h:commandButton value="Confirm"
+							<h:commandButton value="#{label['button.confirm']}"
 								actionListener="#{searchDonorMB.confirmDonorAppointment}"
 								onclick="confirmAppointment()">
 								<f:ajax execute="@form"
@@ -228,7 +228,7 @@
 						</h:panelGrid>
 					</p:dialog>
 					
-					<p:dialog header="Donor Contacted Confirmation" widgetVar="donorContactedConfirm"
+					<p:dialog header="#{label['popupHeader.contactedConfirmation']}" widgetVar="donorContactedConfirm"
 						resizable="false" width="400" height="200">
 
 
@@ -236,10 +236,10 @@
 							id="donorContactedConfirm">
 
 							<h:inputTextarea rows="5"
-								value="Please confirm that you would like to mark this donor as Contacted"
+								value="#{label['info.markContacted']}"
 								cols="35" maxlength="140" autoResize="false" readonly="true" disabled="true" />
 							
-							<h:commandButton value="Confirm"
+							<h:commandButton value="#{label['button.confirm']}"
 								actionListener="#{searchDonorMB.markDonorAsContacted}"
 								onclick="contactedDonor()">
 								<f:ajax execute="@form"
