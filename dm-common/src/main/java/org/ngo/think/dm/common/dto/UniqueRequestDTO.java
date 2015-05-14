@@ -14,7 +14,9 @@ public class UniqueRequestDTO implements Serializable
 	private String requestedDate;
 	private String bloodGroup;
 	private String status;
-	private String remarks;
+	private String closeRemarks;
+	private String withdrawRemarks;
+
 	private Long uniqueRequestTxnId;
 	private DonationCenterDTO donationCenterDTO;
 	private Date donationDate;
@@ -50,15 +52,24 @@ public class UniqueRequestDTO implements Serializable
 		this.status = status;
 	}
 
-	public String getRemarks()
+	public String getCloseRemarks()
 	{
-		return remarks;
+		return closeRemarks;
 	}
 
-	public void setRemarks(String remarks)
+	public void setCloseRemarks(String closeRemarks)
 	{
-		System.out.println("setting remarks:" + this + " " + remarks);
-		this.remarks = remarks;
+		this.closeRemarks = closeRemarks;
+	}
+
+	public String getWithdrawRemarks()
+	{
+		return withdrawRemarks;
+	}
+
+	public void setWithdrawRemarks(String withdrawRemarks)
+	{
+		this.withdrawRemarks = withdrawRemarks;
 	}
 
 	public DonationCenterDTO getDonationCenterDTO()

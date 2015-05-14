@@ -34,7 +34,6 @@ public class CachedDataMB implements Serializable
 	
 	public boolean getFeatureStatus(String featureName)
 	{
-		System.out.println(featureName);
 		return featureMap.get(featureName);
 	}
 	

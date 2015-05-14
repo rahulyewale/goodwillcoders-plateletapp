@@ -112,13 +112,12 @@
     </h:panelGrid>  
 </pe:blockUI> 
 
-
 		<p:dialog header="Please provide a reason for Request closure" widgetVar="closeRequest"
 			resizable="false" width="400" height="200">
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFCloseRequest">
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.remarks}" cols="35" maxlength="140" autoResize="true"/>
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.closeRemarks}" cols="35" maxlength="140" autoResize="true"/>
 
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.closeRequest}"
@@ -133,7 +132,7 @@
 
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFWithdrawRequest">
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.remarks}" cols="35" maxlength="140" autoResize="true"/>
+				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.withdrawRemarks}" cols="35" maxlength="140" autoResize="true"/>
 
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.withdrawRequest}" 

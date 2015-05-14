@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.ngo.think.dm.common.constant.RequestStatus;
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
-import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
+import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.enums.RandomNumberType;
 import org.ngo.think.dm.common.util.RandomNumberGenerator;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
@@ -75,7 +75,7 @@ public class UniqueRequestTransactionService
 			
 			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
 			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
-			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getRemarks());
+			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getCloseRemarks());
 
 			//TODO - act on donors
 			
@@ -94,7 +94,7 @@ public class UniqueRequestTransactionService
 			
 			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
 			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
-			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getRemarks());
+			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getWithdrawRemarks());
 
 			//TODO - act on donors
 			
