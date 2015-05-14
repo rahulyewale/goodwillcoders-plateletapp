@@ -213,10 +213,14 @@
 
 							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
+<<<<<<< HEAD
 								cols="35" maxlength="140" autoResize="true" />
+=======
+								cols="40" maxlength="140" autoResize="true" />
 							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+								cols="40" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+>>>>>>> a12aaf2ad19ccc11db1ee5a4fe077f9b2f00bfe5
 
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorOnMapMB.confirmDonorAppointment}"

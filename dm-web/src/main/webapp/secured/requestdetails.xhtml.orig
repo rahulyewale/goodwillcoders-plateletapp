@@ -62,9 +62,9 @@
 	<h2>Request Details</h2>
 	<h:form id="request_details_frm_id">
 	 
-		<p:accordionPanel id="acc_panel">
+		<p:accordionPanel >
 			<p:tab title="Request Details:">
-				<h:panelGrid id="panel" columns="2" columnClasses="label, value" cellpadding="10">
+				<h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
 
 					<p:outputLabel value="Request Number:"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
@@ -79,9 +79,16 @@
 					<p:outputLabel value="Requirement Date:"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestedDate}"/>
 					
+<<<<<<< HEAD
+						
+					<h:outputText value="Blood Group:"/>
+					<h:outputText value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
+						
 					<h:outputText value="Status:"/>
-					<h:outputText id="status_id" value="#{requestDetailsMB.requestDTO.status}"/>
+					<h:outputText value="#{requestDetailsMB.requestDTO.status}"/>
 
+=======
+>>>>>>> a12aaf2ad19ccc11db1ee5a4fe077f9b2f00bfe5
 				</h:panelGrid>
 					
 			</p:tab>
@@ -93,7 +100,7 @@
         </h:commandLink>
 		
 		<p:graphicImage value="/secured/image/separator.jpg" />
-		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" ajax="false" onclick="closeRequest.show();">
+		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="closeRequest.show();">
 			<f:ajax execute="@form" onevent="unblockUi" />            
 			<p:graphicImage value="/secured/image/closeRequest.jpg"/>
         </h:commandLink>
@@ -136,8 +143,8 @@
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.remarks}" cols="35" maxlength="140" autoResize="true"/>
 
 				<p:commandButton value="Confirm"
-					actionListener="#{requestDetailsMB.withdrawRequest}" 
-					update="request_details_frm_id:acc_panel:status_id" onclick="withdrawRequest();"
+					actionListener="#{requestDetailsMB.withdrawRequest}"
+					update="request_details_frm_id" onclick="withdrawRequest();"
 					oncomplete="unblockUIfreeze();">
 				</p:commandButton>
 
@@ -228,9 +235,9 @@
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
 
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-					cols="35" maxlength="140" autoResize="true" />
+					cols="40" maxlength="140" autoResize="true" />
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-					cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+					cols="40" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
 				
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.confirmDonor}"
@@ -248,7 +255,7 @@
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReject">
 
 				<h:inputTextarea rows="5" value="You are about to Reject donor.Please confirm this action."
-					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
+					cols="40" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
 					
 
 				<p:commandButton value="Confirm"
@@ -266,7 +273,7 @@
 			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReserve">
 
 				<h:inputTextarea rows="5" value="You are about to Reserve this donor.Please confirm this action."
-					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
+					cols="40" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
 
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.reserveDonor}"
@@ -291,7 +298,7 @@
 						
 				<h:outputText value="Remarks:" />		
 				<h:inputTextarea rows="5" value="#{requestDetailsMB.donationRemarks}"
-					cols="35" maxlength="140" autoResize="true" />
+					cols="40" maxlength="140" autoResize="true" />
 
 				<p:commandButton value="Confirm"
 					actionListener="#{requestDetailsMB.addDonationHistory}"

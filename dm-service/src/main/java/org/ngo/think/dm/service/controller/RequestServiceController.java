@@ -1,8 +1,9 @@
 package org.ngo.think.dm.service.controller;
 
-import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.CLOSE_REQUEST;
-import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.GET_REQUEST_LIST;
-import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.WITHDRAW_REQUEST;
+import static org.ngo.think.dm.common.constant.CommonConstants.CommonAttributes.APPLICATION_JSON;
+import static org.ngo.think.dm.common.constant.CommonConstants.ServiceRequestMapping.CLOSE_REQUEST;
+import static org.ngo.think.dm.common.constant.CommonConstants.ServiceRequestMapping.GET_REQUEST_LIST;
+import static org.ngo.think.dm.common.constant.CommonConstants.ServiceRequestMapping.WITHDRAW_REQUEST;
 
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class RequestServiceController
 	@Autowired
 	private UniqueRequestTransactionService requestTransactionService;
 
-	@RequestMapping(value = GET_REQUEST_LIST, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = GET_REQUEST_LIST, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@ResponseBody
 	public ServiceResponse getRequestList(@RequestBody
 	ServiceRequest serviceRequest)
@@ -52,27 +53,27 @@ public class RequestServiceController
 	}
 
 	// close request
-	@RequestMapping(value = CLOSE_REQUEST, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = CLOSE_REQUEST, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@ResponseBody
 	public ServiceResponse closeRequest(@RequestBody
 	ServiceRequest serviceRequest)
 	{
 		UniqueRequestDTO uniqueRequestDTO = (UniqueRequestDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.UNIQUE_REQUEST_DTO, UniqueRequestDTO.class);
 		requestTransactionService.closeRequest(uniqueRequestDTO);
-		
+
 		ServiceResponse serviceResponse = new ServiceResponse(ResponseData.successResponseData);
 		return serviceResponse;
 	}
 
 	// withdraw request
-	@RequestMapping(value = WITHDRAW_REQUEST, method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@RequestMapping(value = WITHDRAW_REQUEST, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@ResponseBody
 	public ServiceResponse withdrawRequest(@RequestBody
 	ServiceRequest serviceRequest)
 	{
 		UniqueRequestDTO uniqueRequestDTO = (UniqueRequestDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.UNIQUE_REQUEST_DTO, UniqueRequestDTO.class);
 		requestTransactionService.withdrawRequest(uniqueRequestDTO);
-		
+
 		ServiceResponse serviceResponse = new ServiceResponse(ResponseData.successResponseData);
 		return serviceResponse;
 	}

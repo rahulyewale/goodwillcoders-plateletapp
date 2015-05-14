@@ -1,8 +1,9 @@
 package org.ngo.think.dm.web.managebeans;
 
 import java.io.Serializable;
-import java.util.Iterator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -27,7 +28,15 @@ public class CachedDataMB implements Serializable
 	
 	public DonationCenterDTO[] donationCenterDTOs = new DonationCenterDTO[50];
 	
-	private boolean areDonationCentersFetched = false;
+	private boolean areDonationCentersFetched;
+	
+	private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
+	
+	public boolean getFeatureStatus(String featureName)
+	{
+		System.out.println(featureName);
+		return featureMap.get(featureName);
+	}
 	
 	@PostConstruct
 	public void init()
@@ -43,7 +52,35 @@ public class CachedDataMB implements Serializable
 			System.out.println("Donation Centers already fetched, Total:"+donationCenterDTOs.length);
 		}
 		
+		//Feature fetch
+		System.out.println("feature fetch - start");
+		fetchFeatures();
+		System.out.println("feature fetch - end");
+		
 		System.out.println("END - Post Construct");
+	}
+	
+	private void fetchFeatures()
+	{
+		System.out.println("START - fetching features");
+		
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo());
+		String serviceResponseString = null;
+		ServiceResponse serviceResponse = null;
+		
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.GET_FEATURES_SERVICE_URL, serviceRequest);
+			serviceResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SYSTEM_FEATURES));
+			featureMap = (HashMap<String, Boolean>) JsonUtil.convertJsonToObject(serviceResponseString, Map.class);
+			
+		}
+		catch (Exception e)
+		{
+			System.out.println("Exception occurred while fetching features.");
+			e.printStackTrace();
+		}
+		System.out.println("END - fetching features");
 	}
 	
 	private GetDonationCenterResponseDTO fetchDonationCenters()

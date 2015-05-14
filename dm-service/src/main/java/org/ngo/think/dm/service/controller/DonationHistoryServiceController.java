@@ -1,6 +1,7 @@
 package org.ngo.think.dm.service.controller;
 
-import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.ADD_DONATION_HISTORY;
+import static org.ngo.think.dm.common.constant.CommonConstants.CommonAttributes.APPLICATION_JSON;
+import static org.ngo.think.dm.common.constant.CommonConstants.ServiceRequestMapping.ADD_DONATION_HISTORY;
 
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -22,24 +23,24 @@ public class DonationHistoryServiceController
 	@Autowired
 	private DonationHistoryService donationHistoryService;
 
-	@RequestMapping(value=ADD_DONATION_HISTORY,method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	@RequestMapping(value = ADD_DONATION_HISTORY, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@ResponseBody
-	public ServiceResponse addDonationHistory(@RequestBody ServiceRequest serviceRequest)
+	public ServiceResponse addDonationHistory(@RequestBody
+	ServiceRequest serviceRequest)
 	{
-		DonationHistoryDTO donationHistoryDTO = (DonationHistoryDTO)ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.ADD_DONATION_HISTORY, DonationHistoryDTO.class);
-		
+		DonationHistoryDTO donationHistoryDTO = (DonationHistoryDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.ADD_DONATION_HISTORY, DonationHistoryDTO.class);
+
 		ResponseData responseData = donationHistoryService.addDonationHistory(donationHistoryDTO);
 		ServiceResponse response = new ServiceResponse(responseData);
 		return response;
-		
+
 	}
-	
-	/*@RequestMapping(value="/sendSMSForConfirmedDonors",method=RequestMethod.POST,consumes="application/json",produces="application/json")
-	@ResponseBody
-	public ServiceResponse sendConfirmedSMSForSearchedDonors(@RequestBody ServiceRequest serviceRequest)
-	{
-		
-		return null;
-		
-	}*/
+
+	/*
+	 * @RequestMapping(value="/sendSMSForConfirmedDonors",method=RequestMethod.POST
+	 * ,consumes=APPLICATION_JSON,produces=APPLICATION_JSON)
+	 * @ResponseBody public ServiceResponse
+	 * sendConfirmedSMSForSearchedDonors(@RequestBody ServiceRequest
+	 * serviceRequest) { return null; }
+	 */
 }

@@ -9,6 +9,7 @@ import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
+import org.ngo.think.dm.common.enums.Feature;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.persistence.dao.DonationCenterDAO;
 import org.ngo.think.dm.persistence.dao.DonorDAO;
@@ -16,6 +17,7 @@ import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.service.domain.DistanceComparator;
 import org.ngo.think.dm.service.domain.DonorFilter;
+import org.ngo.think.dm.service.ff4j.FeatureProvider;
 import org.ngo.think.dm.service.mapper.DonationCenterMapper;
 import org.ngo.think.dm.service.mapper.DonorMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,12 @@ public class SearchDonorService
 
 	@Value("${confirm.sms.text}")
 	private String confirmSmsText;
+	
+	@Value("${confirm.appointment.text}")
+	private String confirmAppointmentText;
+	
+	@Autowired
+	private FeatureProvider featureProvider;
 
 	@Autowired
 	DonorFilter donorFilter;
@@ -87,7 +95,12 @@ public class SearchDonorService
 		String intialSMSWithReqDate = REQ_DATE.matcher(intialSMSWithReqNumber).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
 		initialSMS = intialSMSWithReqDate;
 
-		String confirmSMS = confirmSmsText;
+		String confirmSMS = confirmAppointmentText;
+		
+		if(featureProvider.getFF4j().check(Feature.SEND_SMS_FEATURE.getFeatureName()))
+		{
+			confirmSMS = confirmSmsText;
+		}
 		String confirmSMSWithCenter = DONATION_CENTRE.matcher(confirmSMS).replaceAll(centerDetails);
 		String confirmSMSWithReqDate = REQ_DATE.matcher(confirmSMSWithCenter).replaceAll(DateUtil.dateToString(searchDonorRequestDTO.getRequestDate()));
 		confirmSMS = confirmSMSWithReqDate;

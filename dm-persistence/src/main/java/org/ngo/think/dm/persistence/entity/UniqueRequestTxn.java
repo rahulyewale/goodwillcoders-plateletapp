@@ -13,7 +13,7 @@ import java.util.Date;
 @Table(name = "unique_request_txn")
 @NamedQueries({
 					@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u"),
-               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenter.donationCenterId =:donationCentreId AND u.requestDate = :requestDate"),
+               @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateCentreAndBloodGroup", query = "SELECT u FROM UniqueRequestTxn u WHERE u.donationCenter.donationCenterId =:donationCentreId AND u.requestDate = :requestDate AND u.bloodGroup = :bloodGroup"),
                @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByID", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestId =:requestId")
 					})
 

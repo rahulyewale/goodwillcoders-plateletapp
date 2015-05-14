@@ -57,6 +57,7 @@ public class UniqueRequestDTO implements Serializable
 
 	public void setRemarks(String remarks)
 	{
+		System.out.println("setting remarks:" + this + " " + remarks);
 		this.remarks = remarks;
 	}
 

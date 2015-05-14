@@ -71,6 +71,7 @@ public class RequestDetailsMB implements Serializable
 
 	public void setRequestDTO(UniqueRequestDTO requestDTO)
 	{
+		System.out.println("this:" + this + " setting req DTO:" + requestDTO + " rem:" + requestDTO.getRemarks());
 		this.requestDTO = requestDTO;
 	}
 

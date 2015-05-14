@@ -7,9 +7,7 @@ import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
 import org.ngo.think.dm.common.dto.GetRequestListInputDTO;
-import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
-import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
 import org.ngo.think.dm.persistence.generic.dao.impl.BaseDAOImpl;
 import org.springframework.stereotype.Repository;
@@ -19,12 +17,13 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 {
 
 	@Override
-	public UniqueRequestTxn getUniqueRequestTxnByDateAndCenter(Date requestDate, Long donationCenterId)
+	public UniqueRequestTxn getUniqueRequestTxnByDateAndCenter(Date requestDate, Long donationCenterId, String bloodGroup)
 	{
 
-		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDateAndCentre", UniqueRequestTxn.class);
+		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDateCentreAndBloodGroup", UniqueRequestTxn.class);
 		query.setParameter("requestDate", requestDate, TemporalType.DATE);
 		query.setParameter("donationCentreId", donationCenterId);
+		query.setParameter("bloodGroup", bloodGroup);
 
 		UniqueRequestTxn resultUniqueRequestTxn = null;
 		List<UniqueRequestTxn> uniqueRequestTxns = query.getResultList();

@@ -69,7 +69,7 @@ public class XSSFExcelController
 						case "ID":
 							// case 0:
 							Double donorId = cell.getNumericCellValue();
-							donor.setDonorId(new Long(donorId.longValue()));
+							donor.setDonorId(Long.valueOf(donorId.longValue()));
 							break;
 						case "FIRST NAME":
 							// case 1:

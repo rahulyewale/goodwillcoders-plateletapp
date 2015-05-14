@@ -3,51 +3,25 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:pe="http://primefaces.org/ui/extensions"
-	xmlns:m="http://code.google.com/p/gmaps4jsf/">
+	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
 	<title>Search Donors</title>
-	<style>
-		#map {
-		    width:600px;
-		    height:420px;
-		}
-		#marker-tooltip {
-		    display: none;
-		    position:absolute;
-		    width: 300px;
-		    height: 200px;
-		    background-color: #ccc;
-		    margin: 15px;
-		}
-	</style>
 	
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true">
-    </script> 
 	<script type="text/javascript">
+	
+	$(document).ready(function () {
+		console.log("ready");
+	});
+	
    	function unblockUi(data)
    	{
    		if(data.status==="success")
    		{
    			PF('blockUIWidget').unblock();
    		}
+   		
    	}
-
-   	function markerInfoOpen(event, name)
-   	{
-		event.info = new google.maps.InfoWindow({
-	   		  content: '<b>'+name+'</b>'
-   		});
-   		event.info.open(event.parentMap, event);
-   	}
-   	
-   	function markerInfoClose(event)
-   	{
-   		event.info.close();
-   		event.info = null;
-   	}
-   	
    	
    	function sendSms()
    	{
@@ -63,6 +37,7 @@
    		
    	}
 	
+	
 	function contactedDonor() 
 	{
 		donorContactedConfirm.hide();
@@ -73,14 +48,14 @@
    	{
    		donorDialog.show();
    	}
+	
 	</script>
-
 </h:head>
 <h:body>
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2>Search Donors on Map</h2>
+	<h2>Search Donors</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:accordionPanel>
@@ -90,13 +65,13 @@
 
 					<p:outputLabel for="donationType" value="Donation Type:" />
 					<p:selectOneMenu id="donationType"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationType}">
+						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="bloodGroup" value="Blood Group: " />
 					<p:selectOneMenu id="bloodGroup"
-						value="#{searchDonorOnMapMB.donorRequestDTO.bloodGroup}">
+						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
 						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
 						<f:selectItem itemValue="A-" itemLabel="A-" />
@@ -114,7 +89,7 @@
 
 					<p:outputLabel for="donationCenter" value="Donation Center:" />
 					<p:selectOneMenu id="donationCenter"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationCentre}">
+						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
 						<f:selectItems
 							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
@@ -126,21 +101,22 @@
 					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
 						requiredMessage="Requirement date is mandatory"
-						value="#{searchDonorOnMapMB.donorRequestDTO.requestDate}"
+						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
 				</h:panelGrid>
 
 			</p:tab>
+
 		</p:accordionPanel>
-		
 		<h:commandLink id="searchDonorId" value=""
-			actionListener="#{searchDonorOnMapMB.searchDonor}"
+			actionListener="#{searchDonorMB.searchDonor}"
 			onclick="PF('blockUIWidget').block()">
 			<p:graphicImage value="/secured/image/search.jpg" />
 			<f:ajax execute="@form" render=":searchresult_frm_id"
 				onevent="unblockUi" />
 		</h:commandLink>
+		
 
 
 		<pe:blockUI widgetVar="blockUIWidget">
@@ -153,49 +129,73 @@
 	</h:form>
 
 	<h:form id="searchresult_frm_id">
-		<p:accordionPanel id="accPanel"> 
-			 <p:tab title="Search Map" id="mapTab">
-				<h:panelGrid id="panelGrid">
-					<div id="marker-tooltip"></div>
-					<m:map width="1000px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
-						<m:mapControl id="mapcontrol" name="GMapTypeControl"/>
-						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
-                    	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}" showInformationEvent="mouseover">
-                    	    
-                    	    <m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}"/>
-                    	    <m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
+		<p:accordionPanel>
+			<p:tab title="Search Results:">
+				<h:panelGrid>
+					<p:dataTable id="searchResultId"
+						value="#{searchDonorMB.searchDonorList}" var="donor"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rows="5">
+						<f:facet name="header">
+							<h:outputText value="Filtered Donors List" />
+						</f:facet>
+						<p:column headerText="">
+							<h:selectBooleanCheckbox value="#{donor.selectedDonor}" />
+						</p:column>
+						<p:column headerText="Name">
+							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
+							<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
+				               <p:panelGrid columns="2">  
+				                  <f:facet name="header">Address</f:facet>  
+				
+				                  <h:outputLabel value="#{donor.donorAddressDetailsDTO.addressLine1}" />  
+								  <h:outputLabel value="Pincode: #{donor.donorAddressDetailsDTO.pinCode}" />
+				               </p:panelGrid>  
+				          </p:overlayPanel> -->
+						</p:column>
 
-                    	 	<m:icon imageURL="../secured/image/donationcentre5.png"/>
-                    	 </m:marker>
-						<ui:repeat var="donorMarker" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="donorLoopVar">
-                    	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
-                    	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
-                    	     		
-                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1}&lt;br%2F&gt;');}"/>
-                    	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
-                    	     		                    	     			
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked3.png');};}"/>
-                    	     		<m:icon imageURL="../secured/image/Marker_man.png"/>
-                    	     	</m:marker>
-                    	</ui:repeat> 
-					</m:map>
-					<ui:repeat id="hiddenVarLoop" var="donor" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="loopvar">
-    					<h:inputHidden id="donor_" value="#{donor.selectedDonor}"/>
-    				</ui:repeat>
-    				
-    				
-    				<p:dialog header="Send SMS" widgetVar="donorDialog"
+						<p:column headerText="Contact No">
+							<h:outputText
+								value="#{donor.donorContactDetailsDTO.contactNumber}" />
+						</p:column>
+						<p:column headerText="Address">
+							<h:outputText
+								value="#{donor.donorAddressDetailsDTO.addressLine1}, #{donor.donorAddressDetailsDTO.pinCode}" />
+						</p:column>
+						<p:column headerText="Email">
+							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
+						</p:column>
+						<p:column headerText="Blood Group">
+							<h:outputText value="#{donor.bloodGroup}" />
+						</p:column>
+						<p:column headerText="Last Donation date">
+							<h:outputText value="#{donor.lastDonationDate}" />
+						</p:column>
+						<p:column headerText="Next available date">
+							<h:outputText value="#{donor.nextAvailableDate}" />
+						</p:column>
+						<p:column headerText="Distance (Km)">
+							<h:outputText value="#{donor.distanceKm}" />
+						</p:column>
+
+						<p:column headerText="Rating">
+							<p:rating value="#{donor.rating}" cssStyle="white-space:no-wrap" readonly="true" stars="6" />
+						</p:column>
+					</p:dataTable>
+
+					<p:dialog header="Send SMS" widgetVar="donorDialog"
 						resizable="false" width="400" height="200">
 
 
 						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
 							<h:inputTextarea rows="5"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.intialSmsText}"
+								value="#{searchDonorMB.searchDonorResponseDTO.intialSmsText}"
 								cols="35" maxlength="140" autoResize="true" />
 
 							<h:commandButton value="Send"
-								actionListener="#{searchDonorOnMapMB.sendSmsToSelectedDonors}"
+								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}"
 								onclick="sendSms()">
 								<f:ajax execute="@form"
 							 	 onevent="unblockUi" />
@@ -212,14 +212,19 @@
 							id="contentOFDonorConfirm">
 
 							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
+								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
+<<<<<<< HEAD
 								cols="35" maxlength="140" autoResize="true" />
-							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
 
+=======
+								cols="40" maxlength="140" autoResize="true"/>
+							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
+								cols="40" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+								
+>>>>>>> a12aaf2ad19ccc11db1ee5a4fe077f9b2f00bfe5
 							<h:commandButton value="Confirm"
-								actionListener="#{searchDonorOnMapMB.confirmDonorAppointment}"
+								actionListener="#{searchDonorMB.confirmDonorAppointment}"
 								onclick="confirmAppointment()">
 								<f:ajax execute="@form"
 							 	 onevent="unblockUi" />
@@ -237,10 +242,15 @@
 
 							<h:inputTextarea rows="5"
 								value="Please confirm that you would like to mark this donor as Contacted"
+<<<<<<< HEAD
 								cols="35" maxlength="140" autoResize="false" readonly="true" disabled="true" />
 
+=======
+								cols="40" maxlength="140" autoResize="false" readonly="true" disabled="true" />
+							
+>>>>>>> a12aaf2ad19ccc11db1ee5a4fe077f9b2f00bfe5
 							<h:commandButton value="Confirm"
-								actionListener="#{searchDonorOnMapMB.markDonorAsContacted}"
+								actionListener="#{searchDonorMB.markDonorAsContacted}"
 								onclick="contactedDonor()">
 								<f:ajax execute="@form"
 							 	 onevent="unblockUi" />
@@ -248,12 +258,13 @@
 
 						</h:panelGrid>
 					</p:dialog>
+					
 				</h:panelGrid>
 			</p:tab>
-			
+
 		</p:accordionPanel>
 		
-		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block"> 
+		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block">
 			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 			<p:graphicImage value="/secured/image/separator.jpg" />
 		</h:panelGroup>

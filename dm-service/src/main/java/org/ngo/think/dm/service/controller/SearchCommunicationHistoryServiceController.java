@@ -1,5 +1,8 @@
 package org.ngo.think.dm.service.controller;
 
+import static org.ngo.think.dm.common.constant.CommonConstants.CommonAttributes.APPLICATION_JSON;
+import static org.ngo.think.dm.common.constant.CommonConstants.ServiceRequestMapping.SEARCH_COMMUNICATION_HISTORY;
+
 import org.ngo.think.dm.common.communication.dto.ResponseData;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
@@ -16,28 +19,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import static org.ngo.think.dm.common.constant.CommonConstants.RequestMapping.*;
+
 @Controller
 public class SearchCommunicationHistoryServiceController
 {
 
 	@Autowired
-	SearchCommunicationHistoryService searchCommunicationHistoryService;
-	
-	
-	@RequestMapping(value=COMMUNICATION_HISTORY_SEARCH_SERVICE,method=RequestMethod.POST,consumes="application/json",produces="application/json")
+	private SearchCommunicationHistoryService searchCommunicationHistoryService;
+
+	@RequestMapping(value = SEARCH_COMMUNICATION_HISTORY, method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
 	@ResponseBody
-	public ServiceResponse searchcommunicationhistory(@RequestBody ServiceRequest serviceRequest)
+	public ServiceResponse searchcommunicationhistory(@RequestBody
+	ServiceRequest serviceRequest)
 	{
 		System.out.println("In SearchCommunicationHistoryServiceController : searchcommunicationhistory !!!");
-		SearchCommunicationHistoryRequestDTO  searchCommunicationHistoryRequest = (SearchCommunicationHistoryRequestDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest,CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST, SearchCommunicationHistoryRequestDTO.class);
+		SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequest = (SearchCommunicationHistoryRequestDTO) ServiceUtil.extractObjectFromServiceRequest(serviceRequest, CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST, SearchCommunicationHistoryRequestDTO.class);
 		SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = searchCommunicationHistoryService.searchcommunicationhistory(searchCommunicationHistoryRequest);
-		
-		ResponseData responseData =  new ResponseData(ResponseType.SUCCESS,ResponseCategory.SUCCESS);
+
+		ResponseData responseData = new ResponseData(ResponseType.SUCCESS, ResponseCategory.SUCCESS);
 		ServiceResponse serviceResponse = new ServiceResponse(responseData, CommonConstants.ResponseKey.SEARCH_COMMUNICATION_HISTORY_RESPONSE, searchCommunicationHistoryResponse);
 		return serviceResponse;
-		
-		
-		
+
 	}
 }

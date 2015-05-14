@@ -120,17 +120,17 @@ public class DistanceCalculator
 
 		dist = dist * 1.609344;
 
-		return (dist);
+		return dist;
 	}
 
 	private double deg2rad(double deg)
 	{
-		return (deg * Math.PI / 180.0);
+		return deg * Math.PI / 180.0;
 	}
 
 	private double rad2deg(double rad)
 	{
-		return (rad * 180 / Math.PI);
+		return rad * 180 / Math.PI;
 	}
 
 	private static double roundTo2Decimals(double val)

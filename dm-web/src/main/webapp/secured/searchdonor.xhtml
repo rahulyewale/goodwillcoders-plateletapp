@@ -9,6 +9,11 @@
 	<title>Search Donors</title>
 	
 	<script type="text/javascript">
+	
+	$(document).ready(function () {
+		console.log("ready");
+	});
+	
    	function unblockUi(data)
    	{
    		if(data.status==="success")
@@ -58,16 +63,16 @@
 				<h:panelGrid columns="2" columnClasses="label, value"
 					cellpadding="10">
 
-					<h:outputText value="Donation Type:" />
-					<h:selectOneMenu
+					<p:outputLabel for="donationType" value="Donation Type:" />
+					<p:selectOneMenu id="donationType"
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
 						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
-					<h:outputLabel value="Blood Group: " />
-					<h:selectOneMenu
+					<p:outputLabel for="bloodGroup" value="Blood Group: " />
+					<p:selectOneMenu id="bloodGroup"
 						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
-						<f:selectItem itemValue="" itemLabel="Select" />
+						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
 						<f:selectItem itemValue="A-" itemLabel="A-" />
 						<f:selectItem itemValue="B+" itemLabel="B+" />
@@ -79,23 +84,23 @@
 						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
 						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
 
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
 
-					<h:outputText value="Donation Center:" />
-					<h:selectOneMenu
+					<p:outputLabel for="donationCenter" value="Donation Center:" />
+					<p:selectOneMenu id="donationCenter"
 						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
 						<f:selectItems
 							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
 							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
 							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</h:selectOneMenu>
+					</p:selectOneMenu>
 
-					<h:outputText value="Request Date:" />
+					<p:outputLabel for="requestDate" value="Requirement Date:" />
 					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
-						requiredMessage="Request date is mandatory"
+						requiredMessage="Requirement date is mandatory"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
 						yearRange="-5:+1" />
 
@@ -206,10 +211,13 @@
 						<h:panelGrid columns="0" cellpadding="4"
 							id="contentOFDonorConfirm">
 
-							<h:inputTextarea rows="5"
+							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
 								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" />
-
+								cols="35" maxlength="140" autoResize="true"/>
+							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
+								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+								
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorMB.confirmDonorAppointment}"
 								onclick="confirmAppointment()">
@@ -230,7 +238,7 @@
 							<h:inputTextarea rows="5"
 								value="Please confirm that you would like to mark this donor as Contacted"
 								cols="35" maxlength="140" autoResize="false" readonly="true" disabled="true" />
-
+							
 							<h:commandButton value="Confirm"
 								actionListener="#{searchDonorMB.markDonorAsContacted}"
 								onclick="contactedDonor()">
@@ -246,16 +254,15 @@
 
 		</p:accordionPanel>
 		
-		<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
-		
-		<p:graphicImage value="/secured/image/separator.jpg" />
-		
-		<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
-		
-		<p:graphicImage value="/secured/image/separator.jpg" />
-
-		<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
-
+		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block">
+			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
+			<p:graphicImage value="/secured/image/separator.jpg" />
+		</h:panelGroup>
+		<h:panelGroup style="display: inline-block">
+			<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
+			<p:graphicImage value="/secured/image/separator.jpg" />
+			<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
+		</h:panelGroup>
 	</h:form>
 	</div>
 	<ui:include src="footer.xhtml"></ui:include>
