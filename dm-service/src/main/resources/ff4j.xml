@@ -2,5 +2,5 @@
 <features xmlns="http://ff4j.org/schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://ff4j.org/schema http://ff4j.org/schema/ff4j-1.2.0.xsd">
 	
-	<feature uid="sendSMSFeature" enable="true"  description="Send SMS Feature" />
+	<feature uid="sendSMSFeature" enable="false"  description="Send SMS Feature" />
 </features>
