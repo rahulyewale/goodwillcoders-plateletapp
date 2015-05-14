@@ -127,6 +127,10 @@
 							<h:outputText rendered="#{not empty requestDTO.bloodGroup}" value="#{requestDTO.bloodGroup}" />
 						</p:column>
 
+						<p:column headerText="Platelets">
+							<h:outputText value="#{requestDTO.plateletsBags}" />
+						</p:column>
+						
 						<p:column headerText="Requirement Date">
 							<h:outputText value="#{requestDTO.requestedDate}" />
 						</p:column>

@@ -18,6 +18,8 @@ public class SearchDonorRequestDTO implements Serializable
 
 	private Long donationCentre;
 
+	private int plateletsBags;
+
 	private Integer numberOfDonationsLessThanCount;
 
 	private Integer notDonatedInLastMonthsCount;
@@ -64,6 +66,16 @@ public class SearchDonorRequestDTO implements Serializable
 	public void setDonationCentre(Long donationCentre)
 	{
 		this.donationCentre = donationCentre;
+	}
+
+	public int getPlateletsBags()
+	{
+		return plateletsBags;
+	}
+
+	public void setPlateletsBags(int plateletsBags)
+	{
+		this.plateletsBags = plateletsBags;
 	}
 
 	public Integer getNumberOfDonationsLessThanCount()

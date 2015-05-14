@@ -1,10 +1,21 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the unique_request_txn database table.
@@ -47,9 +58,8 @@ public class UniqueRequestTxn implements Serializable
 	@Column(name = "blood_group")
 	private String bloodGroup;
 
-	public UniqueRequestTxn()
-	{
-	}
+	@Column(name = "platelets_bags")
+	private int plateletsBags;
 
 	public Long getUniqueRequestTxnId()
 	{
@@ -120,6 +130,16 @@ public class UniqueRequestTxn implements Serializable
 	public void setBloodGroup(String bloodGroup)
 	{
 		this.bloodGroup = bloodGroup;
+	}
+
+	public int getPlateletsBags()
+	{
+		return plateletsBags;
+	}
+
+	public void setPlateletsBags(int plateletsBags)
+	{
+		this.plateletsBags = plateletsBags;
 	}
 
 }

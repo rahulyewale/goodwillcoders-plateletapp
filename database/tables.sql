@@ -209,3 +209,5 @@ ALTER TABLE postal_code_master
 ALTER TABLE  unique_request_txn
 ADD COLUMN remarks character varying;
 
+ALTER TABLE  unique_request_txn
+ADD COLUMN platelets_bags integer;

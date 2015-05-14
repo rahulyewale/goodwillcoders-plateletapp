@@ -72,7 +72,10 @@
 					<p:outputLabel value="#{label['bloodGroup']}"/>
 					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
 					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
-					
+
+					<p:outputLabel value="#{label['plateletsBags']}"/>
+					<p:outputLabel value="#{requestDetailsMB.requestDTO.plateletsBags}"/>					
+
 					<p:outputLabel value="#{label['donationCenter']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
 					

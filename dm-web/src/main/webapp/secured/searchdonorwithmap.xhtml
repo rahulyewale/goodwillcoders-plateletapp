@@ -111,6 +111,10 @@
 
 					</p:selectOneMenu>
 
+					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
+					<p:inputText id="plateletsBags"
+						value="#{searchDonorOnMapMB.donorRequestDTO.plateletsBags}"
+						label="plateletsBags" />
 
 					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter"

@@ -20,8 +20,11 @@ public class RequestMapper
 		
 		requestDTO.setRequestNumber(uniqueRequestTxn.getRequestId());
 		requestDTO.setStatus(uniqueRequestTxn.getRequestStatus());
+		requestDTO.setCloseRemarks(uniqueRequestTxn.getRemarks());
+		requestDTO.setWithdrawRemarks(uniqueRequestTxn.getRemarks());
 		requestDTO.setUniqueRequestTxnId(uniqueRequestTxn.getUniqueRequestTxnId());
 		requestDTO.setBloodGroup(uniqueRequestTxn.getBloodGroup());
+		requestDTO.setPlateletsBags(uniqueRequestTxn.getPlateletsBags());
 		
 		return requestDTO;
 		

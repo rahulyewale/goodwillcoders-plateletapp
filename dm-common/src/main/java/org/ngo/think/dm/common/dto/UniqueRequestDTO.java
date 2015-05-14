@@ -13,6 +13,7 @@ public class UniqueRequestDTO implements Serializable
 	private String requestNumber;
 	private String requestedDate;
 	private String bloodGroup;
+	private int plateletsBags;
 	private String status;
 	private String closeRemarks;
 	private String withdrawRemarks;
@@ -103,6 +104,16 @@ public class UniqueRequestDTO implements Serializable
 		this.bloodGroup = bloodGroup;
 	}
 
+	public int getPlateletsBags()
+	{
+		return plateletsBags;
+	}
+
+	public void setPlateletsBags(int plateletsBags)
+	{
+		this.plateletsBags = plateletsBags;
+	}
+
 	public Date getDonationDate()
 	{
 		return donationDate;
@@ -112,7 +123,5 @@ public class UniqueRequestDTO implements Serializable
 	{
 		this.donationDate = donationDate;
 	}
-
-	
 
 }
