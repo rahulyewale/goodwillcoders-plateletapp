@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Query;
 import javax.persistence.TemporalType;
 
+import org.ngo.think.dm.common.constant.CommonConstants;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
@@ -50,6 +51,17 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 		return communicationHistories;
 	}
 	
+	@Override
+	public List<CommunicationHistory> getDonatedStateCommunicationHistoryByRequest(String requestId)
+	{
+		Query query = getEntityManager().createNamedQuery("CommunicationHistory.getDonatedStateCommunicationHistoryOfRequest", CommunicationHistory.class);
+		query.setParameter("requestId", requestId);
+		query.setParameter("status", CommonConstants.HistoryStatus.DONATED);
+
+		List<CommunicationHistory> communicationHistories = query.getResultList();
+		return communicationHistories;
+	}
+
 	@Override
 	public List<CommunicationHistory> getCommunicationHistoryForScreen(SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequestDTO)
 	{

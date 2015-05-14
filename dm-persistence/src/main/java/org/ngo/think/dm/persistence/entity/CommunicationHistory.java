@@ -1,10 +1,21 @@
 package org.ngo.think.dm.persistence.entity;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the communication_history database table.
@@ -15,7 +26,8 @@ import java.util.Date;
 	@NamedQuery(name = "CommunicationHistory.findAll", query = "SELECT c FROM CommunicationHistory c"),
    @NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.donorId =:donorId AND u.requestedDate = :requestedDate"),
 	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForSMSCheck", query = "SELECT u FROM CommunicationHistory u WHERE u.requestId =:requestId AND u.donorId =:donorId AND u.requestedDate =:requestedDate AND u.donationCenter.donationCenterId =:donationCenterId"),
-	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForScreen", query = "SELECT u FROM CommunicationHistory u")
+	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForScreen", query = "SELECT u FROM CommunicationHistory u"),
+	@NamedQuery(name = "CommunicationHistory.getDonatedStateCommunicationHistoryOfRequest", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.requestId =:requestId")
 })
 public class CommunicationHistory implements Serializable
 {

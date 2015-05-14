@@ -9,7 +9,9 @@ import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.enums.RandomNumberType;
 import org.ngo.think.dm.common.util.RandomNumberGenerator;
+import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.dao.UniqueRequestDAO;
+import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.UniqueRequestTxn;
 import org.ngo.think.dm.service.domain.DateComparator;
@@ -24,11 +26,14 @@ public class UniqueRequestTransactionService
 	@Autowired
 	UniqueRequestDAO requestDAO;
 
+	@Autowired
+	CommunicationHistoryDAO communicationHistoryDAO;
+
 	public String getUniqueRequestTranactionID(SearchDonorRequestDTO searchDonorRequestDTO)
 	{
 		String uniqueRequestNumber = null;
 		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDateAndCenter(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getDonationCentre(), searchDonorRequestDTO.getBloodGroup());
-		
+
 		if (null == uniqueRequestTxn)
 		{
 			uniqueRequestNumber = RandomNumberGenerator.generateRandomNumber(RandomNumberType.REQUEST_NUMBER);
@@ -56,12 +61,11 @@ public class UniqueRequestTransactionService
 		}
 		return uniqueRequestNumber;
 	}
-	
-	
+
 	public List<UniqueRequestDTO> getRequestList(GetRequestListInputDTO getRequestListInputDTO)
 	{
 		List<UniqueRequestTxn> uniqueRequestTxnList = requestDAO.getRequestList(getRequestListInputDTO);
-		
+
 		Collections.sort(uniqueRequestTxnList, new DateComparator());
 
 		List<UniqueRequestDTO> requestDTOList = RequestMapper.toDTOList(uniqueRequestTxnList);
@@ -69,36 +73,38 @@ public class UniqueRequestTransactionService
 		return requestDTOList;
 	}
 
-	public void closeRequest(UniqueRequestDTO uniqueRequestDTO)
+	public void closeRequest(UniqueRequestDTO uniqueRequestDTO) throws InsufficientDonationException, Exception
 	{
-		try
-		{
-			
-			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
-			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
-			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getCloseRemarks());
+		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
 
-			//TODO - act on donors
-			
+		List<CommunicationHistory> communicationHistoryList = communicationHistoryDAO.getDonatedStateCommunicationHistoryByRequest(uniqueRequestTxn.getRequestId());
+
+		if (uniqueRequestTxn.getPlateletsBags() <= communicationHistoryList.size())
+		{
+			uniqueRequestTxn.setRequestStatus(RequestStatus.CLOSED.toString());
+			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getCloseRemarks());
 			requestDAO.update(uniqueRequestTxn);
 		}
-		catch (Exception e)
+		else
 		{
-			e.printStackTrace();
+			throw new InsufficientDonationException("Insufficient platelets donation. Request can not be closed.");
 		}
+
+		// TODO - act on donors
+
 	}
-	
+
 	public void withdrawRequest(UniqueRequestDTO uniqueRequestDTO)
 	{
 		try
 		{
-			
+
 			UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
-			uniqueRequestTxn.setRequestStatus(uniqueRequestDTO.getStatus());
+			uniqueRequestTxn.setRequestStatus(RequestStatus.WITHDRAWN.toString());
 			uniqueRequestTxn.setRemarks(uniqueRequestDTO.getWithdrawRemarks());
 
-			//TODO - act on donors
-			
+			// TODO - act on donors
+
 			requestDAO.update(uniqueRequestTxn);
 		}
 		catch (Exception e)

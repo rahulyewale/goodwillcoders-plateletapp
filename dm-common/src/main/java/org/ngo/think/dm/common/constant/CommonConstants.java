@@ -31,10 +31,10 @@ public class CommonConstants
 	public static class HistoryStatus
 	{
 		public static final String SMS_SENT = "SMS_SENT";
+		public static final String CONTACTED = "CONTACTED";
 		public static final String CONFIRMED = "CONFIRMED";
 		public static final String DONATED = "DONATED";
 		public static final String REJECTED = "REJECTED";
-		public static final String CONTACTED = "CONTACTED";
 		public static final String RESERVED = "RESERVED";
 	}
 	

@@ -27,6 +27,7 @@ import org.ngo.think.dm.common.dto.SearchCommunicationHistoryRequestDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResponseDTO;
 import org.ngo.think.dm.common.dto.SearchCommunicationHistoryResultDTO;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
+import org.ngo.think.dm.common.enums.ResponseType;
 import org.ngo.think.dm.common.util.DateUtil;
 import org.ngo.think.dm.common.util.JsonUtil;
 import org.ngo.think.dm.web.client.RestSeviceInvoker;
@@ -251,21 +252,31 @@ public class RequestDetailsMB implements Serializable
 	public void closeRequest()
 	{
 		System.out.println("request details mb: close request");
-		getRequestDTO().setStatus(RequestStatus.CLOSED.toString());
 		
 		
+
 		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.UNIQUE_REQUEST_DTO, getRequestDTO());
 		ServiceResponse serviceResponse = null;
+
+		FacesMessage facesMessage = new FacesMessage("Successful", "Request closed");
 		try
 		{
 			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.CLOSE_REQUEST_URL, serviceRequest);
+			ResponseData responseData = serviceResponse.getResponseData();
+			if (ResponseType.ERROR.equals(responseData.getResponseType()))
+			{
+				facesMessage = new FacesMessage("Error", responseData.getMessage());
+			}
+			else
+			{
+				getRequestDTO().setStatus(RequestStatus.CLOSED.toString());
+			}
 		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		
-		FacesMessage facesMessage = new FacesMessage("Successful", "Request closed");
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
 	

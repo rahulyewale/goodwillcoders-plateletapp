@@ -14,4 +14,6 @@ public interface CommunicationHistoryDAO  extends BaseDAO<CommunicationHistory>
 	List<CommunicationHistory> getCommunicationHistoryForGivenCriteria(Long donorId, DonorAppointmentDTO donorAppointmentDTO);
 	
 	List<CommunicationHistory> getCommunicationHistoryForScreen(SearchCommunicationHistoryRequestDTO searchCommunicationHistoryRequestDTO);
+
+	List<CommunicationHistory> getDonatedStateCommunicationHistoryByRequest(String requestId);
 }
