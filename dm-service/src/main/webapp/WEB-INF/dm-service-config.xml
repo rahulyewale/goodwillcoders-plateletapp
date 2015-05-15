@@ -16,7 +16,7 @@ http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 		lazy-init="false">
 		<property name="locations">
 			<list>
-				<value>classpath:service-config.properties</value>
+				<value>file:/config/techathon/service-config.properties</value>
 			</list>
 		</property>
 	</bean>

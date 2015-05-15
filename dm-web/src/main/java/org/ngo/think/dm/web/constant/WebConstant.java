@@ -7,7 +7,7 @@ public class WebConstant
 	static class RestServiceConstant
 	{
 		private static final String PROTOCOL = "http";
-		private static final String HOST = "dmgmt-thinkngo.rhcloud.com";
+		private static final String HOST = "localhost";
 		private static final String PORT = "8800";
 		private static final String SERVICE_NAME = "dm-service";
 		
@@ -15,7 +15,7 @@ public class WebConstant
 	
 	public static class ServiceURL
 	{
-		private static final String BASE_URL = RestServiceConstant.PROTOCOL + "://" + RestServiceConstant.HOST + "/" + RestServiceConstant.SERVICE_NAME + "/";
+		private static final String BASE_URL = RestServiceConstant.PROTOCOL + "://" + RestServiceConstant.HOST + ":" + RestServiceConstant.PORT + "/" + RestServiceConstant.SERVICE_NAME + "/";
 		public static final String SEARCH_DONOR_SERVICE_URL = BASE_URL + ServiceRequestMapping.SEARCH_DONOR;
 		
 		public static final String IMPORT_DONOR_DATA_URL = BASE_URL + ServiceRequestMapping.IMPORT_DONOR_DATA;
