@@ -40,6 +40,12 @@
    		
    	}
    	
+   	function markDonated()
+   	{
+   		donorDialogDonated.hide();
+   		PF('blockUIWidget').block();
+   	}
+   	
    	function addDonationHistory()
    	{
    		addDonationHistoryDialog.hide();
@@ -183,7 +189,13 @@
 							  onevent="unblockUi" />
                         </h:commandLink>
 			      </p:column>
-			      
+			      <p:column headerText="Donated">
+			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogDonated.show();">
+                             <p:graphicImage value="/secured/image/donated.jpg" />
+                             <f:ajax execute="@form"
+							  onevent="unblockUi" />
+                        </h:commandLink>
+			      </p:column>
 			      <p:column headerText="Reject">
 			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogReject.show();">
                              <p:graphicImage value="/secured/image/reject.jpg" />
@@ -240,7 +252,22 @@
 
 			</h:panelGrid>
 		</p:dialog>
+		<p:dialog header="#{label['popupHeader.donated']}" widgetVar="donorDialogDonated"
+			resizable="false" width="400" height="200">
 
+
+			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorDonated">
+
+				<h:inputTextarea rows="5" value="#{label['info.markDonated']}" 
+					cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+				
+				<p:commandButton value="#{label['button.confirm']}"
+					actionListener="#{requestDetailsMB.markDonated}"
+					update="request_donors_form" onclick="markDonated();"
+					oncomplete="unblockUIfreeze();"></p:commandButton>
+
+			</h:panelGrid>
+		</p:dialog>
 
 		<p:dialog header="#{label['popupHeader.rejectDonor']}" widgetVar="donorDialogReject"
 			resizable="false" width="400" height="200">

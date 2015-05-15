@@ -2,6 +2,7 @@ package org.ngo.think.dm.service;
 
 import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.CONFIRMED;
 import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.CONTACTED;
+import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.DONATED;
 import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.REJECTED;
 import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.RESERVED;
 import static org.ngo.think.dm.common.constant.CommonConstants.HistoryStatus.SMS_SENT;
@@ -133,7 +134,12 @@ public class CommunicationHistoryService
 
 					String statusFromDB = communicationHistory.getStatus();
 
-					if (CONFIRMED.equals(status) && (SMS_SENT.equals(statusFromDB) || CONTACTED.equals(statusFromDB) || RESERVED.equals(statusFromDB) || REJECTED.equals(statusFromDB)))
+					if (DONATED.equals(status))
+					{
+						communicationHistory.setStatus(DONATED);
+						communicationHistoryDAO.update(communicationHistory);
+					}
+					else if (CONFIRMED.equals(status) && (SMS_SENT.equals(statusFromDB) || CONTACTED.equals(statusFromDB) || RESERVED.equals(statusFromDB) || REJECTED.equals(statusFromDB)))
 					{
 						communicationHistory.setStatus(CONFIRMED);
 						communicationHistoryDAO.update(communicationHistory);

@@ -32,7 +32,7 @@ public class UniqueRequestTransactionService
 	public String getUniqueRequestTranactionID(SearchDonorRequestDTO searchDonorRequestDTO)
 	{
 		String uniqueRequestNumber = null;
-		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDateAndCenter(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getDonationCentre(), searchDonorRequestDTO.getBloodGroup());
+		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDateCenterAndBloodGroup(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getDonationCentre(), searchDonorRequestDTO.getBloodGroup());
 
 		if (null == uniqueRequestTxn)
 		{

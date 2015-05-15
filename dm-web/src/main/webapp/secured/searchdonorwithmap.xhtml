@@ -112,10 +112,12 @@
 					</p:selectOneMenu>
 
 					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
-					<p:inputText id="plateletsBags"
+					<p:inputText id="plateletsBags" required="true" requiredMessage="Please enter Platelets Bags."
 						value="#{searchDonorOnMapMB.donorRequestDTO.plateletsBags}"
-						label="plateletsBags" />
-
+						label="Platelets Bags">
+						<f:validateLongRange minimum="1"/>
+					</p:inputText>
+					
 					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter"
 						value="#{searchDonorOnMapMB.donorRequestDTO.donationCentre}">

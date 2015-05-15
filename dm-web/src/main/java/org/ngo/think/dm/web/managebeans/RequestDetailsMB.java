@@ -145,6 +145,11 @@ public class RequestDetailsMB implements Serializable
 		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.CONFIRMED);
 	}
 
+	public void markDonated()
+	{
+		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.DONATED);
+	}
+
 	public void rejectDonor()
 	{
 		maintainCommunicationStatus(communicationHistoryResultDTO, HistoryStatus.REJECTED);
