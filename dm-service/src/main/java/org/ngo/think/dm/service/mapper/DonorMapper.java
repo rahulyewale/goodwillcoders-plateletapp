@@ -38,7 +38,7 @@ public class DonorMapper
 		donorDTO.setLastName(donor.getLastName());
 		donorDTO.setMiddleName(donor.getMiddleName());
 		donorDTO.setNextAvailableDate(donor.getNextAvailableDate());
-		
+		donorDTO.setSearchComment(donor.getSearchComment());
 		return donorDTO;
 		
 		

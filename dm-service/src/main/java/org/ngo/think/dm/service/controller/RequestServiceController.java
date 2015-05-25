@@ -16,7 +16,6 @@ import org.ngo.think.dm.common.dto.GetRequestListResponse;
 import org.ngo.think.dm.common.dto.UniqueRequestDTO;
 import org.ngo.think.dm.common.enums.ResponseCategory;
 import org.ngo.think.dm.common.enums.ResponseType;
-import org.ngo.think.dm.service.InsufficientDonationException;
 import org.ngo.think.dm.service.UniqueRequestTransactionService;
 import org.ngo.think.dm.service.util.ServiceUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,14 +66,10 @@ public class RequestServiceController
 		{
 			requestTransactionService.closeRequest(uniqueRequestDTO);
 		}
-		catch (InsufficientDonationException e)
-		{
-			serviceResponse = new ServiceResponse(ResponseData.errorResponseData);
-			serviceResponse.getResponseData().setMessage(e.getMessage());
-		}
 		catch (Exception exception)
 		{
-			// TODO
+			serviceResponse = new ServiceResponse(ResponseData.errorResponseData);
+			serviceResponse.getResponseData().setMessage(exception.getMessage());
 		}
 		return serviceResponse;
 	}

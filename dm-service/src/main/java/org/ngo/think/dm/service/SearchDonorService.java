@@ -58,7 +58,7 @@ public class SearchDonorService
 	private static final Pattern REQ_DATE = Pattern.compile("#REQ_DATE#");
 
 	@Transactional
-	public SearchDonorResponseDTO searchDonor(SearchDonorRequestDTO searchDonorRequestDTO)
+	public SearchDonorResponseDTO searchDonor(SearchDonorRequestDTO searchDonorRequestDTO) throws Exception
 	{
 		DonationCenter center = null;
 

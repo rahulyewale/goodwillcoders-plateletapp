@@ -1,6 +1,7 @@
 package org.ngo.think.dm.service.domain;
 
-import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
+import java.util.Date;
+
 import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ public class CommunicationHistoryManager
 {
 
 	@Autowired
-	CommunicationHistoryDAO communicationHistoryDAO;
+	private CommunicationHistoryDAO communicationHistoryDAO;
 	
-	public boolean isDonorAlreadyConfirmed(Donor donor, DonorAppointmentDTO appointmentDTO)
+	public boolean isDonorAlreadyConfirmed(Donor donor, Date requirementDate)
 	{
 		//List<CommunicationHistory> communicationHistories = 
-				return communicationHistoryDAO.isDonorConfirmedForGivenRequestDate(donor.getDonorId());
+		return communicationHistoryDAO.isDonorConfirmedOnOrAfterRequirementDate(donor.getDonorId(), requirementDate);
 		//return communicationHistories.size() > 0;
 	}
 }

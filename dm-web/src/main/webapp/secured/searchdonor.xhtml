@@ -185,7 +185,9 @@
 						<p:column headerText="Distance (Km)">
 							<h:outputText value="#{donor.distanceKm}" />
 						</p:column>
-
+						<p:column headerText="Note">
+							<h:outputText value="#{donor.searchComment}"/>
+						</p:column>
 						<p:column headerText="Rating">
 							<p:rating value="#{donor.rating}" cssStyle="white-space:no-wrap" readonly="true" stars="6" />
 						</p:column>

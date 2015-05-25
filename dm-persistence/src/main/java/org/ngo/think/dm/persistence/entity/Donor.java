@@ -99,6 +99,9 @@ public class Donor implements Serializable
 	@Transient
 	private double distanceInMeter;
 
+	@Transient
+	private String searchComment;
+
 	public double getDistanceInMeter()
 	{
 		return distanceInMeter;
@@ -360,6 +363,16 @@ public class Donor implements Serializable
 	{
 		this.distanceInMeter = distanceInMeter;
 		
+	}
+
+	public String getSearchComment()
+	{
+		return searchComment;
+	}
+
+	public void setSearchComment(String searchComment)
+	{
+		this.searchComment = searchComment;
 	}
 
 }

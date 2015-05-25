@@ -24,7 +24,8 @@ import javax.persistence.TemporalType;
 @Table(name = "communication_history")
 @NamedQueries({
 	@NamedQuery(name = "CommunicationHistory.findAll", query = "SELECT c FROM CommunicationHistory c"),
-   @NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.donorId =:donorId AND u.requestedDate = :requestedDate"),
+	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", query = "SELECT u FROM CommunicationHistory u WHERE u.status ='CONFIRMED' AND u.donorId =:donorId AND u.requestedDate <= :requestedDate"),
+								@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryOfDonorOnOrAfterRequirementDate", query = "SELECT u FROM CommunicationHistory u WHERE u.donorId =:donorId AND u.requestedDate >= :today"),
 	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForSMSCheck", query = "SELECT u FROM CommunicationHistory u WHERE u.requestId =:requestId AND u.donorId =:donorId AND u.requestedDate =:requestedDate AND u.donationCenter.donationCenterId =:donationCenterId"),
 	@NamedQuery(name = "CommunicationHistory.getCommunicationHistoryForScreen", query = "SELECT u FROM CommunicationHistory u"),
 	@NamedQuery(name = "CommunicationHistory.getDonatedStateCommunicationHistoryOfRequest", query = "SELECT u FROM CommunicationHistory u WHERE u.status =:status AND u.requestId =:requestId")

@@ -32,6 +32,7 @@ public class DonorDTO implements Serializable
 	private Integer donationCount;
 	private String distanceKm;
 	private boolean selectedDonor;
+	private String searchComment;
 	
 	private DonorContactDetailsDTO donorContactDetailsDTO;
 	private DonorAddressDetailsDTO donorAddressDetailsDTO;
@@ -258,7 +259,14 @@ public class DonorDTO implements Serializable
 	{
 		this.donationHistoryDTOList = donationHistoryDTOList;
 	}
-	
-	
 
+	public String getSearchComment()
+	{
+		return searchComment;
+	}
+
+	public void setSearchComment(String searchComment)
+	{
+		this.searchComment = searchComment;
+	}
 }

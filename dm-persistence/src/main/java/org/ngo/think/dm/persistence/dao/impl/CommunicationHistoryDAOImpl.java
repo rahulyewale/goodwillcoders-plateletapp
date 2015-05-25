@@ -19,11 +19,10 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 {
 
 	@Override
-	public boolean isDonorConfirmedForGivenRequestDate(Long donorId)
+	public boolean isDonorConfirmedOnOrAfterRequirementDate(Long donorId, Date requirementDate)
 	{
 		Query query = getEntityManager().createNamedQuery("CommunicationHistory.getCommunicationHistoryOfConfirmedDonor", CommunicationHistory.class);
-		query.setParameter("status", "CONFIRMED");
-		query.setParameter("requestedDate", new Date(), TemporalType.DATE);
+		query.setParameter("requestedDate", requirementDate, TemporalType.DATE);
 		query.setParameter("donorId", donorId);
 
 		List<CommunicationHistory> communicationHistories = query.getResultList();
@@ -35,6 +34,16 @@ public class CommunicationHistoryDAOImpl extends BaseDAOImpl<CommunicationHistor
 		{
 			return true;
 		}
+	}
+
+	@Override
+	public List<CommunicationHistory> getCommunicationHistoryOfDonorOnOrAfterRequirementDate(Long donorId, Date requirementDate)
+	{
+		Query query = getEntityManager().createNamedQuery("CommunicationHistory.getCommunicationHistoryOfDonorOnOrAfterRequirementDate", CommunicationHistory.class);
+		query.setParameter("today", new Date(), TemporalType.DATE);
+		query.setParameter("donorId", donorId);
+
+		return query.getResultList();
 	}
 
 	@Override

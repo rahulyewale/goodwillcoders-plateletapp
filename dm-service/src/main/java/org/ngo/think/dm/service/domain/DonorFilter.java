@@ -9,7 +9,9 @@ import java.util.Set;
 import org.ngo.think.dm.common.dto.DonorAppointmentDTO;
 import org.ngo.think.dm.common.dto.SearchDonorRequestDTO;
 import org.ngo.think.dm.common.util.DateUtil;
+import org.ngo.think.dm.persistence.dao.CommunicationHistoryDAO;
 import org.ngo.think.dm.persistence.dao.PostalCodeMasterDAO;
+import org.ngo.think.dm.persistence.entity.CommunicationHistory;
 import org.ngo.think.dm.persistence.entity.DonationCenter;
 import org.ngo.think.dm.persistence.entity.Donor;
 import org.ngo.think.dm.persistence.entity.PostalCodeMaster;
@@ -34,6 +36,9 @@ public class DonorFilter
 	@Autowired
 	private PostalCodeMasterDAO postalCodeMasterDAO;
 	
+	@Autowired
+	private CommunicationHistoryDAO communicationHistoryDAO;
+
 	@Value("${max.donation.limit.for.last.12.months}")
 	private String maxDonationLimitForLast12Months;
 	
@@ -72,7 +77,7 @@ public class DonorFilter
 				donorIterator.remove();
 				continue;
 			}	
-			else if(communicationHistoryManager.isDonorAlreadyConfirmed(donor,appointmentDTO))
+			else if (communicationHistoryManager.isDonorAlreadyConfirmed(donor, appointmentDTO.getRequestedDate()))
 			{
 				donorIterator.remove();
 				continue;
@@ -91,6 +96,18 @@ public class DonorFilter
 
 			}
 			
+			//Populate information : if donor already engaged with other request (in any status)
+			List<CommunicationHistory> commHistoryList = communicationHistoryDAO.getCommunicationHistoryOfDonorOnOrAfterRequirementDate(donor.getDonorId(), appointmentDTO.getRequestedDate());
+			for (Iterator<CommunicationHistory> iterator = commHistoryList.iterator(); iterator.hasNext();)
+			{
+				CommunicationHistory communicationHistory = iterator.next();
+
+				StringBuilder stringBuilder = new StringBuilder();
+				stringBuilder.append("Donor ").append(communicationHistory.getStatus()).append(" for ").append(communicationHistory.getRequestId()).append(" dated ").append(communicationHistory.getRequestedDate());
+
+				donor.setSearchComment(stringBuilder.toString());
+			}
+
 			PostalCodeMaster centerPostalCodeMaster = postalCodeMasterDAO.getPostalCodeMasterByPostCode(center.getPinCode());
 			if (null != centerPostalCodeMaster)
 			{

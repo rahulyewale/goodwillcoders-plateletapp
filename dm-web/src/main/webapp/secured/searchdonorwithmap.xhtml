@@ -177,11 +177,11 @@
                     	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
                     	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
                     	     		
-                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1}&lt;br%2F&gt;');}"/>
+                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}"/>
                     	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
                     	     		                    	     			
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/Marker_man.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/Marker_man_checked3.png');};}"/>
-                    	     		<m:icon imageURL="../secured/image/Marker_man.png"/>
+                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/marker_unchecked.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/marker_checked.png');};}"/>
+                    	     		<m:icon imageURL="../secured/image/marker_unchecked.png"/>
                     	     	</m:marker>
                     	</ui:repeat> 
 					</m:map>

@@ -29,7 +29,7 @@ public class UniqueRequestTransactionService
 	@Autowired
 	CommunicationHistoryDAO communicationHistoryDAO;
 
-	public String getUniqueRequestTranactionID(SearchDonorRequestDTO searchDonorRequestDTO)
+	public String getUniqueRequestTranactionID(SearchDonorRequestDTO searchDonorRequestDTO) throws Exception
 	{
 		String uniqueRequestNumber = null;
 		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDateCenterAndBloodGroup(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getDonationCentre(), searchDonorRequestDTO.getBloodGroup());
@@ -52,12 +52,21 @@ public class UniqueRequestTransactionService
 			}
 			catch (Exception e)
 			{
-				e.printStackTrace();
+				throw e;
 			}
 		}
 		else
 		{
 			uniqueRequestNumber = uniqueRequestTxn.getRequestId();
+			uniqueRequestTxn.setPlateletsBags(searchDonorRequestDTO.getPlateletsBags());
+			try
+			{
+				requestDAO.update(uniqueRequestTxn);
+			}
+			catch (Exception e)
+			{
+				throw e;
+			}
 		}
 		return uniqueRequestNumber;
 	}
@@ -77,8 +86,13 @@ public class UniqueRequestTransactionService
 	{
 		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByRequestID(uniqueRequestDTO.getRequestNumber());
 
-		List<CommunicationHistory> communicationHistoryList = communicationHistoryDAO.getDonatedStateCommunicationHistoryByRequest(uniqueRequestTxn.getRequestId());
+		if (!RequestStatus.OPEN.toString().equals(uniqueRequestTxn.getRequestStatus()))
+		{
+			// TODO throw exception... as request is NOT OPEN
+			throw new RequestClosureException("Sorry, only 'Open' requests can be closed.");
+		}
 
+		List<CommunicationHistory> communicationHistoryList = communicationHistoryDAO.getDonatedStateCommunicationHistoryByRequest(uniqueRequestTxn.getRequestId());
 		if (uniqueRequestTxn.getPlateletsBags() <= communicationHistoryList.size())
 		{
 			uniqueRequestTxn.setRequestStatus(RequestStatus.CLOSED.toString());
