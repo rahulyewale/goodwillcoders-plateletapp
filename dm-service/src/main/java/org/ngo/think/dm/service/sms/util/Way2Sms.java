@@ -24,7 +24,7 @@ public class Way2Sms
 	public static void initSMSSteps()
 	{
 		login("9619410803", "rdgumb87");
-		sendSMS("8097780229", "hello ry, sending from java code");// 8097780229
+		//sendSMS("8097780229", "hello ry, sending from java code");// 8097780229
 																						// //9324227177
 
 		System.out.println("Message has been sent successfully!");
