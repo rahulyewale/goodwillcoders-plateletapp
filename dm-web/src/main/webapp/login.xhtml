@@ -20,7 +20,7 @@
             <h3>Login Here </h3>
         <h:form id="login-form">
        <p:messages id="messages"  autoUpdate="true" closable="true" />
-        <p:accordionPanel>
+        <p:panel header="Login Form">
         <p:tab title="Login Form">
        <h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
            <h:outputText value="Username:"/>
@@ -31,7 +31,7 @@
            <h:commandButton id="button" value="Login" action="#{loginBean.doLogin}"/>
            </h:panelGrid>
            </p:tab>
-         </p:accordionPanel>
+         </p:panel>
            <br/>
            
            <br/>

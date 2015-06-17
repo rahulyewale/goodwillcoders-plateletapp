@@ -52,7 +52,7 @@ public class SearchDonorMB implements Serializable
 		if (null != dashbordMB.getSearchDonorRequestDTO())
 		{
 			setDonorRequestDTO(dashbordMB.getSearchDonorRequestDTO());
-			searchDonor();
+			//searchDonor();
 			dashbordMB.setSearchDonorRequestDTO(null);
 		}
 	}

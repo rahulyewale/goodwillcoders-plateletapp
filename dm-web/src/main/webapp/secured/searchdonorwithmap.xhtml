@@ -83,7 +83,7 @@
 	<h2>#{label['pageheader.searchDonorsOnMap']}</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:accordionPanel>
+		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
 				<h:panelGrid columns="2" columnClasses="label, value"
 					cellpadding="10">
@@ -138,7 +138,7 @@
 				</h:panelGrid>
 
 			</p:tab>
-		</p:accordionPanel>
+		</p:panel>
 		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorOnMapMB.searchDonor}"

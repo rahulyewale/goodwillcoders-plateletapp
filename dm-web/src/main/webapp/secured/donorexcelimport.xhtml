@@ -15,7 +15,7 @@
 <div class="container">
 	<h2>#{label['pageheader.uploadDonors']}</h2>
 	<h:form enctype="multipart/form-data">
-	<p:accordionPanel>
+	<p:panel>
 	<p:tab title="Choose Existing Donor Excel File to Upload">
 	    <p:growl id="messages" showDetail="true" />
 	 
@@ -23,7 +23,7 @@
 	 
 	    <h:commandButton value="Submit" ajax="false" actionListener="#{fileUploadMB.upload}" disabled="false" />
 	    </p:tab>
-	    </p:accordionPanel>
+	    </p:panel>
 	</h:form>
 
 </div>

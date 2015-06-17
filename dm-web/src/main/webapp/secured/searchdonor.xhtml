@@ -35,6 +35,7 @@
 		donorDialogConfirm.hide();
    		PF('blockUIWidget').block();
    		
+   		
    	}
 	
 	
@@ -49,6 +50,7 @@
    		donorDialog.show();
    	}
 	
+	
 	</script>
 </h:head>
 <h:body>
@@ -58,7 +60,7 @@
 	<h2>#{label['pageheader.searchDonors']}</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:accordionPanel>
+		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
 				<h:panelGrid columns="2" columnClasses="label, value"
 					cellpadding="10">
@@ -115,10 +117,11 @@
 
 			</p:tab>
 
-		</p:accordionPanel>
+		</p:panel>
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorMB.searchDonor}"
-			onclick="PF('blockUIWidget').block()">
+			onclick="PF('blockUIWidget').block();"
+		>
 			<p:graphicImage value="/secured/image/search.jpg" />
 			<f:ajax execute="@form" render=":searchresult_frm_id"
 				onevent="unblockUi" />
@@ -272,6 +275,10 @@
 			<p:graphicImage value="/secured/image/separator.jpg" />
 			<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
 		</h:panelGroup>
+		
+		
+		
+		
 	</h:form>
 	</div>
 	<ui:include src="footer.xhtml"></ui:include>
