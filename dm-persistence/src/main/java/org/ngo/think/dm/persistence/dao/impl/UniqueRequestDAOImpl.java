@@ -17,12 +17,13 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 {
 
 	@Override
-	public UniqueRequestTxn getUniqueRequestTxnByDateCenterAndBloodGroup(Date requestDate, Long donationCenterId, String bloodGroup)
+	public UniqueRequestTxn getUniqueRequestTxnByDatePatientNameAndBloodGroup(Date requestDate, String patientName, String bloodGroup)
 	{
 
-		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDateCentreAndBloodGroup", UniqueRequestTxn.class);
+		Query query = getEntityManager().createNamedQuery("UniqueRequestTxn.getUniqueRequestTxnByDatePatientNameAndBloodGroup", UniqueRequestTxn.class);
 		query.setParameter("requestDate", requestDate, TemporalType.DATE);
-		query.setParameter("donationCentreId", donationCenterId);
+		//query.setParameter("donationCentreId", donationCenterId);
+		query.setParameter("patientName", patientName);
 		query.setParameter("bloodGroup", bloodGroup);
 
 		UniqueRequestTxn resultUniqueRequestTxn = null;
@@ -71,11 +72,17 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 
 		}
 		
-		if (null != getRequestListInputDTO.getDonationCenterId() && getRequestListInputDTO.getDonationCenterId() != -1)
+		/* if (null != getRequestListInputDTO.getDonationCenterId() && getRequestListInputDTO.getDonationCenterId() != -1)
 		{
 			baseQuery = baseQuery + whereClause + " u.donationCenter.donationCenterId =:donationCenterId";
 			whereClause = " AND";
 
+		}
+		*/
+		
+		if (null != getRequestListInputDTO.getStatus() && !getRequestListInputDTO.getStatus().isEmpty())
+		{
+			baseQuery = baseQuery + whereClause + " u.requestStatus =:requestStatus";
 		}
 
 		if (null != getRequestListInputDTO.getStatus() && !getRequestListInputDTO.getStatus().isEmpty())

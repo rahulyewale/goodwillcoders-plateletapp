@@ -15,12 +15,12 @@
     <div class="container">
     <h:form>
 		<p:graphicImage value="/image/logo.gif" height="50px"
-			width="150px"  />
+			width="150px"/>
 	</h:form>
             <h3>Login Here </h3>
         <h:form id="login-form">
        <p:messages id="messages"  autoUpdate="true" closable="true" />
-        <p:panel header="Login Form">
+        <p:accordionPanel>
         <p:tab title="Login Form">
        <h:panelGrid columns="2" columnClasses="label, value" cellpadding="10">
            <h:outputText value="Username:"/>
@@ -31,7 +31,7 @@
            <h:commandButton id="button" value="Login" action="#{loginBean.doLogin}"/>
            </h:panelGrid>
            </p:tab>
-         </p:panel>
+         </p:accordionPanel>
            <br/>
            
            <br/>

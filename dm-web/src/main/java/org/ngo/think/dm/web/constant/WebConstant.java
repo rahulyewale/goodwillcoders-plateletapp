@@ -18,6 +18,10 @@ public class WebConstant
 		private static final String BASE_URL = RestServiceConstant.PROTOCOL + "://" + RestServiceConstant.HOST + ":" + RestServiceConstant.PORT + "/" + RestServiceConstant.SERVICE_NAME + "/";
 		public static final String SEARCH_DONOR_SERVICE_URL = BASE_URL + ServiceRequestMapping.SEARCH_DONOR;
 		
+		public static final String ADD_DONOR_SERVICE_URL = BASE_URL + ServiceRequestMapping.ADD_DONOR;
+		
+		
+		
 		public static final String IMPORT_DONOR_DATA_URL = BASE_URL + ServiceRequestMapping.IMPORT_DONOR_DATA;
 		
 		public static final String SEND_SMS_TO_DONORS_SERVICE_URL = BASE_URL + ServiceRequestMapping.SEND_SMS;

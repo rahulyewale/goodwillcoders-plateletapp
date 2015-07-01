@@ -60,6 +60,9 @@ public class SearchDonorService
 	@Transactional
 	public SearchDonorResponseDTO searchDonor(SearchDonorRequestDTO searchDonorRequestDTO) throws Exception
 	{
+		
+		System.out.println("Patient name at service= "+searchDonorRequestDTO.getPatientname());
+		
 		DonationCenter center = null;
 
 		try

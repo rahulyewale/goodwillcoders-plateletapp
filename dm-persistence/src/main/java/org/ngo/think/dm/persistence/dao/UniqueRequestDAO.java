@@ -10,7 +10,7 @@ import org.ngo.think.dm.persistence.generic.dao.BaseDAO;
 public interface UniqueRequestDAO  extends BaseDAO<UniqueRequestTxn>
 {
 
-	UniqueRequestTxn getUniqueRequestTxnByDateCenterAndBloodGroup(Date requestDate, Long donationCenterId, String bloodGroup);
+	UniqueRequestTxn getUniqueRequestTxnByDatePatientNameAndBloodGroup(Date requestDate, String patientName, String bloodGroup);
 	
 	UniqueRequestTxn getUniqueRequestTxnByRequestID(String requestId);
 	

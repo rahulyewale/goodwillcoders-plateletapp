@@ -3,6 +3,7 @@ package org.ngo.think.dm.web.managebeans;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -112,6 +113,47 @@ public class RequestDetailsMB implements Serializable
 		System.out.println(requestDTO.getRequestNumber());
 	}
 
+	
+	/////added
+	public void getStatusCount(String reqno1)
+	{
+		String reqnoo=reqno1;
+		setRequestDTO(getRequestDTO());
+		getSearchCommunicationHistoryReqDTO().setRequestTxnId(reqnoo);
+
+		try
+		{
+			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST, getSearchCommunicationHistoryReqDTO());
+			ServiceResponse serviceResponse = null;
+
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
+			String jsonResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_COMMUNICATION_HISTORY_RESPONSE));
+
+			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
+
+			this.communicationHistoryResult = searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList();
+
+			this.confirmSMSText = searchCommunicationHistoryResponse.getConfirmSMSText();
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		System.out.println(communicationHistoryResultDTO.getStatus());
+		int occ = Collections.frequency(communicationHistoryResult, communicationHistoryResultDTO);
+		System.out.println("occourences= "+occ);
+
+	}
+	
+	//////
+	
+	
+	
+	
+	
+	
 	public void getCommunicationHistory()
 	{
 		setRequestDTO(getRequestDTO());

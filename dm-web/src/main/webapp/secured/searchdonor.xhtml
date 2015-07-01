@@ -14,6 +14,9 @@
 		console.log("ready");
 	});
 	
+	
+	
+	
    	function unblockUi(data)
    	{
    		if(data.status==="success")
@@ -50,30 +53,43 @@
    		donorDialog.show();
    	}
 	
+	function buttonsShow()
+	{
+		alert("sahdkkjsahd");
+		$(".checkk").css("display","block");
+		
+	}
 	
 	</script>
+	
+	   <style>
+	h2 { margin: 0px;	padding: 0 0; }
+   </style>
 </h:head>
 <h:body>
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2>#{label['pageheader.searchDonors']}</h2>
+	<h2>#{label['pageheader.searchDonors']}</h2>	
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
-				<h:panelGrid columns="2" columnClasses="label, value"
-					cellpadding="10">
-
+				<h:panelGrid columns="6" columnClasses="label, value"
+					cellpadding="10" >
+				
+					<p:outputLabel for="patientName" value="Patient Name : *" />
+					<h:inputText value="#{searchDonorMB.patientName}" id="patientName"/>
+				
 					<p:outputLabel for="donationType" value="#{label['donationType']}" />
 					<p:selectOneMenu id="donationType"
 						value="#{searchDonorMB.donorRequestDTO.donationType}">
-						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
+						<f:selectItem itemValue="platelets " itemLabel="Platelets " style="width=80%;"/>
 					</p:selectOneMenu>
 					
 					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
 					<p:selectOneMenu id="bloodGroup"
-						value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
+						value="#{searchDonorMB.donorRequestDTO.bloodGroup}" >
 						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
 						<f:selectItem itemValue="A-" itemLabel="A-" />
@@ -83,22 +99,20 @@
 						<f:selectItem itemValue="AB-" itemLabel="AB-" />
 						<f:selectItem itemValue="O+" itemLabel="O+" />
 						<f:selectItem itemValue="O-" itemLabel="O-" />
-						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
-						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
+						<f:selectItem itemValue="OH+" itemLabel="OH+" />
+						<f:selectItem itemValue="OH-" itemLabel="OH-" />
 
 					</p:selectOneMenu>
 
 					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
 					<p:inputText id="plateletsBags" required="true" requiredMessage="Please enter Platelets Bags."
 						value="#{searchDonorMB.donorRequestDTO.plateletsBags}"
-						label="Platelets Bags">
+						label="Platelets Bags" style="width=80%;" >
 						<f:validateLongRange minimum="1" />
-					</p:inputText>
-					
-					
+					</p:inputText> 
 					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter"
-						value="#{searchDonorMB.donorRequestDTO.donationCentre}">
+						value="#{searchDonorMB.donorRequestDTO.donationCentre}" style="width=80%;">
 						<f:selectItems
 							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
@@ -111,8 +125,7 @@
 						required="true" rendered="true"
 						requiredMessage="#{label['validation.mandatory.requirementDate']}"
 						value="#{searchDonorMB.donorRequestDTO.requestDate}"
-						yearRange="-5:+1" />
-
+						yearRange="-5:+1" style="width=80%;"/>
 				</h:panelGrid>
 
 			</p:tab>
@@ -139,7 +152,7 @@
 	</h:form>
 
 	<h:form id="searchresult_frm_id">
-		<p:accordionPanel>
+		<p:accordionPanel styleClass="searchresult" activeIndex="#{searchDonorMB.accordianActiveIndex}">
 			<p:tab title="#{label['tab.searchedResults']}">
 				<h:panelGrid>
 					<p:dataTable id="searchResultId"
@@ -151,7 +164,7 @@
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
 						<p:column headerText="">
-							<h:selectBooleanCheckbox value="#{donor.selectedDonor}" />
+							<h:selectBooleanCheckbox value="#{donor.selectedDonor}"  id="abc" class="checkk" onclick="buttonsShow()"/>
 						</p:column>
 						<p:column headerText="Name">
 							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
@@ -232,7 +245,7 @@
 								
 							<h:commandButton value="#{label['button.confirm']}"
 								actionListener="#{searchDonorMB.confirmDonorAppointment}"
-								onclick="confirmAppointment()">
+								onclick="confirmAppointment()" >
 								<f:ajax execute="@form"
 							 	 onevent="unblockUi" />
 								</h:commandButton>
@@ -271,9 +284,11 @@
 			<p:graphicImage value="/secured/image/separator.jpg" />
 		</h:panelGroup>
 		<h:panelGroup style="display: inline-block">
-			<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
+			<!-- <h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:#{searchDonorMB.contactButtonVisible}"/> -->
+			<h:commandButton class="checkk" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:none"/>
 			<p:graphicImage value="/secured/image/separator.jpg" />
-			<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
+			<!--  <h:commandButton  image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:#{searchDonorMB.contactButtonVisible}"/> -->
+			<h:commandButton class="checkk" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:none"/> 
 		</h:panelGroup>
 		
 		
@@ -282,6 +297,8 @@
 	</h:form>
 	</div>
 	<ui:include src="footer.xhtml"></ui:include>
+
+
 
 </h:body>
 </html>

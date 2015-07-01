@@ -32,13 +32,15 @@ public class UniqueRequestTransactionService
 	public String getUniqueRequestTranactionID(SearchDonorRequestDTO searchDonorRequestDTO) throws Exception
 	{
 		String uniqueRequestNumber = null;
-		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDateCenterAndBloodGroup(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getDonationCentre(), searchDonorRequestDTO.getBloodGroup());
+		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDatePatientNameAndBloodGroup(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getPatientname(), searchDonorRequestDTO.getBloodGroup());
 
 		if (null == uniqueRequestTxn)
 		{
 			uniqueRequestNumber = RandomNumberGenerator.generateRandomNumber(RandomNumberType.REQUEST_NUMBER);
 			try
 			{
+				System.out.println("patient name at random req = "+searchDonorRequestDTO.getPatientname());
+				
 				UniqueRequestTxn uniqueRequestTxn2 = new UniqueRequestTxn();
 				DonationCenter donationCenter = new DonationCenter();
 				donationCenter.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
@@ -48,6 +50,10 @@ public class UniqueRequestTransactionService
 				uniqueRequestTxn2.setBloodGroup(searchDonorRequestDTO.getBloodGroup());
 				uniqueRequestTxn2.setPlateletsBags(searchDonorRequestDTO.getPlateletsBags());
 				uniqueRequestTxn2.setRequestStatus(RequestStatus.OPEN.toString());
+				
+				//for patient name
+				uniqueRequestTxn2.setPatientName(searchDonorRequestDTO.getPatientname());
+				
 				requestDAO.save(uniqueRequestTxn2);
 			}
 			catch (Exception e)

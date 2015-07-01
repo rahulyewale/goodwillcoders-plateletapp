@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 @Table(name = "unique_request_txn")
 @NamedQueries({
 					@NamedQuery(name = "UniqueRequestTxn.findAll", query = "SELECT u FROM UniqueRequestTxn u"),
-								@NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDateCentreAndBloodGroup", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestStatus = 'OPEN' AND u.donationCenter.donationCenterId =:donationCentreId AND u.requestDate = :requestDate AND u.bloodGroup = :bloodGroup"),
+								@NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByDatePatientNameAndBloodGroup", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestStatus = 'OPEN' AND u.patientName = :patientName AND u.requestDate = :requestDate AND u.bloodGroup = :bloodGroup"),
                @NamedQuery(name = "UniqueRequestTxn.getUniqueRequestTxnByID", query = "SELECT u FROM UniqueRequestTxn u WHERE u.requestId =:requestId")
 					})
 
@@ -60,6 +60,9 @@ public class UniqueRequestTxn implements Serializable
 
 	@Column(name = "platelets_bags")
 	private int plateletsBags;
+	
+	@Column(name = "patient_name")
+	private String patientName;
 
 	public Long getUniqueRequestTxnId()
 	{
@@ -141,5 +144,16 @@ public class UniqueRequestTxn implements Serializable
 	{
 		this.plateletsBags = plateletsBags;
 	}
+	
+	public String getPatientName()
+	{
+		return requestStatus;
+	}
+
+	public void setPatientName(String patientName)
+	{
+		this.patientName = patientName;
+	}
+	
 
 }

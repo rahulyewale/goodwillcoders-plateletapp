@@ -8,6 +8,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
@@ -24,7 +25,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
-@ViewScoped
+@SessionScoped
 public class SearchDonorMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();
@@ -39,6 +40,13 @@ public class SearchDonorMB implements Serializable
 	private String bloodGroup;
 
 	private String theme;
+	
+	private String patientName;
+	private String lastName;
+	
+	private String accordianActiveIndex;
+	private String contactButtonVisible;
+	
 
 	@ManagedProperty(value = "#{cachedDataMB}")
 	private CachedDataMB cachedDataMB = new CachedDataMB();
@@ -49,6 +57,7 @@ public class SearchDonorMB implements Serializable
 	@PostConstruct
 	public void searchDonnorPostConstruct()
 	{
+		
 		if (null != dashbordMB.getSearchDonorRequestDTO())
 		{
 			setDonorRequestDTO(dashbordMB.getSearchDonorRequestDTO());
@@ -60,6 +69,9 @@ public class SearchDonorMB implements Serializable
 	public void searchDonor()
 	{
 		this.selectedDonorList = new ArrayList<DonorDTO>();
+		setPatientName(patientName);
+		donorRequestDTO.setPatientname(patientName);
+		System.out.println("patient name = "+donorRequestDTO.getPatientname());
 
 		if (null == donorRequestDTO.getRequestDate())
 		{
@@ -113,7 +125,31 @@ public class SearchDonorMB implements Serializable
 		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestId);
 		
 		System.out.println("Search submitted");
+	
+		int bagsno=donorRequestDTO.getPlateletsBags();
+		///for showing contacted and confirm buttons
+		if(bagsno>=1)
+		{
+			accordianActiveIndex="0";	
+		}
+		else
+		{
+			accordianActiveIndex="";
+		}
+		
+		int patientNameLength = patientName.length();
+		if(patientNameLength>=2)
+		{
+			contactButtonVisible="block";
+		}
+		else
+		{
+			contactButtonVisible="none";
+		}
+	
+	
 	}
+	
 
 	public void sendSmsToSelectedDonors()
 	{
@@ -326,4 +362,32 @@ public class SearchDonorMB implements Serializable
 		this.dashbordMB = dashbordMB;
 	}
 
+	
+	public String getPatientName()
+	{
+		return patientName;
+	}
+	public void setPatientName(String patientName)
+	{
+		this.patientName=patientName;
+	}
+
+	public String getAccordianActiveIndex() {
+		return accordianActiveIndex;
+	}
+
+	public void setAccordianActiveIndex(String accordianActiveIndex) {
+		this.accordianActiveIndex = accordianActiveIndex;
+	}
+
+	public String getContactButtonVisible() {
+		return contactButtonVisible;
+	}
+
+	public void setContactButtonVisible(String contactButtonVisible) {
+		this.contactButtonVisible = contactButtonVisible;
+	}
+	
+	
+	
 }

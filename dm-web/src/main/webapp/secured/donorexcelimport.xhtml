@@ -13,9 +13,9 @@
 
 <ui:include src="header.xhtml"></ui:include>
 <div class="container">
-	<h2>#{label['pageheader.uploadDonors']}</h2>
+	<h2 style = "margin : 3px;font-size:1.2em;">#{label['pageheader.uploadDonors']}</h2>
 	<h:form enctype="multipart/form-data">
-	<p:panel>
+	<p:accordionPanel>
 	<p:tab title="Choose Existing Donor Excel File to Upload">
 	    <p:growl id="messages" showDetail="true" />
 	 
@@ -23,8 +23,57 @@
 	 
 	    <h:commandButton value="Submit" ajax="false" actionListener="#{fileUploadMB.upload}" disabled="false" />
 	    </p:tab>
-	    </p:panel>
+	    </p:accordionPanel>
 	</h:form>
+
+<h:form id="newDonor" style="text-align:center">
+<p:accordionPanel activeIndex="null">
+<p:tab title="add donor">
+<h:panelGrid style="margin: 0 auto;"  columns="8" columnClasses="label,label,label,label" cellpadding="5" cellspacing="10" >
+
+<p:outputLabel value="Name :" />
+ <h:inputText value="#{fileUploadMB.name}" id="name"/>
+
+<p:outputLabel value="Blood Group :" />
+ <p:selectOneMenu value="#{fileUploadMB.bloodGroup}" id="bloodGroup">
+						<f:selectItem itemValue="A+" itemLabel="A+" />
+						<f:selectItem itemValue="A-" itemLabel="A-" />
+						<f:selectItem itemValue="B+" itemLabel="B+" />
+						<f:selectItem itemValue="B-" itemLabel="B-" />
+						<f:selectItem itemValue="AB+" itemLabel="AB+" />
+						<f:selectItem itemValue="AB-" itemLabel="AB-" />
+						<f:selectItem itemValue="O+" itemLabel="O+" />
+						<f:selectItem itemValue="O-" itemLabel="O-" />
+						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
+						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
+ </p:selectOneMenu>
+
+<p:outputLabel value="Mobile No. :" />
+<h:inputText value="#{fileUploadMB.mob}" id="mob"/>
+
+<p:outputLabel value="Home Address :" />
+<h:inputText value="#{fileUploadMB.homeAdd}" id="homeAdd"/>
+
+<p:outputLabel value="pincode :" />
+<h:inputText value="#{fileUploadMB.pincode}" id="pincode"/>
+
+<p:outputLabel value="state :" />
+<h:inputText value="#{fileUploadMB.state}" id="state"/>
+
+<p:outputLabel value="Office Address :" />
+<h:inputText value="#{fileUploadMB.officeAdd}" id="officeAdd"/>
+
+
+</h:panelGrid>
+
+<h:commandButton id="button" value="Add Donor" action="#{fileUploadMB.addDonor}"/>
+
+
+</p:tab>
+</p:accordionPanel>
+
+
+</h:form>
 
 </div>
 <ui:include src="footer.xhtml"></ui:include>

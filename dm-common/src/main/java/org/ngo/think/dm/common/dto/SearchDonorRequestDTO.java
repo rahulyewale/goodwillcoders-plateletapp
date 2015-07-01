@@ -11,6 +11,8 @@ public class SearchDonorRequestDTO implements Serializable
 
 	private static final long serialVersionUID = 1L;
 	private String donationType;
+	
+	private String patientname;
 
 	private String bloodGroup;
 
@@ -116,6 +118,14 @@ public class SearchDonorRequestDTO implements Serializable
 	public void setCenterAddress(String centerAddress)
 	{
 		this.centerAddress = centerAddress;
+	}
+
+	public String getPatientname() {
+		return patientname;
+	}
+
+	public void setPatientname(String patientname) {
+		this.patientname = patientname;
 	}
 
 }

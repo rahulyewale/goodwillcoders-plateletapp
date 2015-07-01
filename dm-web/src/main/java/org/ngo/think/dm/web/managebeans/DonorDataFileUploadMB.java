@@ -12,6 +12,8 @@ import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
 import org.ngo.think.dm.common.communication.dto.ServiceResponse;
 import org.ngo.think.dm.common.constant.CommonConstants;
+import org.ngo.think.dm.common.dto.DonorAddressDetailsDTO;
+import org.ngo.think.dm.common.dto.DonorDTO;
 import org.ngo.think.dm.common.dto.ImportDonorDataRequestDTO;
 import org.ngo.think.dm.common.dto.SearchDonorResponseDTO;
 import org.ngo.think.dm.common.util.JsonUtil;
@@ -23,6 +25,17 @@ import org.primefaces.model.UploadedFile;
 @RequestScoped
 public class DonorDataFileUploadMB
 {
+	
+	private String name;
+	private String bloodGroup;
+	private String mob;
+	private String homeAdd;
+	private String pincode;
+	private String state;
+	private String officeAdd; 
+	
+	private DonorDTO newDonorDTO = new DonorDTO();
+	
 
 	public DonorDataFileUploadMB()
 	{
@@ -90,4 +103,98 @@ public class DonorDataFileUploadMB
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 	}
+	
+	
+	public void addDonor()
+	{
+		
+		newDonorDTO.setFirstName(name);
+		newDonorDTO.setBloodGroup(bloodGroup);
+		DonorAddressDetailsDTO newDonorAddressDetailsDTO = new DonorAddressDetailsDTO();
+		newDonorAddressDetailsDTO.setAddressLine1(homeAdd);
+		newDonorAddressDetailsDTO.setPinCode(pincode);
+		newDonorAddressDetailsDTO.setState(state);
+		newDonorDTO.setDonorAddressDetailsDTO(newDonorAddressDetailsDTO);
+		
+		ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.ADD_DONOR, newDonorDTO);
+		ServiceResponse serviceResponse = null;
+		
+		System.out.println("Name = "+name+" Blood "+bloodGroup);
+		
+		try
+		{
+			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.ADD_DONOR_SERVICE_URL, serviceRequest);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public String getName()
+	{
+		return name;         	
+	}
+	public String getBloodGroup()
+	{	
+		return bloodGroup;   	
+	}
+	public String getMob()
+	{
+		return mob;          	
+	}
+	public String getHomeAdd()
+	{	
+		return homeAdd;      	
+	}
+	public String getPincode()
+	{
+		return pincode;      	
+	}
+	public String getState()
+	{
+		return state;        	
+	}
+	public String getOfficeAdd()
+	{	
+		return officeAdd;	
+	}
+	
+	public void setName(String name)
+	{
+		this.name=name;         	
+	}
+	public void setBloodGroup(String bloodGroup)
+	{	
+		this.bloodGroup=bloodGroup;   	
+	}
+	public void setMob(String mob)
+	{
+		this.mob=mob;          	
+	}
+	public void setHomeAdd(String homeAdd)
+	{	
+		this.homeAdd=homeAdd;      	
+	}
+	public void setPincode(String pincode)
+	{
+		this.pincode=pincode;      	
+	}
+	public void setState(String state)
+	{
+		this.state=state;        	
+	}
+	public void setOfficeAdd(String officeAdd)
+	{	
+		this.officeAdd=officeAdd;	
+	}
+	
+	
+    
+    
+    
+    
+	
+	
 }

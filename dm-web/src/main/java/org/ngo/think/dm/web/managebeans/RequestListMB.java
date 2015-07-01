@@ -63,6 +63,7 @@ public class RequestListMB implements Serializable
 	@PostConstruct
 	public void getRequestList()
 	{
+		System.out.println("getreqlist");
 		setRequestListInputDTO(dashbordMB.getGetRequestListInputDTO());
 		searchRequestList(null);
 	}

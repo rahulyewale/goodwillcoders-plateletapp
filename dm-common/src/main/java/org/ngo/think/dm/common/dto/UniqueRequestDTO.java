@@ -21,6 +21,8 @@ public class UniqueRequestDTO implements Serializable
 	private Long uniqueRequestTxnId;
 	private DonationCenterDTO donationCenterDTO;
 	private Date donationDate;
+	
+	private String patientName;
 
 	public String getRequestNumber()
 	{
@@ -122,6 +124,14 @@ public class UniqueRequestDTO implements Serializable
 	public void setDonationDate(Date donationDate)
 	{
 		this.donationDate = donationDate;
+	}
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
 }

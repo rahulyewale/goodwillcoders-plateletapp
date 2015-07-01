@@ -33,7 +33,6 @@
    			PF('blockUIWidget').unblock();
    		}
    	}
-
    	function markerInfoOpen(event, name)
    	{
 		event.info = new google.maps.InfoWindow({
@@ -80,13 +79,13 @@
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2>#{label['pageheader.searchDonorsOnMap']}</h2>
+	<h2 style="margin:0px;font-size:1.2em;">#{label['pageheader.searchDonorsOnMap']}</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:panel>
+		<p:accordionPanel>
 			<p:tab title="#{label['tab.searchCriteria']}">
-				<h:panelGrid columns="2" columnClasses="label, value"
-					cellpadding="10">
+				<h:panelGrid columns="4" columnClasses="label, value"
+					cellpadding="5">
 
 					<p:outputLabel for="donationType" value="#{label['donationType']}" />
 					<p:selectOneMenu id="donationType"
@@ -138,7 +137,7 @@
 				</h:panelGrid>
 
 			</p:tab>
-		</p:panel>
+		</p:accordionPanel>
 		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorOnMapMB.searchDonor}"
@@ -168,7 +167,7 @@
 						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
                     	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}" showInformationEvent="mouseover">
                     	    
-                    	    <m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}"/>
+                    	    <m:eventListener  eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}"/>
                     	    <m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
 
                     	 	<m:icon imageURL="../secured/image/donationcentre5.png"/>
@@ -177,10 +176,10 @@
                     	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
                     	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
                     	     		
-                    	     		<m:eventListener eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}"/>
+                    	     		<m:eventListener  eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}"/>
                     	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
                     	     		                    	     			
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/marker_unchecked.png');}else{ selCheck.value = 'true';this.setIcon('../secured/image/marker_checked.png');};}"/>
+                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/marker_unchecked.png');}else{ selCheck.value = 'true';document.getElementById('searchresult_frm_id:confirmcall').style.display ='block';document.getElementById('searchresult_frm_id:contactall').style.display ='block';this.setIcon('../secured/image/marker_checked.png');};}"/>
                     	     		<m:icon imageURL="../secured/image/marker_unchecked.png"/>
                     	     	</m:marker>
                     	</ui:repeat> 
@@ -263,13 +262,19 @@
 			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 			<p:graphicImage value="/secured/image/separator.jpg" />
 		</h:panelGroup>
-		<h:panelGroup style="display: inline-block">
-			<h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"/>
-			<p:graphicImage value="/secured/image/separator.jpg" />
-			<h:commandButton image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"/>
-		</h:panelGroup>
+		
+		
+		<h:panelGrid columns="2" cellpading="10">
+			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"  style="display:none" />
+			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"  style="display:none" />
+		</h:panelGrid>
+		
+		
 	</h:form>
 	</div>
+	
+	<br/> <br/>
+	
 	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>

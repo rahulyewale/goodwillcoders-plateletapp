@@ -1,12 +1,26 @@
 
 body {
     font-family: "Segoe UI",Verdana,Arial,sans-serif;
-    font-size: 1em;
+    font-size: 1.2em;
     margin:0;padding:0
 }
 
 .ui-widget, .ui-widget .ui-widget { font-size: 90% !important;}
 
+#left {
+	position: relative;
+	margin-right: 250px;
+	background-color: white;
+}
+
+#right {
+	float: right;
+	position: relative;
+	text-align: left;
+	width: 250px;
+	background-color: white;
+}
+.ui-widget, .ui-widget .ui-widget { font-size: 90% !important;}
 .container {
   padding-right: 15px;
   padding-left: 15px;
@@ -34,12 +48,44 @@ body {
   margin-right: auto;
   margin-left: auto;
 }
+form {margin:0; padding:0}
 
 .header-wrap {background: radial-gradient(circle at 50% 75% , #eeeeee, #eeeeee);
- box-shadow: 0 5px 11px 0 rgba(50, 50, 50, 0.08);padding: 10px 0; border-bottom:1px solid #CCC}
+ box-shadow: 0 5px 11px 0 rgba(50, 50, 50, 0.08);padding: 00px 0; border-bottom:1px solid #CCC}
 
-.nav-wrap {padding-top:10px}
-.footer-wrap { background: linear-gradient(#868686, #666666) repeat scroll 0 0 rgba(0, 0, 0, 0); border-top: 1px solid #262626;
+.nav-wrap {padding-top:00px}
+
+ 
+    
+    /* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  background-color: #e5e5e5;
+  padding-top:10px;
+}
+
+.footer-wrap { 
+	position: absolute;
+	 bottom: 0;
+	 width: 100%;
+	   /* Set the fixed height of the footer here */
+  height: 20px;
+	background: linear-gradient(#868686, #666666) repeat scroll 0 0 rgba(0, 0, 0, 0); 
+	border-top: 1px solid #262626;
     color: #ffffff;
     outline: 0 none;
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);font-size:90%;padding:20px 0 }
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+    font-size:90%;
+    padding:2px 0 }

@@ -38,19 +38,21 @@ body {
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-6">
-
+<!-- header logo -->
 							<h:commandLink value="" style="color:black;"
 								action="#{dashbord.navigateToDashbord}">
 								<p:graphicImage value="/secured/image/logo.gif" height="50px"
 									width="150px" />
 							</h:commandLink>
 						</div>
+<!-- logout Button  -->
 						<div class="ui-grid-col-6">
 							<h:commandLink value="" style="color:black;float:right"
 								action="#{loginBean.doLogout}">
 								<p:graphicImage id="logOutLink"
 									value="/secured/image/logoutNew.jpg" height="35px" width="40px"
 									title="Click here to Logout" />
+<!-- after hovering mouse on logout button shows msg and for effect is given as BLIND -->
 								<p:tooltip for="logOutLink" showEffect="blind"
 									hideEffect="explode" value="Click here to Logout" />
 							</h:commandLink>
@@ -81,6 +83,9 @@ body {
 							<h:commandLink action="#{dashbord.navigateToRequestList}">
 								<p:graphicImage value="/secured/image/requestlist.jpg" />
 							</h:commandLink>
+							
+							
+							
 
 
 </h:panelGrid>

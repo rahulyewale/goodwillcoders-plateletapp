@@ -30,6 +30,7 @@ public class DashbordMB implements Serializable
 
 	public GetRequestListInputDTO getGetRequestListInputDTO()
 	{
+		System.out.println("getGetRequestListInputDTO called");
 		return getRequestListInputDTO;
 	}
 

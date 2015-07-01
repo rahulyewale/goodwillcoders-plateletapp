@@ -6,6 +6,10 @@ public class CommonConstants
 	{
 		public static final String SEARCH_DONOR_REQUEST = "searchDonorRequest";
 		public static final String SEND_SMS_REQUEST = "sendSMSRequest";
+		
+		//Added for new Donor
+		public static final String ADD_DONOR = "addDonor";
+		////
 
 		public static final String DONOR_APPOINTMENT_DTO = "donorAppointmentDTO";
 		public static final String SEARCH_COMMUNICATION_HISTORY_REQUEST = "searchCommunicationHistoryRequest";
@@ -40,6 +44,9 @@ public class CommonConstants
 	
 	public static class ServiceRequestMapping
 	{
+		public static final String ADD_DONOR = "addDonor";
+		
+		
 		public static final String SEARCH_DONOR = "searchdonor";
 		public static final String SEND_SMS = "sendSMSToDonors";
 		public static final String SEARCH_COMMUNICATION_HISTORY = "searchcommunicationhistory";
