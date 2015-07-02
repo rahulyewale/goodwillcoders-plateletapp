@@ -65,6 +65,13 @@ public class UniqueRequestTransactionService
 		{
 			uniqueRequestNumber = uniqueRequestTxn.getRequestId();
 			uniqueRequestTxn.setPlateletsBags(searchDonorRequestDTO.getPlateletsBags());
+			
+
+			///FOR CHANGING DONATION CENTER ON NON UNIQUE REQUEST
+			DonationCenter donationCenter = new DonationCenter();
+			donationCenter.setDonationCenterId(searchDonorRequestDTO.getDonationCentre());
+			uniqueRequestTxn.setDonationCenter(donationCenter);
+
 			try
 			{
 				requestDAO.update(uniqueRequestTxn);

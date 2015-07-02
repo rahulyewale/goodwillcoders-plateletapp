@@ -6,10 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -42,11 +44,12 @@ public class SearchDonorMB implements Serializable
 	private String theme;
 	
 	private String patientName;
-	private String lastName;
 	
 	private String accordianActiveIndex;
 	private String contactButtonVisible;
 	
+	
+	private String uniqueReqNumberText;
 
 	@ManagedProperty(value = "#{cachedDataMB}")
 	private CachedDataMB cachedDataMB = new CachedDataMB();
@@ -64,6 +67,8 @@ public class SearchDonorMB implements Serializable
 			//searchDonor();
 			dashbordMB.setSearchDonorRequestDTO(null);
 		}
+		
+		donorRequestDTO.setPlateletsBags(1);
 	}
 	
 	public void searchDonor()
@@ -147,6 +152,10 @@ public class SearchDonorMB implements Serializable
 			contactButtonVisible="none";
 		}
 	
+		setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
+		
+		FacesMessage facesMessage = new FacesMessage(uniqueReqNumberText);
+		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	
 	}
 	
@@ -386,6 +395,14 @@ public class SearchDonorMB implements Serializable
 
 	public void setContactButtonVisible(String contactButtonVisible) {
 		this.contactButtonVisible = contactButtonVisible;
+	}
+
+	public String getUniqueReqNumberText() {
+		return uniqueReqNumberText;
+	}
+
+	public void setUniqueReqNumberText(String uniqueReqNumberText) {
+		this.uniqueReqNumberText = "Unique Request Number : "+uniqueReqNumberText;
 	}
 	
 	

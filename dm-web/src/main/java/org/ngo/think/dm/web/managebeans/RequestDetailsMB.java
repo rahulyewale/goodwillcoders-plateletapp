@@ -48,6 +48,8 @@ public class RequestDetailsMB implements Serializable
 	private List<SearchCommunicationHistoryResultDTO> communicationHistoryResult = new ArrayList<SearchCommunicationHistoryResultDTO>();
 	
 	private String donationRemarks;
+	
+	private int countDonors;
 
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
@@ -109,7 +111,13 @@ public class RequestDetailsMB implements Serializable
 			e.printStackTrace();
 		}
 		getCommunicationHistory();
-
+		
+	////for count
+			setCountDonors(0);
+			int count=communicationHistoryResult.size();
+			setCountDonors(count);
+			
+			System.out.println(count);
 		System.out.println(requestDTO.getRequestNumber());
 	}
 
@@ -179,6 +187,11 @@ public class RequestDetailsMB implements Serializable
 			e.printStackTrace();
 		}
 
+		
+		
+		
+		
+		
 	}
 
 	public void confirmDonor()
@@ -381,6 +394,14 @@ public class RequestDetailsMB implements Serializable
 	public void setDonationRemarks(String donationRemarks)
 	{
 		this.donationRemarks = donationRemarks;
+	}
+
+	public int getCountDonors() {
+		return countDonors;
+	}
+
+	public void setCountDonors(int countDonors) {
+		this.countDonors = countDonors;
 	}
 
 
