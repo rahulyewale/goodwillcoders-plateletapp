@@ -23,6 +23,8 @@ public class GetRequestListInputDTO implements Serializable
 	
 	private Long donationCenterId;
 	
+	private String patientName;
+	
 	public String getMobileNumber()
 	{
 		return mobileNumber;
@@ -81,6 +83,14 @@ public class GetRequestListInputDTO implements Serializable
 
 	public void setDonationCenterId(Long donationCenterId) {
 		this.donationCenterId = donationCenterId;
+	}
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
 	}
 
 

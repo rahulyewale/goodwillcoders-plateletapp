@@ -76,6 +76,9 @@
 					<p:outputLabel value="#{label['requestNumber']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
 					
+					<p:outputLabel value="#{label['patientName']}"/>
+					<p:outputLabel value="#{requestDetailsMB.requestDTO.patientName}"/>
+					
 					<p:outputLabel value="#{label['bloodGroup']}"/>
 					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
 					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>

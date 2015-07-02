@@ -47,11 +47,13 @@ public class UniqueRequestDTO implements Serializable
 
 	public String getStatus()
 	{
+		System.out.println("get status UQDTO ="+status);
 		return status;
 	}
 
 	public void setStatus(String status)
 	{
+		System.out.println("set status ="+status);
 		this.status = status;
 	}
 
@@ -127,10 +129,12 @@ public class UniqueRequestDTO implements Serializable
 	}
 
 	public String getPatientName() {
+		System.out.println("get Patient Name UQDTO ="+patientName);
 		return patientName;
 	}
 
 	public void setPatientName(String patientName) {
+		System.out.println("set Patient Name UQDTO ="+patientName);
 		this.patientName = patientName;
 	}
 

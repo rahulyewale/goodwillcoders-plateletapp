@@ -147,7 +147,7 @@ public class UniqueRequestTxn implements Serializable
 	
 	public String getPatientName()
 	{
-		return requestStatus;
+		return patientName;
 	}
 
 	public void setPatientName(String patientName)

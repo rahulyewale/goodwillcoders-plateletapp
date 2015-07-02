@@ -112,6 +112,11 @@ public class UniqueRequestDAOImpl extends BaseDAOImpl<UniqueRequestTxn> implemen
 		{
 			query.setParameter("requestStatus", getRequestListInputDTO.getStatus());
 		}
+		
+		if (null != getRequestListInputDTO.getPatientName() && !getRequestListInputDTO.getPatientName().isEmpty())
+		{
+			query.setParameter("patientName", getRequestListInputDTO.getPatientName());
+		}
 
 		List<UniqueRequestTxn> requestTxnList = query.getResultList();
 		return requestTxnList;
