@@ -25,7 +25,10 @@ public class LoginBean implements Serializable {
     private String password;
      
     private boolean loggedIn;
- 
+    
+    //to show Hide uploadDonors to Admin and others resp.
+    private String upload;
+     
     @ManagedProperty(value="#{navigationBean}")
     private NavigationBean navigationBean;
      
@@ -42,6 +45,14 @@ public class LoginBean implements Serializable {
             // Successful login
             if (dbUsername.equals(username) && dbPassword.equals(password)) {
                 loggedIn = true;
+                if(dbUsername.equals("admin"))
+                {
+                	setUpload("block");
+                }
+                else
+                {
+                	setUpload("none");
+                }
                 return navigationBean.redirectToWelcome();
             }
         }
@@ -102,5 +113,13 @@ public class LoginBean implements Serializable {
     public void setNavigationBean(NavigationBean navigationBean) {
         this.navigationBean = navigationBean;
     }
+
+	public String getUpload() {
+		return upload;
+	}
+
+	public void setUpload(String upload) {
+		this.upload = upload;
+	}
      
 }

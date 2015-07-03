@@ -46,7 +46,6 @@ public class SearchDonorMB implements Serializable
 	private String patientName;
 	
 	private String accordianActiveIndex;
-	private String contactButtonVisible;
 	
 	
 	private String uniqueReqNumberText;
@@ -142,19 +141,21 @@ public class SearchDonorMB implements Serializable
 			accordianActiveIndex="";
 		}
 		
-		int patientNameLength = patientName.length();
-		if(patientNameLength>=2)
-		{
-			contactButtonVisible="block";
-		}
-		else
-		{
-			contactButtonVisible="none";
-		}
-	
-		setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
 		
-		FacesMessage facesMessage = new FacesMessage(uniqueReqNumberText);
+
+		
+		///for showing Unique Request Number
+		int patientNameLength = patientName.length();
+		setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
+		FacesMessage facesMessage;
+		if(patientNameLength>=2)
+			{
+			facesMessage = new FacesMessage(uniqueReqNumberText);
+			}
+		else
+			{
+			facesMessage = new FacesMessage("Patient name should be present for generation of Request");
+			}
 		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	
 	}
@@ -389,13 +390,6 @@ public class SearchDonorMB implements Serializable
 		this.accordianActiveIndex = accordianActiveIndex;
 	}
 
-	public String getContactButtonVisible() {
-		return contactButtonVisible;
-	}
-
-	public void setContactButtonVisible(String contactButtonVisible) {
-		this.contactButtonVisible = contactButtonVisible;
-	}
 
 	public String getUniqueReqNumberText() {
 		return uniqueReqNumberText;

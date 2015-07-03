@@ -74,7 +74,15 @@ public class SearchDonorService
 			e.printStackTrace();
 		}
 		
-		String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+		// previous version. String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+		//for request number generation only if patient name>=2
+		//patientName length should be 2 or more characters
+				int patientNameLength=searchDonorRequestDTO.getPatientname().length();
+				String uniqueRequestNumber = "";
+		if(patientNameLength>=2){
+			uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
+		}
+		
 		
 		// Call DAOImpl to get donor master List
 		List<Donor> donorList = donorDAO.getAllDonors(searchDonorRequestDTO.getBloodGroup());

@@ -50,6 +50,11 @@ public class RequestDetailsMB implements Serializable
 	private String donationRemarks;
 	
 	private int countDonors;
+	private int countConfirmed;
+	private int countDonated;
+	private int countReserved;
+	private int countRejected;
+	
 
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
@@ -119,40 +124,72 @@ public class RequestDetailsMB implements Serializable
 			
 			System.out.println(count);
 		System.out.println(requestDTO.getRequestNumber());
+		
+		List<String> status= new ArrayList<String>();
+		
+		//setcon
+		for(int i=0;i<communicationHistoryResult.size();i++)
+		{
+			status.add(communicationHistoryResult.get(i).getStatus());
+			System.out.println(status.get(i));
+			
+			if(status.get(i).equals("CONFIRMED"))
+			{setCountConfirmed(getCountConfirmed()+1);
+			System.out.println("Count Confirmed is "+getCountConfirmed());
+			}
+			else if(status.get(i).equals("REJECTED"))
+			{setCountRejected(getCountRejected()+1);
+			System.out.println("Count Rejected is "+getCountRejected());
+			}
+		}
+		//countConfirmed=Collections.frequency(communicationHistoryResult,communicationHistoryResultDTO.getStatus());
+		System.out.println("Count Confirmed is "+countConfirmed);
+		
 	}
 
 	
 	/////added
-	public void getStatusCount(String reqno1)
+	public void getCounts()
 	{
-		String reqnoo=reqno1;
-		setRequestDTO(getRequestDTO());
-		getSearchCommunicationHistoryReqDTO().setRequestTxnId(reqnoo);
-
+		setRequestDTO(dashbordMB.getSelectedRequestDTO());
 		try
 		{
-			ServiceRequest serviceRequest = new ServiceRequest(new ContextInfo(), CommonConstants.RequestKey.SEARCH_COMMUNICATION_HISTORY_REQUEST, getSearchCommunicationHistoryReqDTO());
-			ServiceResponse serviceResponse = null;
-
-			serviceResponse = RestSeviceInvoker.invokeRestService(WebConstant.ServiceURL.COMMUNICATION_HISTORY_SEARCH_SERVICE_URL, serviceRequest);
-			String jsonResponseString = JsonUtil.convertObjectToJson(serviceResponse.get(CommonConstants.ResponseKey.SEARCH_COMMUNICATION_HISTORY_RESPONSE));
-
-			SearchCommunicationHistoryResponseDTO searchCommunicationHistoryResponse = (SearchCommunicationHistoryResponseDTO) JsonUtil.convertJsonToObject(jsonResponseString, SearchCommunicationHistoryResponseDTO.class);
-
-			this.communicationHistoryResult = searchCommunicationHistoryResponse.getSearchCommunicationHistoryResponseList();
-
-			this.confirmSMSText = searchCommunicationHistoryResponse.getConfirmSMSText();
-
+			getRequestDTO().setDonationDate(DateUtil.stringToDate(getRequestDTO().getRequestedDate(),"dd-MMM-yyyy"));
 		}
-		catch (Exception e)
+		catch (ParseException e)
 		{
 			e.printStackTrace();
 		}
+		getCommunicationHistory();
 		
-		System.out.println(communicationHistoryResultDTO.getStatus());
-		int occ = Collections.frequency(communicationHistoryResult, communicationHistoryResultDTO);
-		System.out.println("occourences= "+occ);
-
+	////for count
+			setCountDonors(0);
+			int count=communicationHistoryResult.size();
+			setCountDonors(count);
+			
+			System.out.println(count);
+		System.out.println(requestDTO.getRequestNumber());
+		
+		List<String> status= new ArrayList<String>();
+		
+		//setcon
+		for(int i=0;i<communicationHistoryResult.size();i++)
+		{
+			status.add(communicationHistoryResult.get(i).getStatus());
+			System.out.println(status.get(i));
+			
+			if(status.get(i).equals("CONFIRMED"))
+			{setCountConfirmed(getCountConfirmed()+1);
+			System.out.println("Count Confirmed is "+getCountConfirmed());
+			}
+			else if(status.get(i).equals("REJECTED"))
+			{setCountRejected(getCountRejected()+1);
+			System.out.println("Count Rejected is "+getCountRejected());
+			}
+		}
+		//countConfirmed=Collections.frequency(communicationHistoryResult,communicationHistoryResultDTO.getStatus());
+		System.out.println("Count Confirmed is "+countConfirmed);
+		
 	}
 	
 	//////
@@ -402,6 +439,38 @@ public class RequestDetailsMB implements Serializable
 
 	public void setCountDonors(int countDonors) {
 		this.countDonors = countDonors;
+	}
+
+	public int getCountConfirmed() {
+		return countConfirmed;
+	}
+
+	public void setCountConfirmed(int countConfirmed) {
+		this.countConfirmed = countConfirmed;
+	}
+
+	public int getCountDonated() {
+		return countDonated;
+	}
+
+	public void setCountDonated(int countDonated) {
+		this.countDonated = countDonated;
+	}
+
+	public int getCountReserved() {
+		return countReserved;
+	}
+
+	public void setCountReserved(int countReserved) {
+		this.countReserved = countReserved;
+	}
+
+	public int getCountRejected() {
+		return countRejected;
+	}
+
+	public void setCountRejected(int countRejected) {
+		this.countRejected = countRejected;
 	}
 
 

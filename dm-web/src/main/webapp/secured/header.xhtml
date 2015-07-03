@@ -25,9 +25,17 @@ body {
 	background-color: white;
 }
 </style>
+<script>
+var uploadval;
+function getup(){
+uploadval="#{loginBean.upload}"
+var x = document.getElementsByClassName("upload");
+x[0].style.display = uploadval;
+}
+</script>
 </h:head>
 
-<h:body>
+<h:body onload="getup()">
 
 
 	<h:form>
@@ -75,7 +83,7 @@ body {
 
 				
 
-							<h:commandLink action="#{dashbord.navigateToExcelUpload}">
+							<h:commandLink action="#{dashbord.navigateToExcelUpload}" class="upload">
 								<p:graphicImage value="/secured/image/uploaddonors.jpg" />
 							</h:commandLink>
 

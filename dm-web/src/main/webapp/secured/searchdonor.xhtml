@@ -60,6 +60,24 @@
 		
 	}
 	
+	
+	function isChecked()
+	{
+		//alert($(":checkbox:checked").length);
+		var count=$(":checkbox:checked").length;
+		if(count>0)
+			{
+			document.getElementById('searchresult_frm_id:confirmcall').style.display = "block";
+			document.getElementById('searchresult_frm_id:contactall').style.display = "block";
+			}
+		else
+			{
+			document.getElementById('searchresult_frm_id:confirmcall').style.display = "none";
+			document.getElementById('searchresult_frm_id:contactall').style.display = "none";
+			}
+		
+	}
+	
 	</script>
 	
 	   <style>
@@ -164,7 +182,7 @@
 							<h:outputText value="Filtered Donors List" />
 						</f:facet>
 						<p:column headerText="">
-							<h:selectBooleanCheckbox value="#{donor.selectedDonor}"  id="abc" class="checkk" onclick="buttonsShow()"/>
+							<h:selectBooleanCheckbox class="checkboxClass" type = "checkbox" value="#{donor.selectedDonor}" onclick="isChecked()"/>
 						</p:column>
 						<p:column headerText="Name">
 							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
@@ -284,11 +302,9 @@
 			<p:graphicImage value="/secured/image/separator.jpg" />
 		</h:panelGroup>
 		<h:panelGroup style="display: inline-block">
-			<!-- <h:commandButton image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:#{searchDonorMB.contactButtonVisible}"/> -->
-			<h:commandButton class="checkk" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:none"/>
-			<p:graphicImage value="/secured/image/separator.jpg" />
-			<!--  <h:commandButton  image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:#{searchDonorMB.contactButtonVisible}"/> -->
-			<h:commandButton class="checkk" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:none"/> 
+			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:none"/>
+			
+			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:none"/> 
 		</h:panelGroup>
 		
 		

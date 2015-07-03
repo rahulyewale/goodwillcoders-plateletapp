@@ -34,6 +34,8 @@ public class UniqueRequestTransactionService
 		String uniqueRequestNumber = null;
 		UniqueRequestTxn uniqueRequestTxn = requestDAO.getUniqueRequestTxnByDatePatientNameAndBloodGroup(searchDonorRequestDTO.getRequestDate(), searchDonorRequestDTO.getPatientname(), searchDonorRequestDTO.getBloodGroup());
 
+		
+		
 		if (null == uniqueRequestTxn)
 		{
 			uniqueRequestNumber = RandomNumberGenerator.generateRandomNumber(RandomNumberType.REQUEST_NUMBER);
