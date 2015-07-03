@@ -53,29 +53,30 @@
    		donorDialog.show();
    	}
 	
-	function buttonsShow()
-	{
-		alert("sahdkkjsahd");
-		$(".checkk").css("display","block");
-		
-	}
+
 	
 	
 	function isChecked()
 	{
 		//alert($(":checkbox:checked").length);
 		var count=$(":checkbox:checked").length;
-		if(count>0)
+		var patientNameLength;
+		if(null != document.getElementById('searchcriteria_frm_id:patientName').value)
+			patientNameLength=document.getElementById('searchcriteria_frm_id:patientName').value.length;
+		else
+			patientNameLength="";
+		if(patientNameLength>=2){
+			if(count>0)
 			{
 			document.getElementById('searchresult_frm_id:confirmcall').style.display = "block";
 			document.getElementById('searchresult_frm_id:contactall').style.display = "block";
 			}
-		else
+			else
 			{
 			document.getElementById('searchresult_frm_id:confirmcall').style.display = "none";
 			document.getElementById('searchresult_frm_id:contactall').style.display = "none";
 			}
-		
+		}
 	}
 	
 	</script>
@@ -307,11 +308,10 @@
 			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:none"/> 
 		</h:panelGroup>
 		
-		
-		
-		
 	</h:form>
 	</div>
+	
+	<br /> <br /> 
 	<ui:include src="footer.xhtml"></ui:include>
 
 

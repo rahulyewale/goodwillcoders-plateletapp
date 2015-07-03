@@ -6,9 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -39,6 +41,13 @@ public class SearchDonorOnMapMB implements Serializable
 	private String bloodGroup;
 
 	private String theme;
+	
+	private String patientName;
+	
+	private String accordianActiveIndex;
+	
+	private String uniqueReqNumberText;
+
 
 	@ManagedProperty(value = "#{cachedDataMB}")
 	private CachedDataMB cachedDataMB = new CachedDataMB();
@@ -55,11 +64,20 @@ public class SearchDonorOnMapMB implements Serializable
 			searchDonor();
 			dashbordMB.setSearchDonorRequestDTO(null);
 		}
+		
+		donorRequestDTO.setPlateletsBags(1);
 	}
 	
 	public void searchDonor()
 	{
+		System.out.println("heyhey");
+		System.out.println("patient name = "+donorRequestDTO.getPatientname());
 		this.selectedDonorList = new ArrayList<DonorDTO>();
+		setPatientName(patientName);
+		donorRequestDTO.setPatientname(patientName);
+		
+		
+		//this.selectedDonorList = new ArrayList<DonorDTO>();
 
 		if (null == donorRequestDTO.getRequestDate())
 		{
@@ -113,6 +131,33 @@ public class SearchDonorOnMapMB implements Serializable
 		searchDonorResponseDTO.setUniqueRequestId(uniqueRequestId);
 		
 		System.out.println("Search submitted");
+		
+		
+		///for showing contacted and confirm buttons
+		int bagsno=donorRequestDTO.getPlateletsBags();
+		if(bagsno>=1)
+		{
+			setAccordianActiveIndex("0");	
+		}
+		else
+		{
+			setAccordianActiveIndex("");
+		}
+		
+		
+		///for showing Unique Request Number
+				int patientNameLength = patientName.length();
+				setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
+				FacesMessage facesMessage;
+				if(patientNameLength>=2)
+					{
+					facesMessage = new FacesMessage(""+uniqueReqNumberText);
+					}
+				else
+					{
+					facesMessage = new FacesMessage("Patient name should be present for generation of Request");
+					}
+				FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
 
 	public void sendSmsToSelectedDonors()
@@ -326,4 +371,30 @@ public class SearchDonorOnMapMB implements Serializable
 		this.dashbordMB = dashbordMB;
 	}
 
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
+
+	public String getAccordianActiveIndex() {
+		return accordianActiveIndex;
+	}
+
+	public void setAccordianActiveIndex(String accordianActiveIndex) {
+		this.accordianActiveIndex = accordianActiveIndex;
+	}
+
+
+	public String getUniqueReqNumberText() {
+		return uniqueReqNumberText;
+	}
+
+	public void setUniqueReqNumberText(String uniqueReqNumberText) {
+		this.uniqueReqNumberText = "Unique Request Number : "+uniqueReqNumberText;
+	}
+	
+	
 }

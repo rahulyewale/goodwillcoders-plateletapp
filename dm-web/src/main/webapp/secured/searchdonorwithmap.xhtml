@@ -72,6 +72,8 @@
    	{
    		donorDialog.show();
    	}
+	
+	var count;
 	</script>
 
 </h:head>
@@ -82,10 +84,13 @@
 	<h2 style="margin:0px;font-size:1.2em;">#{label['pageheader.searchDonorsOnMap']}</h2>
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:accordionPanel>
+		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
 				<h:panelGrid columns="4" columnClasses="label, value"
 					cellpadding="5">
+					
+					<p:outputLabel for="patientName" value="Patient Name : *" />
+					<h:inputText value="#{searchDonorOnMapMB.patientName}" id="patientName"/>
 
 					<p:outputLabel for="donationType" value="#{label['donationType']}" />
 					<p:selectOneMenu id="donationType"
@@ -137,7 +142,7 @@
 				</h:panelGrid>
 
 			</p:tab>
-		</p:accordionPanel>
+		</p:panel>
 		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorOnMapMB.searchDonor}"
@@ -158,7 +163,9 @@
 	</h:form>
 
 	<h:form id="searchresult_frm_id">
-		<p:accordionPanel id="accPanel"> 
+		<!-- hidden label for keeping count of Selection on map -->	
+		<h:outputLabel id="countt" value="0" style="display:none"/>
+		<p:accordionPanel id="accPanel" styleClass="searchresult" activeIndex="#{searchDonorOnMapMB.accordianActiveIndex}"> 
 			 <p:tab title="#{label['tab.searchedResultsOnMap']}" id="mapTab">
 				<h:panelGrid id="panelGrid">
 					<div id="marker-tooltip"></div>
@@ -179,7 +186,34 @@
                     	     		<m:eventListener  eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}"/>
                     	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
                     	     		                    	     			
-                    	     		<m:eventListener eventName="click" jsFunction="function(){var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');if(selCheck.value === 'true'){selCheck.value='false';this.setIcon('../secured/image/marker_unchecked.png');}else{ selCheck.value = 'true';document.getElementById('searchresult_frm_id:confirmcall').style.display ='block';document.getElementById('searchresult_frm_id:contactall').style.display ='block';this.setIcon('../secured/image/marker_checked.png');};}"/>
+                    	     		<m:eventListener eventName="click" jsFunction="
+                    	     		function()
+                    	     		{
+									var count=document.getElementById('searchresult_frm_id:countt').innerHTML;
+                    	     		var selCheck = document.getElementById('searchresult_frm_id:accPanel:hiddenVarLoop:${donorLoopVar.index}:donor_');
+                    	     		if(selCheck.value === 'true')
+                    	     			{
+                    	     			--count;
+                    	                document.getElementById('searchresult_frm_id:countt').innerHTML=count;
+                    	     			if(count==0)
+                    	     			{
+                    	     				document.getElementById('searchresult_frm_id:confirmcall').style.display ='none';
+                    	     				document.getElementById('searchresult_frm_id:contactall').style.display ='none';
+                    	     			}
+                    	     			selCheck.value='false';
+                    	     			this.setIcon('../secured/image/marker_unchecked.png');
+                    	     			}
+                    	     		else
+                    	     			{
+                    	     			
+                    	     			count++;
+                    	     			document.getElementById('searchresult_frm_id:countt').innerHTML=count;
+                    	     		 	selCheck.value = 'true';
+                    	     		 	document.getElementById('searchresult_frm_id:confirmcall').style.display ='block';
+                    	     		 	document.getElementById('searchresult_frm_id:contactall').style.display ='block';
+                    	     		 	this.setIcon('../secured/image/marker_checked.png');
+                    	     		 	};
+                    	     		 }"/>
                     	     		<m:icon imageURL="../secured/image/marker_unchecked.png"/>
                     	     	</m:marker>
                     	</ui:repeat> 

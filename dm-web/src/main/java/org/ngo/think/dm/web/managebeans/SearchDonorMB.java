@@ -47,7 +47,6 @@ public class SearchDonorMB implements Serializable
 	
 	private String accordianActiveIndex;
 	
-	
 	private String uniqueReqNumberText;
 
 	@ManagedProperty(value = "#{cachedDataMB}")
@@ -77,6 +76,7 @@ public class SearchDonorMB implements Serializable
 		donorRequestDTO.setPatientname(patientName);
 		System.out.println("patient name = "+donorRequestDTO.getPatientname());
 
+		
 		if (null == donorRequestDTO.getRequestDate())
 		{
 			donorRequestDTO.setRequestDate(new Date());
@@ -130,8 +130,9 @@ public class SearchDonorMB implements Serializable
 		
 		System.out.println("Search submitted");
 	
-		int bagsno=donorRequestDTO.getPlateletsBags();
+		
 		///for showing contacted and confirm buttons
+		int bagsno=donorRequestDTO.getPlateletsBags();
 		if(bagsno>=1)
 		{
 			accordianActiveIndex="0";	
