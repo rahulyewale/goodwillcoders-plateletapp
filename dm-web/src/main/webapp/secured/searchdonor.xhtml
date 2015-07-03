@@ -302,11 +302,10 @@
 			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
 			<p:graphicImage value="/secured/image/separator.jpg" />
 		</h:panelGroup>
-		<h:panelGroup style="display: inline-block">
-			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;" style="display:none"/>
-			
-			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;" style="display:none"/> 
-		</h:panelGroup>
+		<h:panelGrid columns="2" cellpading="10">
+			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"  style="display:none" />
+			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"  style="display:none" />
+		</h:panelGrid>
 		
 	</h:form>
 	</div>
