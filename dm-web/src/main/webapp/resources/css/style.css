@@ -4,6 +4,7 @@ body {
     font-size: 1.2em;
     margin:0;padding:0
 }
+			
 
 .ui-widget, .ui-widget .ui-widget { font-size: 90% !important;}
 
@@ -64,7 +65,10 @@ html {
   min-height: 100%;
 }
 
-
+.header {
+	margin : 3px;
+	font-size:1.2em;
+}
 
 .footer {
   position: absolute;

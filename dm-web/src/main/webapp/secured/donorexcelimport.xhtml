@@ -13,9 +13,9 @@
 
 <ui:include src="header.xhtml"></ui:include>
 <div class="container">
-	<h2 style = "margin : 3px;font-size:1.2em;">#{label['pageheader.uploadDonors']}</h2>
+	<h2  class="header">#{label['pageheader.uploadDonors']}</h2>
 	<h:form enctype="multipart/form-data">
-	<p:accordionPanel>
+	<p:panel>
 	<p:tab title="Choose Existing Donor Excel File to Upload">
 	    <p:growl id="messages" showDetail="true" />
 	 
@@ -23,7 +23,7 @@
 	 
 	    <h:commandButton value="Submit" ajax="false" actionListener="#{fileUploadMB.upload}" disabled="false" />
 	    </p:tab>
-	    </p:accordionPanel>
+	    </p:panel>
 	</h:form>
 
 <h:form id="newDonor" style="text-align:center">

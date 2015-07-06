@@ -89,7 +89,7 @@
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2>#{label['pageheader.searchDonors']}</h2>	
+	<h2 class="header">#{label['pageheader.searchDonors']}</h2>	
 	<h:form id="searchcriteria_frm_id">
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:panel>
@@ -195,8 +195,32 @@
 								  <h:outputLabel value="Pincode: #{donor.donorAddressDetailsDTO.pinCode}" />
 				               </p:panelGrid>  
 				          </p:overlayPanel> -->
+				          
+				          		<!-- After hovering mouse on name shows Address and number 		[START]	 -->			
+				
+				
+				
+				<p:tooltip for="nameLabel" showEffect="blind" hideEffect="blind" >
+						Mobile No.: <h:outputText value="#{donor.donorContactDetailsDTO.contactNumber}" /><br/>
+						Address : <h:outputText value="#{donor.donorAddressDetailsDTO.addressLine1}" /><br/>
+						Pin Code : <h:outputText value="#{donor.donorAddressDetailsDTO.pinCode} " />
+				</p:tooltip>			
+							
+							
+							
+							
+			<!-- After hovering mouse on name shows Address and number 		[END]	 -->			
+			
+			
 						</p:column>
 
+										
+			
+							
+							
+						
+						<!--
+						
 						<p:column headerText="Contact No">
 							<h:outputText
 								value="#{donor.donorContactDetailsDTO.contactNumber}" />
@@ -205,6 +229,8 @@
 							<h:outputText
 								value="#{donor.donorAddressDetailsDTO.addressLine1}, #{donor.donorAddressDetailsDTO.pinCode}" />
 						</p:column>
+						
+						 -->
 						<p:column headerText="Email">
 							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
 						</p:column>

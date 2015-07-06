@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -61,9 +62,11 @@ public class SearchDonorOnMapMB implements Serializable
 		if (null != dashbordMB.getSearchDonorRequestDTO())
 		{
 			setDonorRequestDTO(dashbordMB.getSearchDonorRequestDTO());
-			searchDonor();
+			//searchDonor();
 			dashbordMB.setSearchDonorRequestDTO(null);
 		}
+		
+		
 		
 		donorRequestDTO.setPlateletsBags(1);
 	}
@@ -151,7 +154,7 @@ public class SearchDonorOnMapMB implements Serializable
 				FacesMessage facesMessage;
 				if(patientNameLength>=2)
 					{
-					facesMessage = new FacesMessage(""+uniqueReqNumberText);
+					facesMessage = new FacesMessage(uniqueReqNumberText);
 					}
 				else
 					{

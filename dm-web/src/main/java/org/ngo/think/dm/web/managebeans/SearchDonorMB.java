@@ -27,7 +27,7 @@ import org.ngo.think.dm.web.constant.WebConstant;
 
 @SuppressWarnings("serial")
 @ManagedBean(name = "searchDonorMB")
-@SessionScoped
+@ViewScoped
 public class SearchDonorMB implements Serializable
 {
 	private SearchDonorRequestDTO donorRequestDTO = new SearchDonorRequestDTO();

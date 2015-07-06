@@ -115,6 +115,7 @@ public class DashbordMB implements Serializable
 		{
 			this.searchDonorRequestDTO= new SearchDonorRequestDTO();   
 			getSearchDonorRequestDTO().setRequestDate(DateUtil.stringToDate(requestDTO.getRequestedDate(), "dd-MMM-yyyy"));
+			getSearchDonorRequestDTO().setPatientname(requestDTO.getPatientName());
 		}
 		catch (ParseException e1)
 		{
