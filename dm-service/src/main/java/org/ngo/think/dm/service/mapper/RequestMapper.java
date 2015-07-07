@@ -25,6 +25,12 @@ public class RequestMapper
 		requestDTO.setUniqueRequestTxnId(uniqueRequestTxn.getUniqueRequestTxnId());
 		requestDTO.setBloodGroup(uniqueRequestTxn.getBloodGroup());
 		requestDTO.setPlateletsBags(uniqueRequestTxn.getPlateletsBags());
+		///for counts
+		requestDTO.setConfirmedCount(uniqueRequestTxn.getConfirmedCount());
+		requestDTO.setDonatedCount(uniqueRequestTxn.getDonatedCount());
+		requestDTO.setRejectCount(uniqueRequestTxn.getRejectCount());
+		requestDTO.setReserveCount(uniqueRequestTxn.getReserveCount());
+		
 		requestDTO.setPatientName(uniqueRequestTxn.getPatientName());
 		
 		return requestDTO;

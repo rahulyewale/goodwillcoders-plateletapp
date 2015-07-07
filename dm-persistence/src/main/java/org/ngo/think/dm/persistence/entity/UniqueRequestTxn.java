@@ -63,6 +63,15 @@ public class UniqueRequestTxn implements Serializable
 	
 	@Column(name = "patient_name")
 	private String patientName;
+	
+	@Column(name = "confirmed_count")
+	private int confirmedCount;
+	@Column(name = "donated_count")
+	private int donatedCount;
+	@Column(name = "reject_count")
+	private int rejectCount;
+	@Column(name = "reserve_count")
+	private int reserveCount;
 
 	public Long getUniqueRequestTxnId()
 	{
@@ -153,6 +162,48 @@ public class UniqueRequestTxn implements Serializable
 	public void setPatientName(String patientName)
 	{
 		this.patientName = patientName;
+	}
+	
+	
+	
+	
+	
+	
+	public int getConfirmedCount()
+	{
+		return confirmedCount;
+	}
+
+	public void setConfirmedCount(int confirmedCount)
+	{
+		this.confirmedCount = confirmedCount;
+	}
+	public int getDonatedCount()
+	{
+		return donatedCount;
+	}
+
+	public void setDonatedCount(int donatedCount)
+	{
+		this.donatedCount = donatedCount;
+	}
+	public int getRejectCount()
+	{
+		return rejectCount;
+	}
+
+	public void setRejectCount(int rejectCount)
+	{
+		this.rejectCount = rejectCount;
+	}
+	public int getReserveCount()
+	{
+		return reserveCount;
+	}
+
+	public void setReserveCount(int reserveCount)
+	{
+		this.reserveCount = reserveCount;
 	}
 	
 
