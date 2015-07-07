@@ -73,13 +73,10 @@ public class SearchDonorOnMapMB implements Serializable
 	
 	public void searchDonor()
 	{
-		System.out.println("heyhey");
-		System.out.println("patient name = "+donorRequestDTO.getPatientname());
 		this.selectedDonorList = new ArrayList<DonorDTO>();
-		setPatientName(patientName);
-		donorRequestDTO.setPatientname(patientName);
-		
-		
+		setPatientName(donorRequestDTO.getPatientname());
+		System.out.println("patient name = "+donorRequestDTO.getPatientname());
+
 		//this.selectedDonorList = new ArrayList<DonorDTO>();
 
 		if (null == donorRequestDTO.getRequestDate())
@@ -149,7 +146,7 @@ public class SearchDonorOnMapMB implements Serializable
 		
 		
 		///for showing Unique Request Number
-				int patientNameLength = patientName.length();
+				int patientNameLength = patientName==null ? 0 : patientName.length();
 				setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
 				FacesMessage facesMessage;
 				if(patientNameLength>=2)

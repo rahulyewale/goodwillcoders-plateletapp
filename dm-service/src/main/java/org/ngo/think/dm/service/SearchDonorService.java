@@ -77,7 +77,12 @@ public class SearchDonorService
 		// previous version. String uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);
 		//for request number generation only if patient name>=2
 		//patientName length should be 2 or more characters
-				int patientNameLength=searchDonorRequestDTO.getPatientname().length();
+		int patientNameLength=0;		
+		if(!(searchDonorRequestDTO.getPatientname() == null))
+					patientNameLength=searchDonorRequestDTO.getPatientname().length();
+		
+					
+				
 				String uniqueRequestNumber = "";
 		if(patientNameLength>=2){
 			uniqueRequestNumber = uniqueRequestTransactionService.getUniqueRequestTranactionID(searchDonorRequestDTO);

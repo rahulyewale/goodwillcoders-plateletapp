@@ -72,8 +72,7 @@ public class SearchDonorMB implements Serializable
 	public void searchDonor()
 	{
 		this.selectedDonorList = new ArrayList<DonorDTO>();
-		setPatientName(patientName);
-		donorRequestDTO.setPatientname(patientName);
+		setPatientName(donorRequestDTO.getPatientname());
 		System.out.println("patient name = "+donorRequestDTO.getPatientname());
 
 		
@@ -146,7 +145,7 @@ public class SearchDonorMB implements Serializable
 
 		
 		///for showing Unique Request Number
-		int patientNameLength = patientName.length();
+		int patientNameLength = patientName==null ? 0 : patientName.length();
 		setUniqueReqNumberText(searchDonorResponseDTO.getUniqueRequestId());
 		FacesMessage facesMessage;
 		if(patientNameLength>=2)
