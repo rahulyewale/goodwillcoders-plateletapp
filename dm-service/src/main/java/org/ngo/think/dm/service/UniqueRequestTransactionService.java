@@ -91,6 +91,7 @@ public class UniqueRequestTransactionService
 		List<UniqueRequestTxn> uniqueRequestTxnList = requestDAO.getRequestList(getRequestListInputDTO);
 
 		Collections.sort(uniqueRequestTxnList, new DateComparator());
+		Collections.reverse(uniqueRequestTxnList);
 
 		List<UniqueRequestDTO> requestDTOList = RequestMapper.toDTOList(uniqueRequestTxnList);
 
