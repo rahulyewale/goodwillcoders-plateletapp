@@ -101,10 +101,12 @@
 					<h:inputText value="#{searchDonorMB.donorRequestDTO.patientname}" id="patientName"/>
 				
 					<p:outputLabel for="donationType" value="#{label['donationType']}" />
-					<p:selectOneMenu id="donationType"
-						value="#{searchDonorMB.donorRequestDTO.donationType}">
-						<f:selectItem itemValue="platelets " itemLabel="Platelets " style="width=80%;"/>
-					</p:selectOneMenu>
+			
+
+					<p:selectOneRadio id="donationType" value="#{searchDonorMB.donorRequestDTO.donationType}" style="display: inline-table; verticle-align: top; font-size: 95%;">
+                    	<f:selectItem itemLabel="Platelets" itemValue="Platelets" />
+            			<f:selectItem itemLabel="Blood" itemValue="Blood" />
+             		</p:selectOneRadio>
 					
 					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
 					<p:selectOneMenu id="bloodGroup"
@@ -194,14 +196,7 @@
 							<h:outputText value="Send Mail"/>
 							</p:tooltip>
 						
-							<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
-				               <p:panelGrid columns="2">  
-				                  <f:facet name="header">Address</f:facet>  
-				
-				                  <h:outputLabel value="#{donor.donorAddressDetailsDTO.addressLine1}" />  
-								  <h:outputLabel value="Pincode: #{donor.donorAddressDetailsDTO.pinCode}" />
-				               </p:panelGrid>  
-				          </p:overlayPanel> -->
+
 				          
 				          		<!-- After hovering mouse on name shows Address and number 		[START]	 -->			
 				
@@ -215,6 +210,10 @@
 							
 							
 					</p:column>			
+							
+						<p:column headerText="Pin Code">
+							<h:outputText value="#{donor.donorAddressDetailsDTO.pinCode}" />
+						</p:column>		
 							
 			<!-- After hovering mouse on name shows Address and number 		[END]	 -->			
 			

@@ -103,7 +103,7 @@ public class DonorFilter
 				CommunicationHistory communicationHistory = iterator.next();
 
 				StringBuilder stringBuilder = new StringBuilder();
-				stringBuilder.append("Donor ").append(communicationHistory.getStatus()).append(" for ").append(communicationHistory.getRequestId()).append(" dated ").append(communicationHistory.getRequestedDate());
+				stringBuilder.append("Donor ").append(communicationHistory.getStatus()).append(" ID : ").append(communicationHistory.getRequestId()).append(" date : ").append(communicationHistory.getRequestedDate());
 
 				donor.setSearchComment(stringBuilder.toString());
 			}

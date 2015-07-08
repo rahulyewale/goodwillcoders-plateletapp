@@ -86,21 +86,23 @@
 		<p:messages id="messages" autoUpdate="true" closable="true" />
 		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
-				<h:panelGrid columns="4" columnClasses="label, value"
-					cellpadding="5">
-					
+				<h:panelGrid columns="6" columnClasses="label, value"
+					cellpadding="5" >
+				
 					<p:outputLabel for="patientName" value="Patient Name : *" />
-					<h:inputText value="#{searchDonorOnMapMB.donorRequestDTO.patientname}" id="patientName"/>
-
+					<h:inputText value="#{searchDonorMB.donorRequestDTO.patientname}" id="patientName"/>
+				
 					<p:outputLabel for="donationType" value="#{label['donationType']}" />
-					<p:selectOneMenu id="donationType"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationType}">
-						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
-					</p:selectOneMenu>
+			
 
+					<p:selectOneRadio id="donationType" value="#{searchDonorMB.donorRequestDTO.donationType}" style="display: inline-table; verticle-align: top; font-size: 95%;">
+                    	<f:selectItem itemLabel="Platelets" itemValue="Platelets" />
+            			<f:selectItem itemLabel="Blood" itemValue="Blood" />
+             		</p:selectOneRadio>
+					
 					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
 					<p:selectOneMenu id="bloodGroup"
-						value="#{searchDonorOnMapMB.donorRequestDTO.bloodGroup}">
+						value="#{searchDonorMB.donorRequestDTO.bloodGroup}" >
 						<f:selectItem itemValue="" itemLabel="Any" />
 						<f:selectItem itemValue="A+" itemLabel="A+" />
 						<f:selectItem itemValue="A-" itemLabel="A-" />
@@ -110,21 +112,20 @@
 						<f:selectItem itemValue="AB-" itemLabel="AB-" />
 						<f:selectItem itemValue="O+" itemLabel="O+" />
 						<f:selectItem itemValue="O-" itemLabel="O-" />
-						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
-						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
+						<f:selectItem itemValue="OH+" itemLabel="OH+" />
+						<f:selectItem itemValue="OH-" itemLabel="OH-" />
 
 					</p:selectOneMenu>
 
 					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
 					<p:inputText id="plateletsBags" required="true" requiredMessage="Please enter Platelets Bags."
-						value="#{searchDonorOnMapMB.donorRequestDTO.plateletsBags}"
-						label="Platelets Bags">
-						<f:validateLongRange minimum="1"/>
-					</p:inputText>
-					
+						value="#{searchDonorMB.donorRequestDTO.plateletsBags}"
+						label="Platelets Bags" style="width=80%;" >
+						<f:validateLongRange minimum="1" />
+					</p:inputText> 
 					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
 					<p:selectOneMenu id="donationCenter"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationCentre}">
+						value="#{searchDonorMB.donorRequestDTO.donationCentre}" style="width=80%;">
 						<f:selectItems
 							value="#{cachedDataMB.donationCenterDTOs}"
 							var="donationCenterDTO"
@@ -136,14 +137,13 @@
 					<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
 						required="true" rendered="true"
 						requiredMessage="#{label['validation.mandatory.requirementDate']}"
-						value="#{searchDonorOnMapMB.donorRequestDTO.requestDate}"
-						yearRange="-5:+1" />
-
+						value="#{searchDonorMB.donorRequestDTO.requestDate}"
+						yearRange="-5:+1" style="width=80%;"/>
 				</h:panelGrid>
 
 			</p:tab>
+
 		</p:panel>
-		
 		<h:commandLink id="searchDonorId" value=""
 			actionListener="#{searchDonorOnMapMB.searchDonor}"
 			onclick="PF('blockUIWidget').block()">

@@ -67,6 +67,7 @@ public class SearchDonorMB implements Serializable
 		}
 		
 		donorRequestDTO.setPlateletsBags(1);
+		donorRequestDTO.setDonationType("Platelets");
 	}
 	
 	public void searchDonor()
