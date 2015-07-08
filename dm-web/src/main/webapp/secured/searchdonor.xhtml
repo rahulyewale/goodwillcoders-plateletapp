@@ -95,7 +95,7 @@
 		<p:panel>
 			<p:tab title="#{label['tab.searchCriteria']}">
 				<h:panelGrid columns="6" columnClasses="label, value"
-					cellpadding="10" >
+					cellpadding="5" >
 				
 					<p:outputLabel for="patientName" value="Patient Name : *" />
 					<h:inputText value="#{searchDonorMB.donorRequestDTO.patientname}" id="patientName"/>
@@ -186,7 +186,14 @@
 							<h:selectBooleanCheckbox class="checkboxClass" type = "checkbox" value="#{donor.selectedDonor}" onclick="isChecked()"/>
 						</p:column>
 						<p:column headerText="Name">
-							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
+							<h:outputText style="width:100px " id="nameLabel" value="#{donor.firstName} #{donor.lastName}"/>
+							<a href="mailto:#{donor.donorContactDetailsDTO.email}?subject=Platelete Donation"> 
+							<p:graphicImage id="M_Icon" value="/secured/image/M_Icon.png" />
+							</a>
+							<p:tooltip for="M_Icon" showEffect="blind" hideEffect="blind" >
+							<h:outputText value="Send Mail"/>
+							</p:tooltip>
+						
 							<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
 				               <p:panelGrid columns="2">  
 				                  <f:facet name="header">Address</f:facet>  
@@ -207,33 +214,23 @@
 				</p:tooltip>			
 							
 							
-							
+					</p:column>			
 							
 			<!-- After hovering mouse on name shows Address and number 		[END]	 -->			
 			
-			
-						</p:column>
-
-										
-			
-							
-							
-						
-						<!--
-						
-						<p:column headerText="Contact No">
+			<!--
+					<p:column headerText="Contact No">
 							<h:outputText
 								value="#{donor.donorContactDetailsDTO.contactNumber}" />
 						</p:column>
 						<p:column headerText="Address">
 							<h:outputText
 								value="#{donor.donorAddressDetailsDTO.addressLine1}, #{donor.donorAddressDetailsDTO.pinCode}" />
-						</p:column>
-						
-						 -->
+						</p:column>						
 						<p:column headerText="Email">
 							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
-						</p:column>
+						</p:column> -->						
+						
 						<p:column headerText="Blood Group">
 							<h:outputText value="#{donor.bloodGroup}" />
 						</p:column>

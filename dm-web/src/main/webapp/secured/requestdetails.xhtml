@@ -69,43 +69,48 @@
 	<h2  class="header">#{label['pageheader.requestDetails']}</h2>
 	<h:form id="request_details_frm_id">
 	 
-		<p:accordionPanel id="acc_panel">
+		<p:panel id="acc_panel">
 			<p:tab title="#{label['tab.requestDetails']}">
-				<h:panelGrid id="panel" columns="4" columnClasses="label, value" cellpadding="10">
+				<h:panelGrid id="panel" columns="4" columnClasses="label, value" cellpadding="5">
 
-					<p:outputLabel value="#{label['requestNumber']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['requestNumber']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
 					
-					<p:outputLabel value="#{label['patientName']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['patientName']}:"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.patientName}"/>
 					
-					<p:outputLabel value="#{label['bloodGroup']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['bloodGroup']}"/>
 					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
 					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
 
-					<p:outputLabel value="#{label['plateletsBags']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['plateletsBags']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.plateletsBags}"/>					
 
-					<p:outputLabel value="#{label['donationCenter']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['donationCenter']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
 					
-					<p:outputLabel value="#{label['requirementDate']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['requirementDate']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestedDate}"/>
 					
-					<p:outputLabel value="#{label['status']}"/>
+					<p:outputLabel style="font-weight:bold" value="#{label['status']}"/>
 					<p:outputLabel value="#{requestDetailsMB.requestDTO.status}"/>
 					
-					<p:outputLabel value="Count"/>
+					<p:outputLabel style="font-weight:bold" value="Count:"/>
 					<p:outputLabel value="#{requestDetailsMB.countDonors}"/>
 
 				</h:panelGrid>
 					
 			</p:tab>
-		</p:accordionPanel>
+		</p:panel>
 
 		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}" ajax="true" action="/secured/searchdonor.xhtml">
 				<p:graphicImage value="/secured/image/search.jpg"/>
 		</h:commandLink>
+
+		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}" ajax="true" action="/secured/searchdonorwithmap.xhtml">
+				<p:graphicImage value="/secured/image/searchonmap.jpg"/>
+		</h:commandLink>
+		
 
 		<p:graphicImage value="/secured/image/separator.jpg" />
 		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="closeRequest.show();">
