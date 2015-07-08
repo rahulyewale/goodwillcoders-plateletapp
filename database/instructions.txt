@@ -1,0 +1,4 @@
+For adding trigger to the database
+
+First all function using Update_uniquerequesttxn_fun.sql
+and then create trigger using communicationhistory_tgr.sql
