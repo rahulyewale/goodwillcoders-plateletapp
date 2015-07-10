@@ -25,14 +25,14 @@ body {
 	background-color: white;
 }
 </style>
-<script>
-var uploadval;
-function getup(){
-uploadval="#{loginBean.upload}"
-var x = document.getElementsByClassName("upload");
-x[0].style.display = uploadval;
-}
-</script>
+	<script>
+		var uploadval;
+		function getup() {
+			uploadval = "#{loginBean.upload}"
+			var x = document.getElementsByClassName("upload");
+			x[0].style.display = uploadval;
+		}
+	</script>
 </h:head>
 
 <h:body onload="getup()">
@@ -46,21 +46,21 @@ x[0].style.display = uploadval;
 				<div class="ui-grid ui-grid-responsive">
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-6">
-<!-- header logo -->
+							<!-- header logo -->
 							<h:commandLink value="" style="color:black;"
 								action="#{dashbord.navigateToDashbord}">
 								<p:graphicImage value="/secured/image/logo.gif" height="50px"
 									width="150px" />
 							</h:commandLink>
 						</div>
-<!-- logout Button  -->
+						<!-- logout Button  -->
 						<div class="ui-grid-col-6">
 							<h:commandLink value="" style="color:black;float:right"
 								action="#{loginBean.doLogout}">
 								<p:graphicImage id="logOutLink"
 									value="/secured/image/logoutNew.jpg" height="35px" width="40px"
 									title="Click here to Logout" />
-<!-- after hovering mouse on logout button shows msg and for effect is given as BLIND -->
+								<!-- after hovering mouse on logout button shows msg and for effect is given as BLIND -->
 								<p:tooltip for="logOutLink" showEffect="blind"
 									hideEffect="explode" value="Click here to Logout" />
 							</h:commandLink>
@@ -69,35 +69,36 @@ x[0].style.display = uploadval;
 
 					<div class="ui-grid-row">
 						<div class="ui-grid-col-12">
-<div class="nav-wrap">
-		<h:panelGrid columns="4">
-							<h:commandLink action="#{dashbord.navigateToSearchDonor}">
-								<p:graphicImage value="/secured/image/searchdonor.jpg" />
-							</h:commandLink>
-
-	
-
-							<h:commandLink action="#{dashbord.navigateToSearchDonorOnMap}">
-								<p:graphicImage value="/secured/image/searchdonorsonmap.jpg" />
-							</h:commandLink>
-
-				
-
-							<h:commandLink action="#{dashbord.navigateToExcelUpload}" class="upload">
-								<p:graphicImage value="/secured/image/uploaddonors.jpg" />
-							</h:commandLink>
-
-		
-							<h:commandLink action="#{dashbord.navigateToRequestList}">
-								<p:graphicImage value="/secured/image/requestlist.jpg" />
-							</h:commandLink>
-							
-							
-							
+							<div class="nav-wrap">
+								<h:panelGrid columns="4">
+									<h:commandLink action="#{dashbord.navigateToSearchDonor}">
+										<p:graphicImage value="/secured/image/searchdonor.jpg" />
+									</h:commandLink>
 
 
-</h:panelGrid>
-</div>
+
+									<h:commandLink action="#{dashbord.navigateToSearchDonorOnMap}">
+										<p:graphicImage value="/secured/image/searchdonorsonmap.jpg" />
+									</h:commandLink>
+
+
+
+									<h:commandLink action="#{dashbord.navigateToExcelUpload}"
+										class="upload">
+										<p:graphicImage value="/secured/image/uploaddonors.jpg" />
+									</h:commandLink>
+
+
+									<h:commandLink action="#{dashbord.navigateToRequestList}">
+										<p:graphicImage value="/secured/image/requestlist.jpg" />
+									</h:commandLink>
+
+
+
+
+
+								</h:panelGrid>
+							</div>
 
 
 						</div>
@@ -105,7 +106,7 @@ x[0].style.display = uploadval;
 
 				</div>
 			</div>
-			</div>
+		</div>
 	</h:form>
 
 </h:body>

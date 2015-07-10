@@ -8,108 +8,124 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-	
-	
-	
-   <h:head>
-   <title>Search Communication History</title>
-   </h:head>
+
+
+
+<h:head>
+	<title>Search Communication History</title>
+</h:head>
 <h:body>
 
 
-<ui:include src="header.xhtml"></ui:include>
+	<ui:include src="header.xhtml"></ui:include>
 
 	<h2>Search Communication History</h2>
- 		<h:form id="asd">
- 		<p:accordionPanel>
- 		<p:tab title="Search Communication History Criteria">
-            <h:panelGrid columns="2" cellpadding="10">
-               
-	 	 	<p:outputLabel for="mobileNo" value="Mobile  No :" /> 
-		 	<p:inputText id="mobileNo"  value="#{srchCommHistMB.srchCommnHistReqDTO.mobileNumber}" label="mobileNo"/>
-		 	
-	 	 	<p:outputLabel for="requestId" value="Request Id :" /> 
-		 	<p:inputText id="requestId"  value="#{srchCommHistMB.srchCommnHistReqDTO.requestTxnId}" label="requestId"/>
-		 	
-            <p:outputLabel for="donationRequestDate" value="Donation Request Date :" />
-            <p:calendar id="donationRequestDate" value="#{srchCommHistMB.srchCommnHistReqDTO.donationRequestDate}" showOn="button" pattern="dd-MMM-yyyy" />
-		        
-	        <p:outputLabel for="status" value="Status :" /> 
-	        <p:selectOneMenu id="status" value="#{srchCommHistMB.srchCommnHistReqDTO.status}"   label="status" >
-	   			<f:selectItem itemLabel="--Select--" itemValue="-1" />
-	  			<f:selectItem itemLabel="SMS sent" itemValue="SMS_SENT" />
-	  			<f:selectItem itemLabel="Confirm" itemValue="CONFIRMED" />
-	  			<f:selectItem itemLabel="Cancel" itemValue="CANCELLED" />
-	   		</p:selectOneMenu>
-		        
-            </h:panelGrid>
-            <h:panelGrid cellpadding="10">
-            	<h:commandButton value="Search" actionListener="#{srchCommHistMB.searchCommunications}"> 
-            		<f:ajax execute="@form" render=":basd" />
-            	</h:commandButton>
-            </h:panelGrid>
-            </p:tab>
-            </p:accordionPanel>
-		</h:form>
-     
+	<h:form id="asd">
+		<p:accordionPanel>
+			<p:tab title="Search Communication History Criteria">
+				<h:panelGrid columns="2" cellpadding="10">
 
-        	<h:form id="basd">	
-        	<p:accordionPanel>
-        	<p:tab title="Communication History Result">
-            <h:panelGrid  cellpadding="10" >
-                
-               <p:dataTable rows="10"  value="#{srchCommHistMB.srchCommnHistResultList}" var="commnHist"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
-            	 <f:facet name="header">   <h:outputText value="Communication History List" /> </f:facet>
-            	 
-            	  <p:column headerText="Select">
-			            <h:selectBooleanCheckbox value="#{commnHist.historySelected}" />
-			      </p:column>
-			 
-			      <p:column headerText="Request Id">
-			            <h:outputText value="#{commnHist.requestId}" />
-			      </p:column>
-			 
-			      <p:column headerText="Donor UUID">
-			            <h:outputText value="#{commnHist.donorUuid}" />
-			      </p:column>
-			 
-			      <p:column headerText="Name">
-			            <h:outputText value="#{commnHist.donorName}" />
-			      </p:column>
-			      
-			      <p:column headerText="Mobile No">
-			            <h:outputText value="#{commnHist.mobileNumber}" />
-			      </p:column>
-			 
-			      <p:column headerText="Donation Center">
-			            <h:outputText value="#{commnHist.donationCenterDTO.donationCenterName},  #{commnHist.donationCenterDTO.addressLine1},
+					<p:outputLabel for="mobileNo" value="Mobile  No :" />
+					<p:inputText id="mobileNo"
+						value="#{srchCommHistMB.srchCommnHistReqDTO.mobileNumber}"
+						label="mobileNo" />
+
+					<p:outputLabel for="requestId" value="Request Id :" />
+					<p:inputText id="requestId"
+						value="#{srchCommHistMB.srchCommnHistReqDTO.requestTxnId}"
+						label="requestId" />
+
+					<p:outputLabel for="donationRequestDate"
+						value="Donation Request Date :" />
+					<p:calendar id="donationRequestDate"
+						value="#{srchCommHistMB.srchCommnHistReqDTO.donationRequestDate}"
+						showOn="button" pattern="dd-MMM-yyyy" />
+
+					<p:outputLabel for="status" value="Status :" />
+					<p:selectOneMenu id="status"
+						value="#{srchCommHistMB.srchCommnHistReqDTO.status}"
+						label="status">
+						<f:selectItem itemLabel="--Select--" itemValue="-1" />
+						<f:selectItem itemLabel="SMS sent" itemValue="SMS_SENT" />
+						<f:selectItem itemLabel="Confirm" itemValue="CONFIRMED" />
+						<f:selectItem itemLabel="Cancel" itemValue="CANCELLED" />
+					</p:selectOneMenu>
+
+				</h:panelGrid>
+				<h:panelGrid cellpadding="10">
+					<h:commandButton value="Search"
+						actionListener="#{srchCommHistMB.searchCommunications}">
+						<f:ajax execute="@form" render=":basd" />
+					</h:commandButton>
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+
+
+	<h:form id="basd">
+		<p:accordionPanel>
+			<p:tab title="Communication History Result">
+				<h:panelGrid cellpadding="10">
+
+					<p:dataTable rows="10"
+						value="#{srchCommHistMB.srchCommnHistResultList}" var="commnHist"
+						paginator="true"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="5,10,15">
+						<f:facet name="header">
+							<h:outputText value="Communication History List" />
+						</f:facet>
+
+						<p:column headerText="Select">
+							<h:selectBooleanCheckbox value="#{commnHist.historySelected}" />
+						</p:column>
+
+						<p:column headerText="Request Id">
+							<h:outputText value="#{commnHist.requestId}" />
+						</p:column>
+
+						<p:column headerText="Donor UUID">
+							<h:outputText value="#{commnHist.donorUuid}" />
+						</p:column>
+
+						<p:column headerText="Name">
+							<h:outputText value="#{commnHist.donorName}" />
+						</p:column>
+
+						<p:column headerText="Mobile No">
+							<h:outputText value="#{commnHist.mobileNumber}" />
+						</p:column>
+
+						<p:column headerText="Donation Center">
+							<h:outputText
+								value="#{commnHist.donationCenterDTO.donationCenterName},  #{commnHist.donationCenterDTO.addressLine1},
 			            #{commnHist.donationCenterDTO.addressLine2},
 			            #{commnHist.donationCenterDTO.city}, #{commnHist.donationCenterDTO.state},
 			            #{commnHist.donationCenterDTO.pinCode}" />
-			      </p:column>
-			      
-   			      <p:column headerText="SMS Sent Date">
-			            <h:outputText value="#{commnHist.smsSentDate}" />
-			      </p:column>
-			      
-   			      <p:column headerText="Status">
-			            <h:outputText value="#{commnHist.status}" />
-			      </p:column>
-			      
-               </p:dataTable>
-            </h:panelGrid>
-            <h:panelGrid columns="2" cellpadding="10">
-          	            <p:commandButton value="Confirm" > </p:commandButton>
-          	            <p:commandButton value="Cancel" > </p:commandButton>
-            </h:panelGrid>
-            </p:tab>
-            </p:accordionPanel>
-            </h:form>
+						</p:column>
 
-<ui:include src="footer.xhtml"></ui:include>
- 
+						<p:column headerText="SMS Sent Date">
+							<h:outputText value="#{commnHist.smsSentDate}" />
+						</p:column>
+
+						<p:column headerText="Status">
+							<h:outputText value="#{commnHist.status}" />
+						</p:column>
+
+					</p:dataTable>
+				</h:panelGrid>
+				<h:panelGrid columns="2" cellpadding="10">
+					<p:commandButton value="Confirm">
+					</p:commandButton>
+					<p:commandButton value="Cancel">
+					</p:commandButton>
+				</h:panelGrid>
+			</p:tab>
+		</p:accordionPanel>
+	</h:form>
+
+	<ui:include src="footer.xhtml"></ui:include>
+
 </h:body>
 </html>

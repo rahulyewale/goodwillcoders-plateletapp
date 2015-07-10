@@ -15,166 +15,172 @@
 <h:head>
 	<title>Request List</title>
 	<script type="text/javascript">
-   	function unblockUi(data)
-   	{
-   		if(data.status==="success")
-   		{
-   			PF('blockUIWidget').unblock();
-   		}
-   		
-   	}
-   
-   
-   </script>
+		function unblockUi(data) {
+			if (data.status === "success") {
+				PF('blockUIWidget').unblock();
+			}
+
+		}
+	</script>
 </h:head>
 <h:body>
 	<ui:include src="header.xhtml"></ui:include>
-<div class="container">
+	<div class="container">
 
 
-	<h2  class="header">#{label['pageheader.requestList']}</h2>
-	<h:form id="requestListForm">
-		<p:panel style="padding : 0;">
-			<p:tab title="#{label['tab.searchRequestListCriteria']}">
-				<h:panelGrid columns="4" columnClasses="label, value" cellpadding="5">
+		<h2 class="header">#{label['pageheader.requestList']}</h2>
+		<h:form id="requestListForm">
+			<p:panel style="padding : 0;">
+				<p:tab title="#{label['tab.searchRequestListCriteria']}">
+					<h:panelGrid columns="4" columnClasses="label, value"
+						cellpadding="5">
 
-					<p:outputLabel  value="#{label['requestNumber']}" for="requestNumber"/>
-					<p:inputText  id="requestNumber"
-						value="#{requestListMB.requestListInputDTO.requestNumber}"
-						label="requestNumber" />
-
-
-
-					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
-					<p:selectOneMenu id="donationCenter" appendTo="@this"
-						value="#{requestListMB.requestListInputDTO.donationCenterId}">
-						<f:selectItem itemValue="-1" itemLabel="--Select--" />
-						<f:selectItems
-							value="#{cachedDataMB.donationCenterDTOs}"
-							var="donationCenterDTO"
-							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
-							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</p:selectOneMenu>
-
-					<p:outputLabel for="donationRequestFromDate"
-						value="#{label['requirementFromDate']}" />
-					<p:calendar id="donationRequestFromDate"
-						value="#{requestListMB.requestListInputDTO.donationRequestFromDate}"
-						showOn="button" pattern="dd-MMM-yyyy" />
-
-					<p:outputLabel for="donationRequestToDate"
-						value="#{label['requirementToDate']}" />
-					<p:calendar id="donationRequestToDate"
-						value="#{requestListMB.requestListInputDTO.donationRequestToDate}"
-						showOn="button" pattern="dd-MMM-yyyy" />
+						<p:outputLabel value="#{label['requestNumber']}"
+							for="requestNumber" />
+						<p:inputText id="requestNumber"
+							value="#{requestListMB.requestListInputDTO.requestNumber}"
+							label="requestNumber" />
 
 
-					
 
-					<p:outputLabel for="status" value="#{label['status']}" />
-					<p:selectOneMenu id="status" appendTo="@this"
-						value="#{requestListMB.requestListInputDTO.status}" label="status">
-						<f:selectItem itemLabel="--Select--" itemValue="-1" />
-						<f:selectItem itemLabel="Open" itemValue="OPEN" />
-						<f:selectItem itemLabel="Closed" itemValue="CLOSED" />
-						<f:selectItem itemLabel="Withdrawn" itemValue="WITHDRAWN" />
-					</p:selectOneMenu>
+						<p:outputLabel for="donationCenter"
+							value="#{label['donationCenter']}" />
+						<p:selectOneMenu id="donationCenter" appendTo="@this"
+							value="#{requestListMB.requestListInputDTO.donationCenterId}">
+							<f:selectItem itemValue="-1" itemLabel="--Select--" />
+							<f:selectItems value="#{cachedDataMB.donationCenterDTOs}"
+								var="donationCenterDTO"
+								itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
+								itemValue="#{donationCenterDTO.donationCenterId}" />
+						</p:selectOneMenu>
 
+						<p:outputLabel for="donationRequestFromDate"
+							value="#{label['requirementFromDate']}" />
+						<p:calendar id="donationRequestFromDate"
+							value="#{requestListMB.requestListInputDTO.donationRequestFromDate}"
+							showOn="button" pattern="dd-MMM-yyyy" />
+
+						<p:outputLabel for="donationRequestToDate"
+							value="#{label['requirementToDate']}" />
+						<p:calendar id="donationRequestToDate"
+							value="#{requestListMB.requestListInputDTO.donationRequestToDate}"
+							showOn="button" pattern="dd-MMM-yyyy" />
+
+
+
+
+						<p:outputLabel for="status" value="#{label['status']}" />
+						<p:selectOneMenu id="status" appendTo="@this"
+							value="#{requestListMB.requestListInputDTO.status}"
+							label="status">
+							<f:selectItem itemLabel="--Select--" itemValue="-1" />
+							<f:selectItem itemLabel="Open" itemValue="OPEN" />
+							<f:selectItem itemLabel="Closed" itemValue="CLOSED" />
+							<f:selectItem itemLabel="Withdrawn" itemValue="WITHDRAWN" />
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+				</p:tab>
+			</p:panel>
+
+
+			<h:commandLink id="searchRequestListId" value=""
+				actionListener="#{requestListMB.searchRequestList('requestlist')}"
+				onclick="PF('blockUIWidget').block()">
+				<p:graphicImage value="/secured/image/search.jpg" />
+				<f:ajax execute="@form" render=":requestListResultForm"
+					onevent="unblockUi" />
+			</h:commandLink>
+
+
+			<pe:blockUI widgetVar="blockUIWidget">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/secured/image/loader.GIF" />
+					<h:outputText value="#{label['info.pleaseWait']}"
+						style="white-space: nowrap;" />
 				</h:panelGrid>
-			</p:tab>
-		</p:panel>
+			</pe:blockUI>
 
 
-		<h:commandLink id="searchRequestListId" value=""
-			actionListener="#{requestListMB.searchRequestList('requestlist')}"
-			onclick="PF('blockUIWidget').block()">
-			<p:graphicImage value="/secured/image/search.jpg" />
-			<f:ajax execute="@form" render=":requestListResultForm"
-				onevent="unblockUi" />
-		</h:commandLink>
+		</h:form>
 
 
-		<pe:blockUI widgetVar="blockUIWidget">
-			<h:panelGrid columns="2">
-				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
-			</h:panelGrid>
-		</pe:blockUI>
+		<h:form id="requestListResultForm">
+			<p:accordionPanel>
+				<p:tab title="#{label['tab.searchRequestListCriteria']}">
+					<h:panelGrid cellpadding="10">
+
+						<p:dataTable rows="10" value="#{requestListMB.requestDTOList}"
+							var="requestDTO" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15">
+							<f:facet name="header">
+								<h:outputText value="Request List" />
+							</f:facet>
+
+							<p:column headerText="Request Number">
+
+								<h:commandLink
+									actionListener="#{dashbord.setSelectedRequestDTO(requestDTO)}"
+									ajax="true" action="/secured/requestdetails.xhtml"
+									target="_parent" value="#{requestDTO.requestNumber}" />
+							</p:column>
+
+							<p:column headerText="Blood Group">
+								<h:outputText rendered="#{empty requestDTO.bloodGroup}"
+									value="Any" />
+								<h:outputText rendered="#{not empty requestDTO.bloodGroup}"
+									value="#{requestDTO.bloodGroup}" />
+							</p:column>
+
+							<p:column headerText="Platelets">
+								<h:outputText value="#{requestDTO.plateletsBags}" />
+							</p:column>
+
+							<p:column headerText="Requirement Date">
+								<h:outputText value="#{requestDTO.requestedDate}" />
+							</p:column>
+
+							<p:column headerText="Donation Center">
+								<h:outputText
+									value="#{requestDTO.donationCenterDTO.donationCenterName},#{requestDTO.donationCenterDTO.city}" />
+							</p:column>
+
+							<p:column headerText="Status">
+								<h:outputText value="#{requestDTO.status}" />
+							</p:column>
+							<p:column headerText="#{label['patientName']}">
+								<h:outputText value="#{requestDTO.patientName}" />
+							</p:column>
 
 
-	</h:form>
+							<p:column headerText="Confirmed">
+								<h:outputText value="#{requestDTO.confirmedCount}" />
+							</p:column>
 
+							<p:column headerText="Donated">
+								<h:outputText value="#{requestDTO.donatedCount}" />
+							</p:column>
 
-	<h:form id="requestListResultForm">
-		<p:accordionPanel>
-			<p:tab title="#{label['tab.searchRequestListCriteria']}">
-				<h:panelGrid cellpadding="10">
+							<p:column headerText="Reject">
+								<h:outputText value="#{requestDTO.rejectCount}" />
+							</p:column>
 
-					<p:dataTable rows="10"
-						value="#{requestListMB.requestDTOList}" var="requestDTO"
-						paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,15">
-						<f:facet name="header">
-							<h:outputText value="Request List" />
-						</f:facet>
+							<p:column headerText="Reserved">
+								<h:outputText value="#{requestDTO.reserveCount}" />
+							</p:column>
 
-						<p:column headerText="Request Number">
-							
-							<h:commandLink actionListener="#{dashbord.setSelectedRequestDTO(requestDTO)}"
-                             ajax="true" action="/secured/requestdetails.xhtml" target="_parent"
-                             value="#{requestDTO.requestNumber}"/>
-						</p:column>
+						</p:dataTable>
+					</h:panelGrid>
 
-						<p:column headerText="Blood Group">
-							<h:outputText rendered="#{empty requestDTO.bloodGroup}" value="Any" />
-							<h:outputText rendered="#{not empty requestDTO.bloodGroup}" value="#{requestDTO.bloodGroup}" />
-						</p:column>
-
-						<p:column headerText="Platelets">
-							<h:outputText value="#{requestDTO.plateletsBags}" />
-						</p:column>
-						
-						<p:column headerText="Requirement Date">
-							<h:outputText value="#{requestDTO.requestedDate}" />
-						</p:column>
-
-						<p:column headerText="Donation Center">
-							<h:outputText value="#{requestDTO.donationCenterDTO.donationCenterName},#{requestDTO.donationCenterDTO.city}" />
-						</p:column>
-
-						<p:column headerText="Status">
-							<h:outputText value="#{requestDTO.status}" />
-						</p:column>
-						<p:column headerText="#{label['patientName']}">
-							<h:outputText value="#{requestDTO.patientName}" />
-						</p:column>
-						
-						
-						<p:column headerText="Confirmed">
-							<h:outputText value="#{requestDTO.confirmedCount}" />
-						</p:column>
-						
-						<p:column headerText="Donated">
-							<h:outputText value="#{requestDTO.donatedCount}" />
-						</p:column>
-						
-						<p:column headerText="Reject">
-							<h:outputText value="#{requestDTO.rejectCount}" />
-						</p:column>
-						
-						<p:column headerText="Reserved">
-							<h:outputText value="#{requestDTO.reserveCount}" />
-						</p:column>
-						
-					</p:dataTable>
-				</h:panelGrid>
-				
-			</p:tab>
-		</p:accordionPanel>
-	</h:form>
-	<BR /><BR /><BR /><BR />
-</div>
+				</p:tab>
+			</p:accordionPanel>
+		</h:form>
+		<BR />
+		<BR />
+		<BR />
+		<BR />
+	</div>
 	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>

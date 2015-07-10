@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ResponseData;
@@ -106,6 +108,16 @@ public class RequestDetailsMB implements Serializable
 	@PostConstruct
 	public void openRequest()
 	{
+		// view page only if logged in
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("username") == null) {
+			NavigationBean NB = new NavigationBean();
+			NB.redirectToLogin();
+		}
+		//
+
 		setRequestDTO(dashbordMB.getSelectedRequestDTO());
 		try
 		{
@@ -286,6 +298,13 @@ public class RequestDetailsMB implements Serializable
 		if (communicationHistoryResultDTO.getStatus().equals(communicationStatus))
 		{
 			facesMessage = new FacesMessage("Already "+communicationStatus, communicationHistoryResultDTO.getDonorName() + " is already "+communicationStatus);
+		}
+ else if (communicationHistoryResultDTO.getStatus().equals("REJECTED")
+				&& communicationStatus == HistoryStatus.DONATED) {
+
+			facesMessage = new FacesMessage(
+					"Donor is Rejected Cannot Change Status to Donated");
+
 		}
 		else
 		{

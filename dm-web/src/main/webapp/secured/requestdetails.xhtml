@@ -6,340 +6,374 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <h:head>
-   <title>Request Details</title>
-   
-   <script type="text/javascript">
-   	function unblockUi(data)
-   	{
-   		if(data.status==="success")
-   		{
-   			PF('blockUIWidget').unblock();
-   		}
-   		
-   	}
+	<title>Request Details</title>
 
-	function closeRequest()
-   	{
-		closeRequestConfirm.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}  
- 
-	function withdrawRequest()
-   	{
-		withdrawRequestConfirm.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}  
-	
+	<script type="text/javascript">
+		function unblockUi(data) {
+			if (data.status === "success") {
+				PF('blockUIWidget').unblock();
+			}
 
-   	function confirmAppointment()
-   	{
-		donorDialogConfirm.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}
-   	
-   	function markDonated()
-   	{
-   		donorDialogDonated.hide();
-   		PF('blockUIWidget').block();
-   	}
-   	
-   	function addDonationHistory()
-   	{
-   		addDonationHistoryDialog.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}
-   	
-   	function unblockUIfreeze()
-   	{
-   		PF('blockUIWidget').unblock();
-   		
-   	}
-   
-   
-   </script>
- </h:head>
+		}
+
+		function closeRequest() {
+			closeRequestConfirm.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function withdrawRequest() {
+			withdrawRequestConfirm.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function confirmAppointment() {
+			donorDialogConfirm.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function markDonated() {
+			donorDialogDonated.hide();
+			PF('blockUIWidget').block();
+		}
+
+		function addDonationHistory() {
+			addDonationHistoryDialog.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function unblockUIfreeze() {
+			PF('blockUIWidget').unblock();
+
+		}
+	</script>
+</h:head>
 <h:body>
-<ui:include src="header.xhtml"></ui:include>
-<div class="container">
+	<ui:include src="header.xhtml"></ui:include>
+	<div class="container">
 
-	<h2  class="header">#{label['pageheader.requestDetails']}</h2>
-	<h:form id="request_details_frm_id">
-	 
-		<p:accordionPanel id="acc_panel">
-			<p:tab title="#{label['tab.requestDetails']}">
-				<h:panelGrid id="panel" columns="4" columnClasses="label, value" cellpadding="10">
+		<h2 class="header">#{label['pageheader.requestDetails']}</h2>
+		<h:form id="request_details_frm_id">
 
-					<p:outputLabel value="#{label['requestNumber']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestNumber}"/>
-					
-					<p:outputLabel value="#{label['patientName']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.patientName}"/>
-					
-					<p:outputLabel value="#{label['bloodGroup']}"/>
-					<p:outputLabel rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}" value="Any"/>
-					<p:outputLabel rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}" value="#{requestDetailsMB.requestDTO.bloodGroup}"/>
+			<p:panel id="acc_panel">
+				<p:tab title="#{label['tab.requestDetails']}">
+					<h:panelGrid id="panel" columns="4" columnClasses="label, value"
+						cellpadding="10">
 
-					<p:outputLabel value="#{label['plateletsBags']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.plateletsBags}"/>					
+						<p:outputLabel value="#{label['requestNumber']}" />
+						<p:outputLabel
+							value="#{requestDetailsMB.requestDTO.requestNumber}" />
 
-					<p:outputLabel value="#{label['donationCenter']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}"/>
-					
-					<p:outputLabel value="#{label['requirementDate']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.requestedDate}"/>
-					
-					<p:outputLabel value="#{label['status']}"/>
-					<p:outputLabel value="#{requestDetailsMB.requestDTO.status}"/>
-					
-					<p:outputLabel value="Count"/>
-					<p:outputLabel value="#{requestDetailsMB.countDonors}"/>
+						<p:outputLabel value="#{label['patientName']}" />
+						<p:outputLabel value="#{requestDetailsMB.requestDTO.patientName}" />
+
+						<p:outputLabel value="#{label['bloodGroup']}" />
+						<p:outputLabel
+							rendered="#{empty requestDetailsMB.requestDTO.bloodGroup}"
+							value="Any" />
+						<p:outputLabel
+							rendered="#{not empty requestDetailsMB.requestDTO.bloodGroup}"
+							value="#{requestDetailsMB.requestDTO.bloodGroup}" />
+
+						<p:outputLabel value="#{label['plateletsBags']}" />
+						<p:outputLabel
+							value="#{requestDetailsMB.requestDTO.plateletsBags}" />
+
+						<p:outputLabel value="#{label['donationCenter']}" />
+						<p:outputLabel
+							value="#{requestDetailsMB.requestDTO.donationCenterDTO.donationCenterName},#{requestDetailsMB.requestDTO.donationCenterDTO.city}" />
+
+						<p:outputLabel value="#{label['requirementDate']}" />
+						<p:outputLabel
+							value="#{requestDetailsMB.requestDTO.requestedDate}" />
+
+						<p:outputLabel value="#{label['status']}" />
+						<p:outputLabel value="#{requestDetailsMB.requestDTO.status}" />
+
+						<p:outputLabel value="Count" />
+						<p:outputLabel value="#{requestDetailsMB.countDonors}" />
+
+					</h:panelGrid>
+
+				</p:tab>
+			</p:panel>
+
+			<h:commandLink
+				actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}"
+				ajax="true" action="/secured/searchdonor.xhtml">
+				<p:graphicImage value="/secured/image/search.jpg" />
+			</h:commandLink>
+
+			<p:graphicImage value="/secured/image/separator.jpg" />
+			<h:commandLink
+				actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}"
+				onclick="closeRequest.show();">
+				<f:ajax execute="@form" onevent="unblockUi" />
+				<p:graphicImage value="/secured/image/closeRequest.jpg" />
+			</h:commandLink>
+
+			<p:graphicImage value="/secured/image/separator.jpg" />
+			<h:commandLink
+				actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}"
+				onclick="withdrawRequest.show();">
+				<f:ajax execute="@form" onevent="unblockUi" />
+				<p:graphicImage value="/secured/image/withdrawRequest.jpg" />
+			</h:commandLink>
+
+			<pe:blockUI widgetVar="blockUIWidget">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/secured/image/loader.GIF" />
+					<p:outputLabel value="#{label['info.pleaseWait']}"
+						style="white-space: nowrap;" />
+				</h:panelGrid>
+			</pe:blockUI>
+
+			<p:dialog header="#{label['popupHeader.closeRequest']}"
+				widgetVar="closeRequest" resizable="false" width="400" height="200">
+
+				<h:panelGrid columns="0" cellpadding="4" id="contentOFCloseRequest">
+
+					<h:inputTextarea rows="5"
+						value="#{requestDetailsMB.requestDTO.closeRemarks}" cols="35"
+						maxlength="140" autoResize="true" />
+
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.closeRequest}"
+						update="request_details_frm_id" onclick="closeRequest();"
+						oncomplete="unblockUIfreeze();">
+					</p:commandButton>
 
 				</h:panelGrid>
-					
-			</p:tab>
-		</p:accordionPanel>
+			</p:dialog>
+			<p:dialog header="#{label['popupHeader.withdrawRequest']}"
+				widgetVar="withdrawRequest" resizable="false" width="400"
+				height="200">
 
-		<h:commandLink actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}" ajax="true" action="/secured/searchdonor.xhtml">
-				<p:graphicImage value="/secured/image/search.jpg"/>
-		</h:commandLink>
+				<h:panelGrid columns="0" cellpadding="4"
+					id="contentOFWithdrawRequest">
 
-		<p:graphicImage value="/secured/image/separator.jpg" />
-		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="closeRequest.show();">
-			<f:ajax execute="@form" onevent="unblockUi" />            
-			<p:graphicImage value="/secured/image/closeRequest.jpg"/>
-        </h:commandLink>
-		
-		<p:graphicImage value="/secured/image/separator.jpg" />    	
-		<h:commandLink actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}" onclick="withdrawRequest.show();">
-            <f:ajax execute="@form" onevent="unblockUi" />         
-			<p:graphicImage value="/secured/image/withdrawRequest.jpg"/>
-        </h:commandLink>  
-		
-	<pe:blockUI widgetVar="blockUIWidget">  
-	    <h:panelGrid columns="2">  
-	        <p:graphicImage
-				value="/secured/image/loader.GIF" /> 
-	        <p:outputLabel value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />  
-	    </h:panelGrid>  
-	</pe:blockUI> 
+					<h:inputTextarea rows="5"
+						value="#{requestDetailsMB.requestDTO.withdrawRemarks}" cols="35"
+						maxlength="140" autoResize="true" />
 
-		<p:dialog header="#{label['popupHeader.closeRequest']}" widgetVar="closeRequest"
-			resizable="false" width="400" height="200">
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.withdrawRequest}"
+						update="request_details_frm_id" onclick="withdrawRequest();"
+						oncomplete="unblockUIfreeze();">
+					</p:commandButton>
 
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFCloseRequest">
+				</h:panelGrid>
+			</p:dialog>
+		</h:form>
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.closeRemarks}" cols="35" maxlength="140" autoResize="true"/>
+		<h:form id="request_donors_form">
 
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.closeRequest}"
-					update="request_details_frm_id" onclick="closeRequest();"
-					oncomplete="unblockUIfreeze();">
-				</p:commandButton>
+			<p:growl id="messages" showDetail="true" />
 
-			</h:panelGrid>
-		</p:dialog>
-		<p:dialog header="#{label['popupHeader.withdrawRequest']}" widgetVar="withdrawRequest"
-			resizable="false" width="400" height="200">
+			<p:accordionPanel>
+				<p:tab title="Communication History Result">
+					<h:panelGrid cellpadding="10">
 
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFWithdrawRequest">
+						<p:dataTable rows="10"
+							value="#{requestDetailsMB.communicationHistoryResult}"
+							var="commnHist" paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15">
+							<f:facet name="header">
+								<h:outputText value="Communication History" />
+							</f:facet>
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.requestDTO.withdrawRemarks}" cols="35" maxlength="140" autoResize="true"/>
+							<p:column headerText="Donor UUID">
+								<h:outputText value="#{commnHist.donorUuid}" />
+							</p:column>
 
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.withdrawRequest}" 
-					update="request_details_frm_id" onclick="withdrawRequest();"
-					oncomplete="unblockUIfreeze();">
-				</p:commandButton>
+							<p:column headerText="Name">
+								<h:outputText value="#{commnHist.donorName}" />
+							</p:column>
 
-			</h:panelGrid>
-		</p:dialog>
-	</h:form>
+							<p:column headerText="Mobile No">
+								<h:outputText value="#{commnHist.mobileNumber}" />
+							</p:column>
 
-<h:form id="request_donors_form">
+							<p:column headerText="Status">
+								<h:outputText value="#{commnHist.status}" />
+							</p:column>
 
-		<p:growl id="messages" showDetail="true" />
-			
-		<p:accordionPanel>
-        	<p:tab title="Communication History Result">
-            <h:panelGrid  cellpadding="10" >
-               
-               <p:dataTable rows="10"  value="#{requestDetailsMB.communicationHistoryResult}" var="commnHist"
-                         paginator="true"
-                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                         rowsPerPageTemplate="5,10,15">
-            	 <f:facet name="header">   <h:outputText value="Communication History" /> </f:facet>
-            	 
-			      <p:column headerText="Donor UUID">
-			            <h:outputText value="#{commnHist.donorUuid}" />
-			      </p:column>
-			 
-			      <p:column headerText="Name">
-			            <h:outputText value="#{commnHist.donorName}" />
-			      </p:column>
-			      
-			      <p:column headerText="Mobile No">
-			            <h:outputText value="#{commnHist.mobileNumber}" />
-			      </p:column>
-			      
-   			      <p:column headerText="Status">
-			            <h:outputText value="#{commnHist.status}" />
-			      </p:column>
-			      
-			      <p:column headerText="Confirm">
-			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogConfirm.show();">
-                             <p:graphicImage value="/secured/image/confirm.jpg" />
-                             <f:ajax execute="@form"
-							  onevent="unblockUi" />
-                        </h:commandLink>
-			      </p:column>
-			      <p:column headerText="Donated">
-			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogDonated.show();">
-                             <p:graphicImage value="/secured/image/donated.jpg" />
-                             <f:ajax execute="@form"
-							  onevent="unblockUi" />
-                        </h:commandLink>
-			      </p:column>
-			      <p:column headerText="Reject">
-			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogReject.show();">
-                             <p:graphicImage value="/secured/image/reject.jpg" />
-                             <f:ajax execute="@form"
-							  onevent="unblockUi" />
-                        </h:commandLink>
-			      </p:column>
-			      
-			      <p:column headerText="Reserve">
-			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="donorDialogReserve.show();">
-                             <p:graphicImage value="/secured/image/reserve.jpg" />
-                             <f:ajax execute="@form"
-							  onevent="unblockUi" />
-                        </h:commandLink>
-			      </p:column>
-			      
-			      
-			      <p:column headerText="Add donation history">
-			              <h:commandLink actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}" onclick="addDonationHistoryDialog.show();">
-                             <p:graphicImage value="/secured/image/addhistory.jpg" />
-                             <f:ajax execute="@form"
-							  onevent="unblockUi" />
-                        </h:commandLink>
-			      </p:column>
-			      
-               </p:dataTable>
-            </h:panelGrid>
-           
-            </p:tab>
-            </p:accordionPanel>
-            
-            <pe:blockUI widgetVar="blockUIWidget">
-			<h:panelGrid columns="2">
-				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
-			</h:panelGrid>
-		</pe:blockUI>
+							<p:column headerText="Confirm">
+								<h:commandLink
+									actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}"
+									onclick="donorDialogConfirm.show();">
+									<p:graphicImage value="/secured/image/confirm.jpg" />
+									<f:ajax execute="@form" onevent="unblockUi" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Donated">
+								<h:commandLink
+									actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}"
+									onclick="donorDialogDonated.show();">
+									<p:graphicImage value="/secured/image/donated.jpg" />
+									<f:ajax execute="@form" onevent="unblockUi" />
+								</h:commandLink>
+							</p:column>
+							<p:column headerText="Reject">
+								<h:commandLink
+									actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}"
+									onclick="donorDialogReject.show();">
+									<p:graphicImage value="/secured/image/reject.jpg" />
+									<f:ajax execute="@form" onevent="unblockUi" />
+								</h:commandLink>
+							</p:column>
 
-		<p:dialog header="#{label['popupHeader.confirmAppointment']}" widgetVar="donorDialogConfirm"
-			resizable="false" width="400" height="200">
+							<p:column headerText="Reserve">
+								<h:commandLink
+									actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}"
+									onclick="donorDialogReserve.show();">
+									<p:graphicImage value="/secured/image/reserve.jpg" />
+									<f:ajax execute="@form" onevent="unblockUi" />
+								</h:commandLink>
+							</p:column>
 
 
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
+							<p:column headerText="Add donation history">
+								<h:commandLink
+									actionListener="#{requestDetailsMB.setSelectedRow(commnHist)}"
+									onclick="addDonationHistoryDialog.show();">
+									<p:graphicImage value="/secured/image/addhistory.jpg" />
+									<f:ajax execute="@form" onevent="unblockUi" />
+								</h:commandLink>
+							</p:column>
 
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-					cols="35" maxlength="140" autoResize="true" />
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.confirmSMSText}" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-					cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
-				
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.confirmDonor}"
-					update="request_donors_form" onclick="confirmAppointment();"
-					oncomplete="unblockUIfreeze();"></p:commandButton>
+						</p:dataTable>
+					</h:panelGrid>
 
-			</h:panelGrid>
-		</p:dialog>
-		<p:dialog header="#{label['popupHeader.donated']}" widgetVar="donorDialogDonated"
-			resizable="false" width="400" height="200">
+				</p:tab>
+			</p:accordionPanel>
 
+			<pe:blockUI widgetVar="blockUIWidget">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/secured/image/loader.GIF" />
+					<h:outputText value="#{label['info.pleaseWait']}"
+						style="white-space: nowrap;" />
+				</h:panelGrid>
+			</pe:blockUI>
 
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorDonated">
-
-				<h:inputTextarea rows="5" value="#{label['info.markDonated']}" 
-					cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
-				
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.markDonated}"
-					update="request_donors_form" onclick="markDonated();"
-					oncomplete="unblockUIfreeze();"></p:commandButton>
-
-			</h:panelGrid>
-		</p:dialog>
-
-		<p:dialog header="#{label['popupHeader.rejectDonor']}" widgetVar="donorDialogReject"
-			resizable="false" width="400" height="200">
+			<p:dialog header="#{label['popupHeader.confirmAppointment']}"
+				widgetVar="donorDialogConfirm" resizable="false" width="400"
+				height="200">
 
 
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReject">
+				<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorConfirm">
 
-				<h:inputTextarea rows="5" value="#{label['info.rejectDonor']}"
-					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
-					
+					<h:inputTextarea rows="5"
+						value="#{requestDetailsMB.confirmSMSText}"
+						rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+						cols="35" maxlength="140" autoResize="true" />
+					<h:inputTextarea rows="5"
+						value="#{requestDetailsMB.confirmSMSText}"
+						rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+						cols="35" maxlength="140" autoResize="true" disabled="true"
+						readonly="true" />
 
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.rejectDonor}"
-					update="request_donors_form" onclick="confirmAppointment();"
-					oncomplete="unblockUIfreeze();"></p:commandButton>
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.confirmDonor}"
+						update="request_donors_form" onclick="confirmAppointment();"
+						oncomplete="unblockUIfreeze();"></p:commandButton>
 
-			</h:panelGrid>
-		</p:dialog>
-		
-		<p:dialog header="#{label['popupHeader.reserverDonor']}" widgetVar="donorDialogReserve"
-			resizable="false" width="400" height="200">
-
-
-			<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReserve">
-
-				<h:inputTextarea rows="5" value="#{label['info.reserveDonor']}"
-					cols="35" maxlength="140" autoResize="true" readonly="true" disabled="true"/>
-
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.reserveDonor}"
-					update="request_donors_form" onclick="confirmAppointment();"
-					oncomplete="unblockUIfreeze();"></p:commandButton>
-
-			</h:panelGrid>
-		</p:dialog>
-		
-		<p:dialog header="#{label['popupHeader.addDonationHistory']}" widgetVar="addDonationHistoryDialog"
-			resizable="false" width="500" height="250">
+				</h:panelGrid>
+			</p:dialog>
+			<p:dialog header="#{label['popupHeader.donated']}"
+				widgetVar="donorDialogDonated" resizable="false" width="400"
+				height="200">
 
 
-			<h:panelGrid columns="2" cellpadding="4" id="addDonationHistoryDialogId">
+				<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorDonated">
 
-			<h:outputText value="#{label['donationDate']}" />
-			<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
-						required="true" rendered="true"
+					<h:inputTextarea rows="5" value="#{label['info.markDonated']}"
+						cols="35" maxlength="140" autoResize="true" disabled="true"
+						readonly="true" />
+
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.markDonated}"
+						update="request_donors_form" onclick="markDonated();"
+						oncomplete="unblockUIfreeze();"></p:commandButton>
+
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="#{label['popupHeader.rejectDonor']}"
+				widgetVar="donorDialogReject" resizable="false" width="400"
+				height="200">
+
+
+				<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReject">
+
+					<h:inputTextarea rows="5" value="#{label['info.rejectDonor']}"
+						cols="35" maxlength="140" autoResize="true" readonly="true"
+						disabled="true" />
+
+
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.rejectDonor}"
+						update="request_donors_form" onclick="confirmAppointment();"
+						oncomplete="unblockUIfreeze();"></p:commandButton>
+
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="#{label['popupHeader.reserverDonor']}"
+				widgetVar="donorDialogReserve" resizable="false" width="400"
+				height="200">
+
+
+				<h:panelGrid columns="0" cellpadding="4" id="contentOFDonorReserve">
+
+					<h:inputTextarea rows="5" value="#{label['info.reserveDonor']}"
+						cols="35" maxlength="140" autoResize="true" readonly="true"
+						disabled="true" />
+
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.reserveDonor}"
+						update="request_donors_form" onclick="confirmAppointment();"
+						oncomplete="unblockUIfreeze();"></p:commandButton>
+
+				</h:panelGrid>
+			</p:dialog>
+
+			<p:dialog header="#{label['popupHeader.addDonationHistory']}"
+				widgetVar="addDonationHistoryDialog" resizable="false" width="500"
+				height="250">
+
+
+				<h:panelGrid columns="2" cellpadding="4"
+					id="addDonationHistoryDialogId">
+
+					<h:outputText value="#{label['donationDate']}" />
+					<p:calendar id="requestDate" locale="ge" pattern="dd-MMM-yyyy"
+						showOn="button" required="true" rendered="true"
 						requiredMessage="Donation date is mandatory"
 						value="#{requestDetailsMB.requestDTO.donationDate}"
 						yearRange="-5:+1" />
-						
-				<h:outputText value="#{label['remarks']}" />		
-				<h:inputTextarea rows="5" value="#{requestDetailsMB.donationRemarks}"
-					cols="35" maxlength="140" autoResize="true" />
 
-				<p:commandButton value="#{label['button.confirm']}"
-					actionListener="#{requestDetailsMB.addDonationHistory}"
-					onclick="addDonationHistory();"
-					oncomplete="unblockUIfreeze();"></p:commandButton>
+					<h:outputText value="#{label['remarks']}" />
+					<h:inputTextarea rows="5"
+						value="#{requestDetailsMB.donationRemarks}" cols="35"
+						maxlength="140" autoResize="true" />
 
-			</h:panelGrid>
-		</p:dialog>
-		
-	</h:form>	
-	<br/><br/>
+					<p:commandButton value="#{label['button.confirm']}"
+						actionListener="#{requestDetailsMB.addDonationHistory}"
+						onclick="addDonationHistory();" oncomplete="unblockUIfreeze();"></p:commandButton>
+
+				</h:panelGrid>
+			</p:dialog>
+
+		</h:form>
+		<br />
+		<br />
 	</div>
-<ui:include src="footer.xhtml"></ui:include>
+	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>
 </html>

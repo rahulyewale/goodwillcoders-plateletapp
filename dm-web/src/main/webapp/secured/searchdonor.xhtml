@@ -7,187 +7,181 @@
 
 <h:head>
 	<title>Search Donors</title>
-	
-	<script type="text/javascript">
-	
-	$(document).ready(function () {
-		console.log("ready");
-	});
-	
-	
-	
-	
-   	function unblockUi(data)
-   	{
-   		if(data.status==="success")
-   		{
-   			PF('blockUIWidget').unblock();
-   		}
-   		
-   	}
-   	
-   	function sendSms()
-   	{
-   		donorDialog.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}
-   	
-	function confirmAppointment()
-   	{
-		donorDialogConfirm.hide();
-   		PF('blockUIWidget').block();
-   		
-   		
-   	}
-	
-	
-	function contactedDonor() 
-	{
-		donorContactedConfirm.hide();
-   		PF('blockUIWidget').block();
-	}
-	
-	function sendSMSImgFunction()
-   	{
-   		donorDialog.show();
-   	}
-	
 
-	
-	
-	function isChecked()
-	{
-		//alert($(":checkbox:checked").length);
-		var count=$(":checkbox:checked").length;
-		var patientNameLength;
-		if(null != document.getElementById('searchcriteria_frm_id:patientName').value)
-			patientNameLength=document.getElementById('searchcriteria_frm_id:patientName').value.length;
-		else
-			patientNameLength="";
-		if(patientNameLength>=2){
-			if(count>0)
-			{
-			document.getElementById('searchresult_frm_id:confirmcall').style.display = "block";
-			document.getElementById('searchresult_frm_id:contactall').style.display = "block";
+	<script type="text/javascript">
+		$(document).ready(function() {
+			console.log("ready");
+		});
+
+		function unblockUi(data) {
+			if (data.status === "success") {
+				PF('blockUIWidget').unblock();
 			}
+
+		}
+
+		function sendSms() {
+			donorDialog.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function confirmAppointment() {
+			donorDialogConfirm.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function contactedDonor() {
+			donorContactedConfirm.hide();
+			PF('blockUIWidget').block();
+		}
+
+		function sendSMSImgFunction() {
+			donorDialog.show();
+		}
+
+		function isChecked() {
+			//alert($(":checkbox:checked").length);
+			var count = $(":checkbox:checked").length;
+			var patientNameLength;
+			if (null != document
+					.getElementById('searchcriteria_frm_id:patientName').value)
+				patientNameLength = document
+						.getElementById('searchcriteria_frm_id:patientName').value.length;
 			else
-			{
-			document.getElementById('searchresult_frm_id:confirmcall').style.display = "none";
-			document.getElementById('searchresult_frm_id:contactall').style.display = "none";
+				patientNameLength = "";
+			if (patientNameLength >= 2) {
+				if (count > 0) {
+					document.getElementById('searchresult_frm_id:confirmcall').style.display = "block";
+					document.getElementById('searchresult_frm_id:contactall').style.display = "block";
+				} else {
+					document.getElementById('searchresult_frm_id:confirmcall').style.display = "none";
+					document.getElementById('searchresult_frm_id:contactall').style.display = "none";
+				}
 			}
 		}
-	}
-	
 	</script>
-	
-	   <style>
-	h2 { margin: 0px;	padding: 0 0; }
-   </style>
+
+	<style>
+h2 {
+	margin: 0px;
+	padding: 0 0;
+}
+</style>
 </h:head>
 <h:body>
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2 class="header">#{label['pageheader.searchDonors']}</h2>	
-	<h:form id="searchcriteria_frm_id">
-		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:panel>
-			<p:tab title="#{label['tab.searchCriteria']}">
-				<h:panelGrid columns="6" columnClasses="label, value"
-					cellpadding="10" >
-				
-					<p:outputLabel for="patientName" value="Patient Name : *" />
-					<h:inputText value="#{searchDonorMB.donorRequestDTO.patientname}" id="patientName"/>
-				
-					<p:outputLabel for="donationType" value="#{label['donationType']}" />
-					<p:selectOneMenu id="donationType"
-						value="#{searchDonorMB.donorRequestDTO.donationType}">
-						<f:selectItem itemValue="platelets " itemLabel="Platelets " style="width=80%;"/>
-					</p:selectOneMenu>
-					
-					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
-					<p:selectOneMenu id="bloodGroup"
-						value="#{searchDonorMB.donorRequestDTO.bloodGroup}" >
-						<f:selectItem itemValue="" itemLabel="Any" />
-						<f:selectItem itemValue="A+" itemLabel="A+" />
-						<f:selectItem itemValue="A-" itemLabel="A-" />
-						<f:selectItem itemValue="B+" itemLabel="B+" />
-						<f:selectItem itemValue="B-" itemLabel="B-" />
-						<f:selectItem itemValue="AB+" itemLabel="AB+" />
-						<f:selectItem itemValue="AB-" itemLabel="AB-" />
-						<f:selectItem itemValue="O+" itemLabel="O+" />
-						<f:selectItem itemValue="O-" itemLabel="O-" />
-						<f:selectItem itemValue="OH+" itemLabel="OH+" />
-						<f:selectItem itemValue="OH-" itemLabel="OH-" />
+		<h2 class="header">#{label['pageheader.searchDonors']}</h2>
+		<h:form id="searchcriteria_frm_id">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:panel>
+				<p:tab title="#{label['tab.searchCriteria']}">
+					<h:panelGrid columns="6" columnClasses="label, value"
+						cellpadding="10">
 
-					</p:selectOneMenu>
+						<p:outputLabel for="patientName" value="Patient Name : *" />
+						<h:inputText value="#{searchDonorMB.donorRequestDTO.patientname}"
+							id="patientName" />
 
-					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
-					<p:inputText id="plateletsBags" required="true" requiredMessage="Please enter Platelets Bags."
-						value="#{searchDonorMB.donorRequestDTO.plateletsBags}"
-						label="Platelets Bags" style="width=80%;" >
-						<f:validateLongRange minimum="1" />
-					</p:inputText> 
-					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
-					<p:selectOneMenu id="donationCenter"
-						value="#{searchDonorMB.donorRequestDTO.donationCentre}" style="width=80%;">
-						<f:selectItems
-							value="#{cachedDataMB.donationCenterDTOs}"
-							var="donationCenterDTO"
-							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
-							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</p:selectOneMenu>
+						<p:outputLabel for="donationType" value="#{label['donationType']}" />
+						<p:selectOneMenu id="donationType"
+							value="#{searchDonorMB.donorRequestDTO.donationType}">
+							<f:selectItem itemValue="platelets " itemLabel="Platelets "
+								style="width=80%;" />
+						</p:selectOneMenu>
 
-					<p:outputLabel for="requirementDate" value="#{label['requirementDate']}" />
-					<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
-						required="true" rendered="true"
-						requiredMessage="#{label['validation.mandatory.requirementDate']}"
-						value="#{searchDonorMB.donorRequestDTO.requestDate}"
-						yearRange="-5:+1" style="width=80%;"/>
+						<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
+						<p:selectOneMenu id="bloodGroup"
+							value="#{searchDonorMB.donorRequestDTO.bloodGroup}">
+							<f:selectItem itemValue="" itemLabel="Any" />
+							<f:selectItem itemValue="A+" itemLabel="A+" />
+							<f:selectItem itemValue="A-" itemLabel="A-" />
+							<f:selectItem itemValue="B+" itemLabel="B+" />
+							<f:selectItem itemValue="B-" itemLabel="B-" />
+							<f:selectItem itemValue="AB+" itemLabel="AB+" />
+							<f:selectItem itemValue="AB-" itemLabel="AB-" />
+							<f:selectItem itemValue="O+" itemLabel="O+" />
+							<f:selectItem itemValue="O-" itemLabel="O-" />
+							<f:selectItem itemValue="OH+" itemLabel="OH+" />
+							<f:selectItem itemValue="OH-" itemLabel="OH-" />
+
+						</p:selectOneMenu>
+
+						<p:outputLabel value="#{label['plateletsBags']}"
+							for="plateletsBags" />
+						<p:inputText id="plateletsBags" required="true"
+							requiredMessage="Please enter Platelets Bags."
+							value="#{searchDonorMB.donorRequestDTO.plateletsBags}"
+							label="Platelets Bags" style="width=80%;">
+							<f:validateLongRange minimum="1" />
+						</p:inputText>
+						<p:outputLabel for="donationCenter"
+							value="#{label['donationCenter']}" />
+						<p:selectOneMenu id="donationCenter"
+							value="#{searchDonorMB.donorRequestDTO.donationCentre}"
+							style="width=80%;">
+							<f:selectItems value="#{cachedDataMB.donationCenterDTOs}"
+								var="donationCenterDTO"
+								itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
+								itemValue="#{donationCenterDTO.donationCenterId}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="requirementDate"
+							value="#{label['requirementDate']}" />
+						<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy"
+							showOn="button" required="true" rendered="true"
+							requiredMessage="#{label['validation.mandatory.requirementDate']}"
+							value="#{searchDonorMB.donorRequestDTO.requestDate}"
+							yearRange="-5:+1" style="width=80%;" />
+					</h:panelGrid>
+
+				</p:tab>
+
+			</p:panel>
+			<h:commandLink id="searchDonorId" value=""
+				actionListener="#{searchDonorMB.searchDonor}"
+				onclick="PF('blockUIWidget').block();">
+				<p:graphicImage value="/secured/image/search.jpg" />
+				<f:ajax execute="@form" render=":searchresult_frm_id"
+					onevent="unblockUi" />
+			</h:commandLink>
+
+
+
+			<pe:blockUI widgetVar="blockUIWidget">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/secured/image/loader.GIF" />
+					<h:outputText value="#{label['info.pleaseWait']}"
+						style="white-space: nowrap;" />
 				</h:panelGrid>
+			</pe:blockUI>
 
-			</p:tab>
+		</h:form>
 
-		</p:panel>
-		<h:commandLink id="searchDonorId" value=""
-			actionListener="#{searchDonorMB.searchDonor}"
-			onclick="PF('blockUIWidget').block();"
-		>
-			<p:graphicImage value="/secured/image/search.jpg" />
-			<f:ajax execute="@form" render=":searchresult_frm_id"
-				onevent="unblockUi" />
-		</h:commandLink>
-		
-
-
-		<pe:blockUI widgetVar="blockUIWidget">
-			<h:panelGrid columns="2">
-				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
-			</h:panelGrid>
-		</pe:blockUI>
-
-	</h:form>
-
-	<h:form id="searchresult_frm_id">
-		<p:accordionPanel styleClass="searchresult" activeIndex="#{searchDonorMB.accordianActiveIndex}">
-			<p:tab title="#{label['tab.searchedResults']}">
-				<h:panelGrid>
-					<p:dataTable id="searchResultId"
-						value="#{searchDonorMB.searchDonorList}" var="donor"
-						paginator="true"
-						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rows="5">
-						<f:facet name="header">
-							<h:outputText value="Filtered Donors List" />
-						</f:facet>
-						<p:column headerText="">
-							<h:selectBooleanCheckbox class="checkboxClass" type = "checkbox" value="#{donor.selectedDonor}" onclick="isChecked()"/>
-						</p:column>
-						<p:column headerText="Name">
-							<h:outputText id="nameLabel" value="#{donor.firstName} #{donor.lastName}" />
-							<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
+		<h:form id="searchresult_frm_id">
+			<p:accordionPanel styleClass="searchresult"
+				activeIndex="#{searchDonorMB.accordianActiveIndex}">
+				<p:tab title="#{label['tab.searchedResults']}">
+					<h:panelGrid>
+						<p:dataTable id="searchResultId"
+							value="#{searchDonorMB.searchDonorList}" var="donor"
+							paginator="true"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+							rowsPerPageTemplate="5,10,15" paginatorPosition="bottom" rows="5">
+							<f:facet name="header">
+								<h:outputText value="Filtered Donors List" />
+							</f:facet>
+							<p:column headerText="">
+								<h:selectBooleanCheckbox class="checkboxClass" type="checkbox"
+									value="#{donor.selectedDonor}" onclick="isChecked()" />
+							</p:column>
+							<p:column headerText="Name">
+								<h:outputText id="nameLabel"
+									value="#{donor.firstName} #{donor.lastName}" />
+								<!-- <p:overlayPanel id="namePanel" for="nameLabel" showEvent="mouseover" hideEvent="mouseout">
 				               <p:panelGrid columns="2">  
 				                  <f:facet name="header">Address</f:facet>  
 				
@@ -195,31 +189,36 @@
 								  <h:outputLabel value="Pincode: #{donor.donorAddressDetailsDTO.pinCode}" />
 				               </p:panelGrid>  
 				          </p:overlayPanel> -->
-				          
-				          		<!-- After hovering mouse on name shows Address and number 		[START]	 -->			
-				
-				
-				
-				<p:tooltip for="nameLabel" showEffect="blind" hideEffect="blind" >
-						Mobile No.: <h:outputText value="#{donor.donorContactDetailsDTO.contactNumber}" /><br/>
-						Address : <h:outputText value="#{donor.donorAddressDetailsDTO.addressLine1}" /><br/>
-						Pin Code : <h:outputText value="#{donor.donorAddressDetailsDTO.pinCode} " />
-				</p:tooltip>			
-							
-							
-							
-							
-			<!-- After hovering mouse on name shows Address and number 		[END]	 -->			
-			
-			
-						</p:column>
 
-										
-			
-							
-							
-						
-						<!--
+								<!-- After hovering mouse on name shows Address and number 		[START]	 -->
+
+
+
+								<p:tooltip for="nameLabel" showEffect="blind" hideEffect="blind">
+						Mobile No.: <h:outputText
+										value="#{donor.donorContactDetailsDTO.contactNumber}" />
+									<br />
+						Address : <h:outputText
+										value="#{donor.donorAddressDetailsDTO.addressLine1}" />
+									<br />
+						Pin Code : <h:outputText
+										value="#{donor.donorAddressDetailsDTO.pinCode} " />
+								</p:tooltip>
+
+
+
+
+								<!-- After hovering mouse on name shows Address and number 		[END]	 -->
+
+
+							</p:column>
+
+
+
+
+
+
+							<!--
 						
 						<p:column headerText="Contact No">
 							<h:outputText
@@ -231,112 +230,125 @@
 						</p:column>
 						
 						 -->
-						<p:column headerText="Email">
-							<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
-						</p:column>
-						<p:column headerText="Blood Group">
-							<h:outputText value="#{donor.bloodGroup}" />
-						</p:column>
-						<p:column headerText="Last Donation date">
-							<h:outputText value="#{donor.lastDonationDate}" />
-						</p:column>
-						<p:column headerText="Next available date">
-							<h:outputText value="#{donor.nextAvailableDate}" />
-						</p:column>
-						<p:column headerText="Distance (Km)">
-							<h:outputText value="#{donor.distanceKm}" />
-						</p:column>
-						<p:column headerText="Note">
-							<h:outputText value="#{donor.searchComment}"/>
-						</p:column>
-						<p:column headerText="Rating">
-							<p:rating value="#{donor.rating}" cssStyle="white-space:no-wrap" readonly="true" stars="6" />
-						</p:column>
-					</p:dataTable>
+							<p:column headerText="Email">
+								<h:outputText value="#{donor.donorContactDetailsDTO.email}" />
+							</p:column>
+							<p:column headerText="Blood Group">
+								<h:outputText value="#{donor.bloodGroup}" />
+							</p:column>
+							<p:column headerText="Last Donation date">
+								<h:outputText value="#{donor.lastDonationDate}" />
+							</p:column>
+							<p:column headerText="Next available date">
+								<h:outputText value="#{donor.nextAvailableDate}" />
+							</p:column>
+							<p:column headerText="Distance (Km)">
+								<h:outputText value="#{donor.distanceKm}" />
+							</p:column>
+							<p:column headerText="Note">
+								<h:outputText value="#{donor.searchComment}" />
+							</p:column>
+							<p:column headerText="Rating">
+								<p:rating value="#{donor.rating}" cssStyle="white-space:no-wrap"
+									readonly="true" stars="6" />
+							</p:column>
+						</p:dataTable>
 
-					<p:dialog header="#{label['popupHeader.sendSMS']}" widgetVar="donorDialog"
-						resizable="false" width="400" height="200">
+						<p:dialog header="#{label['popupHeader.sendSMS']}"
+							widgetVar="donorDialog" resizable="false" width="400"
+							height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
+							<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
 
-							<h:inputTextarea rows="5"
-								value="#{searchDonorMB.searchDonorResponseDTO.intialSmsText}"
-								cols="35" maxlength="140" autoResize="true" />
-
-							<h:commandButton value="Send"
-								actionListener="#{searchDonorMB.sendSmsToSelectedDonors}"
-								onclick="sendSms()">
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+								<h:inputTextarea rows="5"
+									value="#{searchDonorMB.searchDonorResponseDTO.intialSmsText}"
+									cols="35" maxlength="140" autoResize="true" />
+								<h:commandButton value="Send"
+									actionListener="#{searchDonorMB.sendSmsToSelectedDonors}"
+									onclick="sendSms()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
+							</h:panelGrid>
+						</p:dialog>
 
-					<p:dialog header="#{label['popupHeader.confirmAppointment']}" widgetVar="donorDialogConfirm"
-						resizable="false" width="400" height="200">
+						<p:dialog header="#{label['popupHeader.confirmAppointment']}"
+							widgetVar="donorDialogConfirm" resizable="false" width="400"
+							height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4"
-							id="contentOFDonorConfirm">
+							<h:panelGrid columns="0" cellpadding="4"
+								id="contentOFDonorConfirm">
 
-							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true"/>
-							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
-								
-							<h:commandButton value="#{label['button.confirm']}"
-								actionListener="#{searchDonorMB.confirmDonorAppointment}"
-								onclick="confirmAppointment()" >
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+								<h:inputTextarea rows="5"
+									rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+									value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
+									cols="35" maxlength="140" autoResize="true" />
+								<h:inputTextarea rows="5"
+									rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+									value="#{searchDonorMB.searchDonorResponseDTO.confirmSmsText}"
+									cols="35" maxlength="140" autoResize="true" disabled="true"
+									readonly="true" />
+
+								<h:commandButton value="#{label['button.confirm']}"
+									actionListener="#{searchDonorMB.confirmDonorAppointment}"
+									onclick="confirmAppointment()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
-					
-					<p:dialog header="#{label['popupHeader.contactedConfirmation']}" widgetVar="donorContactedConfirm"
-						resizable="false" width="400" height="200">
+							</h:panelGrid>
+						</p:dialog>
+
+						<p:dialog header="#{label['popupHeader.contactedConfirmation']}"
+							widgetVar="donorContactedConfirm" resizable="false" width="400"
+							height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4"
-							id="donorContactedConfirm">
+							<h:panelGrid columns="0" cellpadding="4"
+								id="donorContactedConfirm">
 
-							<h:inputTextarea rows="5"
-								value="#{label['info.markContacted']}"
-								cols="35" maxlength="140" autoResize="false" readonly="true" disabled="true" />
-							
-							<h:commandButton value="#{label['button.confirm']}"
-								actionListener="#{searchDonorMB.markDonorAsContacted}"
-								onclick="contactedDonor()">
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+								<h:inputTextarea rows="5" value="#{label['info.markContacted']}"
+									cols="35" maxlength="140" autoResize="false" readonly="true"
+									disabled="true" />
+
+								<h:commandButton value="#{label['button.confirm']}"
+									actionListener="#{searchDonorMB.markDonorAsContacted}"
+									onclick="contactedDonor()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
-					
-				</h:panelGrid>
-			</p:tab>
+							</h:panelGrid>
+						</p:dialog>
 
-		</p:accordionPanel>
-		
-		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block">
-			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
-			<p:graphicImage value="/secured/image/separator.jpg" />
-		</h:panelGroup>
-		<h:panelGrid columns="2" cellpading="10">
-			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"  style="display:none" />
-			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"  style="display:none" />
-		</h:panelGrid>
-		
-	</h:form>
+					</h:panelGrid>
+				</p:tab>
+
+			</p:accordionPanel>
+
+			<h:panelGroup
+				rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+				style="display: inline-block">
+				<h:commandButton image="/secured/image/sendsms.jpg"
+					onclick="donorDialog.show();return false;" />
+				<p:graphicImage value="/secured/image/separator.jpg" />
+			</h:panelGroup>
+			<h:panelGrid columns="2" cellpading="10">
+				<h:commandButton id="confirmcall"
+					image="/secured/image/confirmviacall.jpg"
+					onclick="donorDialogConfirm.show();return false;"
+					style="display:none" />
+				<h:commandButton id="contactall"
+					image="/secured/image/contacted.jpg"
+					onclick="donorContactedConfirm.show();return false;"
+					style="display:none" />
+			</h:panelGrid>
+
+		</h:form>
 	</div>
-	
-	<br /> <br /> 
+
+	<br />
+	<br />
 	<ui:include src="footer.xhtml"></ui:include>
 
 

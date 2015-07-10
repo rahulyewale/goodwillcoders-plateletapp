@@ -1,11 +1,14 @@
 package org.ngo.think.dm.web.managebeans;
 import java.io.Serializable;
  
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
  
  
 /**
@@ -38,6 +41,10 @@ public class LoginBean implements Serializable {
      */
     public String doLogin() {
         // Get every user from our sample database :)
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = request.getSession();
+		session.setAttribute("username", username);
         for (String user: USERS) {
             String dbUsername = user.split(":")[0];
             String dbPassword = user.split(":")[1];
@@ -53,6 +60,9 @@ public class LoginBean implements Serializable {
                 {
                 	setUpload("none");
                 }
+
+				System.out.println("useratLB" + username);
+				setPassword(dbPassword);
                 return navigationBean.redirectToWelcome();
             }
         }
@@ -91,6 +101,7 @@ public class LoginBean implements Serializable {
     }
  
     public void setUsername(String username) {
+		if (this.username == null)
         this.username = username;
     }
  

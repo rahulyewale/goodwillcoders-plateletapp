@@ -9,71 +9,65 @@
 <h:head>
 	<title>Search Donors</title>
 	<style>
-		#map {
-		    width:600px;
-		    height:420px;
-		}
-		#marker-tooltip {
-		    display: none;
-		    position:absolute;
-		    width: 300px;
-		    height: 200px;
-		    background-color: #ccc;
-		    margin: 15px;
-		}
-	</style>
-	
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true">
-    </script> 
+#map {
+	width: 600px;
+	height: 420px;
+}
+
+#marker-tooltip {
+	display: none;
+	position: absolute;
+	width: 300px;
+	height: 200px;
+	background-color: #ccc;
+	margin: 15px;
+}
+</style>
+
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?sensor=true">
+		
+	</script>
 	<script type="text/javascript">
-   	function unblockUi(data)
-   	{
-   		if(data.status==="success")
-   		{
-   			PF('blockUIWidget').unblock();
-   		}
-   	}
-   	function markerInfoOpen(event, name)
-   	{
-		event.info = new google.maps.InfoWindow({
-	   		  content: '<b>'+name+'</b>'
-   		});
-   		event.info.open(event.parentMap, event);
-   	}
-   	
-   	function markerInfoClose(event)
-   	{
-   		event.info.close();
-   		event.info = null;
-   	}
-   	
-   	
-   	function sendSms()
-   	{
-   		donorDialog.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}
-   	
-	function confirmAppointment()
-   	{
-		donorDialogConfirm.hide();
-   		PF('blockUIWidget').block();
-   		
-   	}
-	
-	function contactedDonor() 
-	{
-		donorContactedConfirm.hide();
-   		PF('blockUIWidget').block();
-	}
-	
-	function sendSMSImgFunction()
-   	{
-   		donorDialog.show();
-   	}
-	
-	var count;
+		function unblockUi(data) {
+			if (data.status === "success") {
+				PF('blockUIWidget').unblock();
+			}
+		}
+		function markerInfoOpen(event, name) {
+			event.info = new google.maps.InfoWindow({
+				content : '<b>' + name + '</b>'
+			});
+			event.info.open(event.parentMap, event);
+		}
+
+		function markerInfoClose(event) {
+			event.info.close();
+			event.info = null;
+		}
+
+		function sendSms() {
+			donorDialog.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function confirmAppointment() {
+			donorDialogConfirm.hide();
+			PF('blockUIWidget').block();
+
+		}
+
+		function contactedDonor() {
+			donorContactedConfirm.hide();
+			PF('blockUIWidget').block();
+		}
+
+		function sendSMSImgFunction() {
+			donorDialog.show();
+		}
+
+		
 	</script>
 
 </h:head>
@@ -81,112 +75,135 @@
 
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
-	<h2  class="header">#{label['pageheader.searchDonorsOnMap']}</h2>
-	<h:form id="searchcriteria_frm_id">
-		<p:messages id="messages" autoUpdate="true" closable="true" />
-		<p:panel>
-			<p:tab title="#{label['tab.searchCriteria']}">
-				<h:panelGrid columns="4" columnClasses="label, value"
-					cellpadding="5">
-					
-					<p:outputLabel for="patientName" value="Patient Name : *" />
-					<h:inputText value="#{searchDonorOnMapMB.donorRequestDTO.patientname}" id="patientName"/>
+		<h2 class="header">#{label['pageheader.searchDonorsOnMap']}</h2>
+		<h:form id="searchcriteria_frm_id">
+			<p:messages id="messages" autoUpdate="true" closable="true" />
+			<p:panel>
+				<p:tab title="#{label['tab.searchCriteria']}">
+					<h:panelGrid columns="4" columnClasses="label, value"
+						cellpadding="5">
 
-					<p:outputLabel for="donationType" value="#{label['donationType']}" />
-					<p:selectOneMenu id="donationType"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationType}">
-						<f:selectItem itemValue="platelets " itemLabel="Platelets " />
-					</p:selectOneMenu>
+						<p:outputLabel for="patientName" value="Patient Name : *" />
+						<h:inputText
+							value="#{searchDonorOnMapMB.donorRequestDTO.patientname}"
+							id="patientName" />
 
-					<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
-					<p:selectOneMenu id="bloodGroup"
-						value="#{searchDonorOnMapMB.donorRequestDTO.bloodGroup}">
-						<f:selectItem itemValue="" itemLabel="Any" />
-						<f:selectItem itemValue="A+" itemLabel="A+" />
-						<f:selectItem itemValue="A-" itemLabel="A-" />
-						<f:selectItem itemValue="B+" itemLabel="B+" />
-						<f:selectItem itemValue="B-" itemLabel="B-" />
-						<f:selectItem itemValue="AB+" itemLabel="AB+" />
-						<f:selectItem itemValue="AB-" itemLabel="AB-" />
-						<f:selectItem itemValue="O+" itemLabel="O+" />
-						<f:selectItem itemValue="O-" itemLabel="O-" />
-						<f:selectItem itemValue="OH+" itemLabel="OH+(Bombay+ Blood Group)" />
-						<f:selectItem itemValue="OH-" itemLabel="OH-(Bombay- Blood Group)" />
+						<p:outputLabel for="donationType" value="#{label['donationType']}" />
+						<p:selectOneMenu id="donationType"
+							value="#{searchDonorOnMapMB.donorRequestDTO.donationType}">
+							<f:selectItem itemValue="platelets " itemLabel="Platelets " />
+						</p:selectOneMenu>
 
-					</p:selectOneMenu>
+						<p:outputLabel for="bloodGroup" value="#{label['bloodGroup']}" />
+						<p:selectOneMenu id="bloodGroup"
+							value="#{searchDonorOnMapMB.donorRequestDTO.bloodGroup}">
+							<f:selectItem itemValue="" itemLabel="Any" />
+							<f:selectItem itemValue="A+" itemLabel="A+" />
+							<f:selectItem itemValue="A-" itemLabel="A-" />
+							<f:selectItem itemValue="B+" itemLabel="B+" />
+							<f:selectItem itemValue="B-" itemLabel="B-" />
+							<f:selectItem itemValue="AB+" itemLabel="AB+" />
+							<f:selectItem itemValue="AB-" itemLabel="AB-" />
+							<f:selectItem itemValue="O+" itemLabel="O+" />
+							<f:selectItem itemValue="O-" itemLabel="O-" />
+							<f:selectItem itemValue="OH+"
+								itemLabel="OH+(Bombay+ Blood Group)" />
+							<f:selectItem itemValue="OH-"
+								itemLabel="OH-(Bombay- Blood Group)" />
 
-					<p:outputLabel value="#{label['plateletsBags']}" for="plateletsBags"/>
-					<p:inputText id="plateletsBags" required="true" requiredMessage="Please enter Platelets Bags."
-						value="#{searchDonorOnMapMB.donorRequestDTO.plateletsBags}"
-						label="Platelets Bags">
-						<f:validateLongRange minimum="1"/>
-					</p:inputText>
-					
-					<p:outputLabel for="donationCenter" value="#{label['donationCenter']}" />
-					<p:selectOneMenu id="donationCenter"
-						value="#{searchDonorOnMapMB.donorRequestDTO.donationCentre}">
-						<f:selectItems
-							value="#{cachedDataMB.donationCenterDTOs}"
-							var="donationCenterDTO"
-							itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
-							itemValue="#{donationCenterDTO.donationCenterId}" />
-					</p:selectOneMenu>
+						</p:selectOneMenu>
 
-					<p:outputLabel for="requirementDate" value="#{label['requirementDate']}" />
-					<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy" showOn="button"
-						required="true" rendered="true"
-						requiredMessage="#{label['validation.mandatory.requirementDate']}"
-						value="#{searchDonorOnMapMB.donorRequestDTO.requestDate}"
-						yearRange="-5:+1" />
+						<p:outputLabel value="#{label['plateletsBags']}"
+							for="plateletsBags" />
+						<p:inputText id="plateletsBags" required="true"
+							requiredMessage="Please enter Platelets Bags."
+							value="#{searchDonorOnMapMB.donorRequestDTO.plateletsBags}"
+							label="Platelets Bags">
+							<f:validateLongRange minimum="1" />
+						</p:inputText>
 
+						<p:outputLabel for="donationCenter"
+							value="#{label['donationCenter']}" />
+						<p:selectOneMenu id="donationCenter"
+							value="#{searchDonorOnMapMB.donorRequestDTO.donationCentre}">
+							<f:selectItems value="#{cachedDataMB.donationCenterDTOs}"
+								var="donationCenterDTO"
+								itemLabel="#{donationCenterDTO.donationCenterName},#{donationCenterDTO.city}"
+								itemValue="#{donationCenterDTO.donationCenterId}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel for="requirementDate"
+							value="#{label['requirementDate']}" />
+						<p:calendar id="requirementDate" locale="ge" pattern="dd-MMM-yyyy"
+							showOn="button" required="true" rendered="true"
+							requiredMessage="#{label['validation.mandatory.requirementDate']}"
+							value="#{searchDonorOnMapMB.donorRequestDTO.requestDate}"
+							yearRange="-5:+1" />
+
+					</h:panelGrid>
+
+				</p:tab>
+			</p:panel>
+
+			<h:commandLink id="searchDonorId" value=""
+				actionListener="#{searchDonorOnMapMB.searchDonor}"
+				onclick="PF('blockUIWidget').block()">
+				<p:graphicImage value="/secured/image/search.jpg" />
+				<f:ajax execute="@form" render=":searchresult_frm_id"
+					onevent="unblockUi" />
+			</h:commandLink>
+
+
+			<pe:blockUI widgetVar="blockUIWidget">
+				<h:panelGrid columns="2">
+					<p:graphicImage value="/secured/image/loader.GIF" />
+					<h:outputText value="#{label['info.pleaseWait']}"
+						style="white-space: nowrap;" />
 				</h:panelGrid>
+			</pe:blockUI>
 
-			</p:tab>
-		</p:panel>
-		
-		<h:commandLink id="searchDonorId" value=""
-			actionListener="#{searchDonorOnMapMB.searchDonor}"
-			onclick="PF('blockUIWidget').block()">
-			<p:graphicImage value="/secured/image/search.jpg" />
-			<f:ajax execute="@form" render=":searchresult_frm_id"
-				onevent="unblockUi" />
-		</h:commandLink>
+		</h:form>
 
+		<h:form id="searchresult_frm_id">
+			<!-- hidden label for keeping count of Selection on map -->
+			<h:outputLabel id="countt" value="0" style="display:none" />
+			<h:outputLabel id="patientname" value="#{searchDonorMB.patientName}" style="display:none" />
+			<p:accordionPanel id="accPanel" styleClass="searchresult"
+				activeIndex="#{searchDonorOnMapMB.accordianActiveIndex}">
+				<p:tab title="#{label['tab.searchedResultsOnMap']}" id="mapTab">
+					<h:panelGrid id="panelGrid">
+						<div id="marker-tooltip"></div>
+						<m:map width="1000px" height="500px" latitude="24" longitude="15"
+							jsVariable="map1" zoom="4" autoReshape="true" debug="true"
+							partiallyTriggered="true">
+							<m:mapControl id="mapcontrol" name="GMapTypeControl" />
+							<m:marker
+								latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}"
+								longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}"
+								showInformationEvent="mouseover">
 
-		<pe:blockUI widgetVar="blockUIWidget">
-			<h:panelGrid columns="2">
-				<p:graphicImage value="/secured/image/loader.GIF" />
-				<h:outputText value="#{label['info.pleaseWait']}" style="white-space: nowrap;" />
-			</h:panelGrid>
-		</pe:blockUI>
+								<m:eventListener eventName="mouseover"
+									jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}" />
+								<m:eventListener eventName="mouseout"
+									jsFunction="function(){markerInfoClose(this);}" />
 
-	</h:form>
+								<m:icon imageURL="../secured/image/donationcentre5.png" />
+							</m:marker>
+							<ui:repeat var="donorMarker"
+								value="#{searchDonorOnMapMB.searchDonorList}"
+								varStatus="donorLoopVar">
+								<m:marker
+									latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}"
+									longitude="#{donorMarker.donorAddressDetailsDTO.longitude}"
+									draggable="false" jsVariable="donorMark">
 
-	<h:form id="searchresult_frm_id">
-		<!-- hidden label for keeping count of Selection on map -->	
-		<h:outputLabel id="countt" value="0" style="display:none"/>
-		<p:accordionPanel id="accPanel" styleClass="searchresult" activeIndex="#{searchDonorOnMapMB.accordianActiveIndex}"> 
-			 <p:tab title="#{label['tab.searchedResultsOnMap']}" id="mapTab">
-				<h:panelGrid id="panelGrid">
-					<div id="marker-tooltip"></div>
-					<m:map width="1000px" height="500px" latitude="24" longitude="15"  jsVariable="map1" zoom="4" autoReshape="true" debug="true" partiallyTriggered="true">
-						<m:mapControl id="mapcontrol" name="GMapTypeControl"/>
-						<m:marker latitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.lattitude}" 
-                    	     		longitude="#{searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.longitude}" showInformationEvent="mouseover">
-                    	    
-                    	    <m:eventListener  eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.donationCenterName}, ${searchDonorOnMapMB.searchDonorResponseDTO.donationCenterDTO.city}');}"/>
-                    	    <m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
+									<m:eventListener eventName="mouseover"
+										jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}" />
+									<m:eventListener eventName="mouseout"
+										jsFunction="function(){markerInfoClose(this);}" />
 
-                    	 	<m:icon imageURL="../secured/image/donationcentre5.png"/>
-                    	 </m:marker>
-						<ui:repeat var="donorMarker" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="donorLoopVar">
-                    	     	<m:marker latitude="#{donorMarker.donorAddressDetailsDTO.lattitude}" 
-                    	     		longitude="#{donorMarker.donorAddressDetailsDTO.longitude}" draggable="false" jsVariable="donorMark">
-                    	     		
-                    	     		<m:eventListener  eventName="mouseover" jsFunction="function(){markerInfoOpen(this, '${donorMarker.firstName}:${donorMarker.donorContactDetailsDTO.contactNumber} &lt;br&gt; ${donorMarker.donorAddressDetailsDTO.addressLine1} &lt;br&gt; ${donorMarker.searchComment} &lt;br%2F&gt;');}"/>
-                    	     		<m:eventListener eventName="mouseout" jsFunction="function(){markerInfoClose(this);}"/>
-                    	     		                    	     			
-                    	     		<m:eventListener eventName="click" jsFunction="
+									<m:eventListener eventName="click"
+										jsFunction="
                     	     		function()
                     	     		{
 									var count=document.getElementById('searchresult_frm_id:countt').innerHTML;
@@ -209,106 +226,125 @@
                     	     			count++;
                     	     			document.getElementById('searchresult_frm_id:countt').innerHTML=count;
                     	     		 	selCheck.value = 'true';
+                    	     		 	var patientName=document.getElementById('searchcriteria_frm_id:patientName').value;
+                    	     		 	var patientNameLength=patientName.length;
+                    	     		 	if(patientNameLength>=2)
+                    	     		 	{
                     	     		 	document.getElementById('searchresult_frm_id:confirmcall').style.display ='block';
                     	     		 	document.getElementById('searchresult_frm_id:contactall').style.display ='block';
+                    	     		 	}
                     	     		 	this.setIcon('../secured/image/marker_checked.png');
                     	     		 	};
-                    	     		 }"/>
-                    	     		<m:icon imageURL="../secured/image/marker_unchecked.png"/>
-                    	     	</m:marker>
-                    	</ui:repeat> 
-					</m:map>
-					<ui:repeat id="hiddenVarLoop" var="donor" value="#{searchDonorOnMapMB.searchDonorList}" varStatus="loopvar">
-    					<h:inputHidden id="donor_" value="#{donor.selectedDonor}"/>
-    				</ui:repeat>
-    				
-    				
-    				<p:dialog header="#{label['popupHeader.sendSMS']}" widgetVar="donorDialog"
-						resizable="false" width="400" height="200">
+                    	     		 }" />
+									<m:icon imageURL="../secured/image/marker_unchecked.png" />
+								</m:marker>
+							</ui:repeat>
+						</m:map>
+						<ui:repeat id="hiddenVarLoop" var="donor"
+							value="#{searchDonorOnMapMB.searchDonorList}" varStatus="loopvar">
+							<h:inputHidden id="donor_" value="#{donor.selectedDonor}" />
+						</ui:repeat>
 
 
-						<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
+						<p:dialog header="#{label['popupHeader.sendSMS']}"
+							widgetVar="donorDialog" resizable="false" width="400"
+							height="200">
 
-							<h:inputTextarea rows="5"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.intialSmsText}"
-								cols="35" maxlength="140" autoResize="true" />
 
-							<h:commandButton value="Send"
-								actionListener="#{searchDonorOnMapMB.sendSmsToSelectedDonors}"
-								onclick="sendSms()">
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+							<h:panelGrid columns="0" cellpadding="4" id="contentOFDonor">
+
+								<h:inputTextarea rows="5"
+									value="#{searchDonorOnMapMB.searchDonorResponseDTO.intialSmsText}"
+									cols="35" maxlength="140" autoResize="true" />
+
+								<h:commandButton value="Send"
+									actionListener="#{searchDonorOnMapMB.sendSmsToSelectedDonors}"
+									onclick="sendSms()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
+							</h:panelGrid>
+						</p:dialog>
 
-					<p:dialog header="#{label['popupHeader.confirmAppointment']}" widgetVar="donorDialogConfirm"
-						resizable="false" width="400" height="200">
+						<p:dialog header="#{label['popupHeader.confirmAppointment']}"
+							widgetVar="donorDialogConfirm" resizable="false" width="400"
+							height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4"
-							id="contentOFDonorConfirm">
+							<h:panelGrid columns="0" cellpadding="4"
+								id="contentOFDonorConfirm">
 
-							<h:inputTextarea rows="5" rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" />
-							<h:inputTextarea rows="5" rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
-								value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
-								cols="35" maxlength="140" autoResize="true" disabled="true" readonly="true"/>
+								<h:inputTextarea rows="5"
+									rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+									value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
+									cols="35" maxlength="140" autoResize="true" />
+								<h:inputTextarea rows="5"
+									rendered="#{not cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+									value="#{searchDonorOnMapMB.searchDonorResponseDTO.confirmSmsText}"
+									cols="35" maxlength="140" autoResize="true" disabled="true"
+									readonly="true" />
 
-							<h:commandButton value="#{label['button.confirm']}"
-								actionListener="#{searchDonorOnMapMB.confirmDonorAppointment}"
-								onclick="confirmAppointment()">
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+								<h:commandButton value="#{label['button.confirm']}"
+									actionListener="#{searchDonorOnMapMB.confirmDonorAppointment}"
+									onclick="confirmAppointment()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
-					
-					<p:dialog header="#{label['popupHeader.contactedConfirmation']}" widgetVar="donorContactedConfirm"
-						resizable="false" width="400" height="200">
+							</h:panelGrid>
+						</p:dialog>
+
+						<p:dialog header="#{label['popupHeader.contactedConfirmation']}"
+							widgetVar="donorContactedConfirm" resizable="false" width="400"
+							height="200">
 
 
-						<h:panelGrid columns="0" cellpadding="4"
-							id="donorContactedConfirm">
+							<h:panelGrid columns="0" cellpadding="4"
+								id="donorContactedConfirm">
 
-							<h:inputTextarea rows="5"
-								value="#{label['info.markContacted']}"
-								cols="35" maxlength="140" autoResize="false" readonly="true" disabled="true" />
+								<h:inputTextarea rows="5" value="#{label['info.markContacted']}"
+									cols="35" maxlength="140" autoResize="false" readonly="true"
+									disabled="true" />
 
-							<h:commandButton value="#{label['button.confirm']}"
-								actionListener="#{searchDonorOnMapMB.markDonorAsContacted}"
-								onclick="contactedDonor()">
-								<f:ajax execute="@form"
-							 	 onevent="unblockUi" />
+								<h:commandButton value="#{label['button.confirm']}"
+									actionListener="#{searchDonorOnMapMB.markDonorAsContacted}"
+									onclick="contactedDonor()">
+									<f:ajax execute="@form" onevent="unblockUi" />
 								</h:commandButton>
 
-						</h:panelGrid>
-					</p:dialog>
-				</h:panelGrid>
-			</p:tab>
-			
-		</p:accordionPanel>
-		
-		<h:panelGroup rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}" style="display: inline-block"> 
-			<h:commandButton image="/secured/image/sendsms.jpg" onclick="donorDialog.show();return false;"/>
-			<p:graphicImage value="/secured/image/separator.jpg" />
-		</h:panelGroup>
-		
-		
-		<h:panelGrid columns="2" cellpading="10">
-			<h:commandButton id="confirmcall" image="/secured/image/confirmviacall.jpg" onclick="donorDialogConfirm.show();return false;"  style="display:none" />
-			<h:commandButton id="contactall" image="/secured/image/contacted.jpg" onclick="donorContactedConfirm.show();return false;"  style="display:none" />
-		</h:panelGrid>
-		
-		
-	</h:form>
+							</h:panelGrid>
+						</p:dialog>
+					</h:panelGrid>
+				</p:tab>
+
+			</p:accordionPanel>
+
+			<h:panelGroup
+				rendered="#{cachedDataMB.getFeatureStatus('sendSMSFeature')}"
+				style="display: inline-block">
+				<h:commandButton image="/secured/image/sendsms.jpg"
+					onclick="donorDialog.show();return false;" />
+				<p:graphicImage value="/secured/image/separator.jpg" />
+			</h:panelGroup>
+
+
+			<h:panelGrid columns="2" cellpading="10">
+				<h:commandButton id="confirmcall"
+					image="/secured/image/confirmviacall.jpg"
+					onclick="donorDialogConfirm.show();return false;"
+					style="display:none" />
+				<h:commandButton id="contactall"
+					image="/secured/image/contacted.jpg"
+					onclick="donorContactedConfirm.show();return false;"
+					style="display:none" />
+			</h:panelGrid>
+
+
+		</h:form>
 	</div>
-	
-	<br/> <br/>
-	
+
+	<br />
+	<br />
+
 	<ui:include src="footer.xhtml"></ui:include>
 
 </h:body>

@@ -32,6 +32,8 @@ public class CachedDataMB implements Serializable
 	
 	private Map<String, Boolean> featureMap = new HashMap<String, Boolean>();
 	
+	private String username;
+
 	public boolean getFeatureStatus(String featureName)
 	{
 		return featureMap.get(featureName);
@@ -132,5 +134,13 @@ public class CachedDataMB implements Serializable
 
 	public void setAreDonationCentersFetched(boolean areDonationCentersFetched) {
 		this.areDonationCentersFetched = areDonationCentersFetched;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }

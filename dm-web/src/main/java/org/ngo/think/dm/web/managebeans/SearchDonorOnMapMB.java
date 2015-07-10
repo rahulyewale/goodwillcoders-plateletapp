@@ -12,6 +12,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.ngo.think.dm.common.Context.ContextInfo;
 import org.ngo.think.dm.common.communication.dto.ServiceRequest;
@@ -56,9 +58,21 @@ public class SearchDonorOnMapMB implements Serializable
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
 
+
 	@PostConstruct
 	public void searchDonnorPostConstruct()
 	{
+		// view page only if logged in
+		HttpServletRequest request = (HttpServletRequest) FacesContext
+				.getCurrentInstance().getExternalContext().getRequest();
+		HttpSession session = request.getSession();
+		if (session.getAttribute("username") == null) {
+			NavigationBean NB = new NavigationBean();
+			NB.redirectToLogin();
+		}
+		System.out.println("session on map called");
+		//
+
 		if (null != dashbordMB.getSearchDonorRequestDTO())
 		{
 			setDonorRequestDTO(dashbordMB.getSearchDonorRequestDTO());
