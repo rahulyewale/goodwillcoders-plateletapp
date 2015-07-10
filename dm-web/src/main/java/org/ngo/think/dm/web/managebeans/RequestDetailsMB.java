@@ -57,6 +57,7 @@ public class RequestDetailsMB implements Serializable
 	private int countReserved;
 	private int countRejected;
 	
+	
 
 	@ManagedProperty(value = "#{dashbord}")
 	private DashbordMB dashbordMB = new DashbordMB();
@@ -153,63 +154,17 @@ public class RequestDetailsMB implements Serializable
 			{setCountRejected(getCountRejected()+1);
 			System.out.println("Count Rejected is "+getCountRejected());
 			}
+ else if (status.get(i).equals("DONATED")) {
+				setCountDonated(getCountDonated() + 1);
+				System.out.println("Count Rejected is " + getCountDonated());
+			}
 		}
 		//countConfirmed=Collections.frequency(communicationHistoryResult,communicationHistoryResultDTO.getStatus());
 		System.out.println("Count Confirmed is "+countConfirmed);
+		System.out.println("countDonated " + countDonated);
 		
 	}
 
-	
-	/////added
-	public void getCounts()
-	{
-		setRequestDTO(dashbordMB.getSelectedRequestDTO());
-		try
-		{
-			getRequestDTO().setDonationDate(DateUtil.stringToDate(getRequestDTO().getRequestedDate(),"dd-MMM-yyyy"));
-		}
-		catch (ParseException e)
-		{
-			e.printStackTrace();
-		}
-		getCommunicationHistory();
-		
-	////for count
-			setCountDonors(0);
-			int count=communicationHistoryResult.size();
-			setCountDonors(count);
-			
-			System.out.println(count);
-		System.out.println(requestDTO.getRequestNumber());
-		
-		List<String> status= new ArrayList<String>();
-		
-		//setcon
-		for(int i=0;i<communicationHistoryResult.size();i++)
-		{
-			status.add(communicationHistoryResult.get(i).getStatus());
-			System.out.println(status.get(i));
-			
-			if(status.get(i).equals("CONFIRMED"))
-			{setCountConfirmed(getCountConfirmed()+1);
-			System.out.println("Count Confirmed is "+getCountConfirmed());
-			}
-			else if(status.get(i).equals("REJECTED"))
-			{setCountRejected(getCountRejected()+1);
-			System.out.println("Count Rejected is "+getCountRejected());
-			}
-		}
-		//countConfirmed=Collections.frequency(communicationHistoryResult,communicationHistoryResultDTO.getStatus());
-		System.out.println("Count Confirmed is "+countConfirmed);
-		
-	}
-	
-	//////
-	
-	
-	
-	
-	
 	
 	public void getCommunicationHistory()
 	{

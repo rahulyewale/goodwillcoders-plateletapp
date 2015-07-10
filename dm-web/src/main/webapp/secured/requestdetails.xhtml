@@ -49,9 +49,31 @@
 			PF('blockUIWidget').unblock();
 
 		}
+		
+		function checkDonation(a)
+		{
+			var donatedCount="#{requestDetailsMB.countDonated}";
+				if(a==1)
+					{
+					document.getElementById("request_details_frm_id:closeRequest").style.display="block";
+					document.getElementById("request_details_frm_id:withdrawRequest").style.display="none";
+					}
+				if(donatedCount>=1)
+				{
+					document.getElementById("request_details_frm_id:closeRequest").style.display="block";
+					document.getElementById("request_details_frm_id:withdrawRequest").style.display="none";
+				}
+				else
+				{
+					document.getElementById("request_details_frm_id:closeRequest").style.display="none";
+					document.getElementById("request_details_frm_id:withdrawRequest").style.display="block";
+				}
+				
+		}
+		
 	</script>
 </h:head>
-<h:body>
+<h:body onload="checkDonation(0)">
 	<ui:include src="header.xhtml"></ui:include>
 	<div class="container">
 
@@ -101,22 +123,22 @@
 				</p:tab>
 			</p:panel>
 
-			<h:commandLink
+			<h:commandLink onclick="checkDonation(0)"
 				actionListener="#{dashbord.setSearchDonorCriteria(requestDetailsMB.requestDTO)}"
 				ajax="true" action="/secured/searchdonor.xhtml">
 				<p:graphicImage value="/secured/image/search.jpg" />
 			</h:commandLink>
 
-			<p:graphicImage value="/secured/image/separator.jpg" />
-			<h:commandLink
+	
+			<h:commandLink id="closeRequest" style="display:none"
 				actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}"
 				onclick="closeRequest.show();">
 				<f:ajax execute="@form" onevent="unblockUi" />
 				<p:graphicImage value="/secured/image/closeRequest.jpg" />
 			</h:commandLink>
 
-			<p:graphicImage value="/secured/image/separator.jpg" />
-			<h:commandLink
+		
+			<h:commandLink id="withdrawRequest" style="display:none"
 				actionListener="#{requestDetailsMB.setRequestDTO(requestDetailsMB.requestDTO)}"
 				onclick="withdrawRequest.show();">
 				<f:ajax execute="@form" onevent="unblockUi" />
@@ -297,7 +319,7 @@
 
 					<p:commandButton value="#{label['button.confirm']}"
 						actionListener="#{requestDetailsMB.markDonated}"
-						update="request_donors_form" onclick="markDonated();"
+						update="request_donors_form" onclick="markDonated();checkDonation(1)"
 						oncomplete="unblockUIfreeze();"></p:commandButton>
 
 				</h:panelGrid>
